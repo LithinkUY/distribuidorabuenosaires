@@ -1000,12 +1000,15 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
     // 3. Remove product from cart if present
     setCart((prev) => {
-      const nextCart = prev.filter((item) => item.product.id !== id);
+      const nextCart = (prev || []).filter((item) => item?.product && item.product.id !== id);
       try {
         localStorage.setItem('lcc_cart', JSON.stringify(nextCart));
       } catch (e) {}
       return nextCart;
     });
+
+    // Clear detail modal if the deleted product was open
+    setSelectedProductForDetail((prev) => (prev?.id === id ? null : prev));
 
     // 4. Delete from cloud database
     fetch(`/api/products?id=${id}`, {

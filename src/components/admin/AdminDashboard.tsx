@@ -282,25 +282,28 @@ export const AdminDashboard: React.FC = () => {
   });
 
   // Filtered products for Catalog & Inventory
-  const filteredProducts = products.filter(p => {
-    const query = inventorySearch.toLowerCase();
-    const nameMatch = p.name.toLowerCase().includes(query) || p.sku.toLowerCase().includes(query) || (p.material && p.material.toLowerCase().includes(query));
+  const filteredProducts = (products || []).filter(p => {
+    if (!p) return false;
+    const query = (inventorySearch || '').toLowerCase();
+    const nameMatch = (p.name || '').toLowerCase().includes(query) || (p.sku || '').toLowerCase().includes(query) || (p.material && p.material.toLowerCase().includes(query));
     
-    const brandMatch = inventoryBrandFilter === 'todas' || p.compatibleBrands.some(b => b.toLowerCase().includes(inventoryBrandFilter.toLowerCase()));
-    const catMatch = inventoryCategoryFilter === 'todas' || p.category.toLowerCase() === inventoryCategoryFilter.toLowerCase();
+    const brands = Array.isArray(p.compatibleBrands) ? p.compatibleBrands : [];
+    const brandMatch = inventoryBrandFilter === 'todas' || brands.some(b => typeof b === 'string' && b.toLowerCase().includes(inventoryBrandFilter.toLowerCase()));
+    const catMatch = inventoryCategoryFilter === 'todas' || (p.category || '').toLowerCase() === (inventoryCategoryFilter || '').toLowerCase();
     
     let stockMatch = true;
-    if (inventoryStockFilter === 'instock') stockMatch = p.stock > 10;
-    if (inventoryStockFilter === 'lowstock') stockMatch = p.stock > 0 && p.stock <= 10;
-    if (inventoryStockFilter === 'nostock') stockMatch = p.stock === 0;
+    if (inventoryStockFilter === 'instock') stockMatch = (p.stock || 0) > 10;
+    if (inventoryStockFilter === 'lowstock') stockMatch = (p.stock || 0) > 0 && (p.stock || 0) <= 10;
+    if (inventoryStockFilter === 'nostock') stockMatch = (p.stock || 0) === 0;
 
     return nameMatch && brandMatch && catMatch && stockMatch;
   });
 
   // Filtered users
   const filteredUsers = safeUsers.filter(u => {
-    const query = userSearch.toLowerCase();
-    const nameMatch = u.name.toLowerCase().includes(query) || u.email.toLowerCase().includes(query) || u.phone.toLowerCase().includes(query);
+    if (!u) return false;
+    const query = (userSearch || '').toLowerCase();
+    const nameMatch = (u.name || '').toLowerCase().includes(query) || (u.email || '').toLowerCase().includes(query) || (u.phone || '').toLowerCase().includes(query);
     const statusMatch = userStatusFilter === 'todos' || (u.status || 'Activo').toLowerCase() === userStatusFilter.toLowerCase();
     return nameMatch && statusMatch;
   });

@@ -19,6 +19,7 @@ import { AdminDashboard } from './components/admin/AdminDashboard';
 import { Footer } from './components/Footer';
 import { CatalogPage } from './pages/CatalogPage';
 import { Car, ShieldCheck, PhoneCall, Mail, MapPin, Sparkles, Heart } from 'lucide-react';
+import { ErrorBoundary } from './components/ErrorBoundary';
 
 
 function AdminRoute() {
@@ -127,16 +128,25 @@ function StorefrontContent() {
 
 export default function App() {
   return (
-    <StoreProvider>
-      <Router>
-        <Routes>
-          <Route path="/" element={<StorefrontContent />} />
-          <Route path="/catalogo" element={<CatalogPage />} />
-          <Route path="/productos" element={<Navigate to="/catalogo" replace />} />
-          <Route path="/admin" element={<AdminRoute />} />
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
-      </Router>
-    </StoreProvider>
+    <ErrorBoundary>
+      <StoreProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<StorefrontContent />} />
+            <Route path="/catalogo" element={<CatalogPage />} />
+            <Route path="/productos" element={<Navigate to="/catalogo" replace />} />
+            <Route
+              path="/admin"
+              element={
+                <ErrorBoundary>
+                  <AdminRoute />
+                </ErrorBoundary>
+              }
+            />
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+        </Router>
+      </StoreProvider>
+    </ErrorBoundary>
   );
 }
