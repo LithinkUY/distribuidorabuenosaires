@@ -1,0 +1,6 @@
+{
+  "name": "Distribuidora Buenos Aires",
+  "description": "Tienda oficial de Distribuidora Buenos Aires. Venta de fundas para asientos listas para colocar, bandejas termoformadas y accesorios automotrices.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
