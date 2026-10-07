@@ -2829,17 +2829,25 @@ export const AdminDashboard: React.FC = () => {
                           const file = e.target.files?.[0];
                           if (!file) return;
                           setIsUploadingVideo(true);
-                          try {
-                            const key = `prod_vid_${Date.now()}`;
-                            const idbKey = await saveMediaBlob(key, file);
-                            setProdVideo(idbKey);
-                            triggerToast('¡Video cargado y guardado correctamente!');
-                          } catch (err) {
-                            console.error('Error guardando video:', err);
-                            triggerToast('Error al procesar el archivo de video.');
-                          } finally {
-                            setIsUploadingVideo(false);
+                          if (file.size > 4.5 * 1024 * 1024) {
+                            alert(
+                              `El archivo de video pesa ${(file.size / (1024 * 1024)).toFixed(1)}MB.\n` +
+                              `Para guardarse en la nube (Neon DB) y verse en Incógnito y Vercel, debe pesar menos de 4MB.\n` +
+                              `Puedes comprimirlo a menos de 4MB o pegar un enlace web directo en el campo siguiente.`
+                            );
                           }
+                          const reader = new FileReader();
+                          reader.onload = (ev) => {
+                            const dataUrl = ev.target?.result as string;
+                            setProdVideo(dataUrl);
+                            triggerToast('¡Video cargado y listo para guardar en la nube!');
+                            setIsUploadingVideo(false);
+                          };
+                          reader.onerror = () => {
+                            triggerToast('Error al leer el archivo de video');
+                            setIsUploadingVideo(false);
+                          };
+                          reader.readAsDataURL(file);
                         }}
                       />
                     </label>

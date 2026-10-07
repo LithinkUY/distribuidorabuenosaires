@@ -1,0 +1,826 @@
+{
+  "timestamp": "2026-10-07T21:37:55.200Z",
+  "productsCount": 7,
+  "products": [
+    {
+      "id": "prod-bondeado-kit-150k",
+      "name": "Línea Intermedia - Ecocuero Premium con Bondeado (Kit Completo)",
+      "category": "Ecocuero con bondeado línea intermedia",
+      "currency": "ARS",
+      "price_usd": "120.00",
+      "price_uyu": "4800.00",
+      "price_ars": "150000.00",
+      "stock": 40,
+      "sku": "DBA-BOND-KIT-150K",
+      "image": "/src/assets/images/product_ecocuero_bondeado_kit_completo.jpg",
+      "images": [
+        "/src/assets/images/product_ecocuero_bondeado_kit_completo.jpg",
+        "/src/assets/images/product_ecocuero_bondeado_variantes.jpg"
+      ],
+      "additional_images": [
+        "/src/assets/images/product_ecocuero_bondeado_variantes.jpg"
+      ],
+      "video": null,
+      "video_url": null,
+      "description": "Juego completo de fundas universales en Ecocuero Premium acolchado con espuma bondeada de alta densidad. Incluye fundas para las 2 butacas delanteras y el juego trasero completo (asiento y respaldo) más apoyacabezas. Terminación acanalada vertical con soporte mullido, gran resistencia al desgaste y fácil mantenimiento.",
+      "features": [
+        "Kit Completo: 2 butacas delanteras + asiento y respaldo trasero + apoyacabezas",
+        "Espuma bondeada acolchada de alta densidad para máximo confort",
+        "Ecocuero automotor premium: impermeable, suave y lavable con paño húmedo",
+        "Costuras acanaladas verticales reforzadas que mantienen la forma original",
+        "4 opciones de combinación: Gris/Plata, Rojo, Azul y Negro pleno",
+        "Calce anatómico universal apto para autos y camionetas de 5 plazas",
+        "Incluye elásticos reforzados y kit de ganchos metálicos para fijación firme"
+      ],
+      "compatible_brands": [
+        "Universal",
+        "Toyota",
+        "Volkswagen",
+        "Ford",
+        "Chevrolet",
+        "Fiat",
+        "Renault",
+        "Peugeot",
+        "Nissan",
+        "Honda",
+        "Jeep",
+        "Citroën"
+      ],
+      "is_featured": true,
+      "material": "Ecocuero Premium con Bondeado",
+      "rating": "5.00",
+      "reviews_count": 28,
+      "variants": [
+        {
+          "id": "var-gris",
+          "name": "Negro con Franjas Grises / Plata",
+          "image": "/src/assets/images/product_ecocuero_bondeado_kit_completo.jpg",
+          "stock": 15,
+          "priceExtraUSD": 0
+        },
+        {
+          "id": "var-rojo",
+          "name": "Negro con Franjas Rojas",
+          "image": "/src/assets/images/product_ecocuero_bondeado_variantes.jpg",
+          "stock": 10,
+          "priceExtraUSD": 0
+        },
+        {
+          "id": "var-azul",
+          "name": "Negro con Franjas Azules",
+          "image": "/src/assets/images/product_ecocuero_bondeado_variantes.jpg",
+          "stock": 8,
+          "priceExtraUSD": 0
+        },
+        {
+          "id": "var-negro",
+          "name": "Negro Pleno (Total Black)",
+          "image": "/src/assets/images/product_ecocuero_bondeado_variantes.jpg",
+          "stock": 7,
+          "priceExtraUSD": 0
+        }
+      ],
+      "created_at": "2026-10-07T18:49:41.012Z"
+    },
+    {
+      "id": "prod-2",
+      "name": "Juego de Fundas Ecocuero con Bondeado Intermedio - Costura Diamante",
+      "category": "Ecocuero con bondeado línea intermedia",
+      "currency": "ARS",
+      "price_usd": "130.00",
+      "price_uyu": "5200.00",
+      "price_ars": "162500.00",
+      "stock": 30,
+      "sku": "DBA-ECO-BOND-02",
+      "image": "/src/assets/images/product_cubreasiento_cuero_deluxe_1791205480107.jpg",
+      "images": [],
+      "additional_images": [],
+      "video": null,
+      "video_url": null,
+      "description": "Fundas completas acolchadas con espuma bondeada de 5mm para mayor cuerpo, mullidez y confort. Aporta un diseño elegante con costura en rombos/diamante que no se deforma con el uso continuo.",
+      "features": [
+        "Espuma bondeada de 5mm de alta densidad para máxima comodidad",
+        "Costura capitoné diamante reforzada antidesgarro",
+        "Textura suave, acolchada y respirable",
+        "Excelente calce anatómico para autos y camionetas"
+      ],
+      "compatible_brands": [
+        "Universal",
+        "Toyota",
+        "Volkswagen",
+        "Ford",
+        "Chevrolet",
+        "Nissan",
+        "Jeep",
+        "Renault"
+      ],
+      "is_featured": true,
+      "material": "Ecocuero con Espuma Bondeada 5mm",
+      "rating": "4.90",
+      "reviews_count": 38,
+      "variants": [],
+      "created_at": "2026-10-07T18:49:41.012Z"
+    },
+    {
+      "id": "prod-3",
+      "name": "Juego de Fundas Cuero Automotor Premium",
+      "category": "Cuero automotor",
+      "currency": "ARS",
+      "price_usd": "190.00",
+      "price_uyu": "7600.00",
+      "price_ars": "237500.00",
+      "stock": 22,
+      "sku": "DBA-CUERO-AUTO-03",
+      "image": "/src/assets/images/product_cubreasiento_cuero_deluxe_1791205480107.jpg",
+      "images": [],
+      "additional_images": [],
+      "video": null,
+      "video_url": null,
+      "description": "Fundas de máxima calidad elaboradas en cuero automotriz de 1.2mm de espesor. Terminación y textura idéntica al tapizado original de fábrica, alta resistencia al roce intensivo y apto para despliegue de airbags.",
+      "features": [
+        "Cuero automotor de 1.2mm de máxima durabilidad",
+        "Terminación y textura idéntica a tapizado de fábrica",
+        "Aptas para airbags laterales y apoyacabezas",
+        "Garantía oficial por 3 años"
+      ],
+      "compatible_brands": [
+        "Universal",
+        "Toyota",
+        "Volkswagen",
+        "Ford",
+        "Chevrolet",
+        "Audi",
+        "BMW",
+        "Honda",
+        "Jeep"
+      ],
+      "is_featured": true,
+      "material": "Cuero Automotor 1.2mm",
+      "rating": "5.00",
+      "reviews_count": 56,
+      "variants": [],
+      "created_at": "2026-10-07T18:49:41.012Z"
+    },
+    {
+      "id": "prod-4",
+      "name": "Juego de Fundas Cuero Automotor con Soporte Lumbar Ergonómico",
+      "category": "Cuero automotor con soporte lumbar",
+      "currency": "ARS",
+      "price_usd": "240.00",
+      "price_uyu": "9600.00",
+      "price_ars": "300000.00",
+      "stock": 18,
+      "sku": "DBA-CUERO-LUMB-04",
+      "image": "/src/assets/images/product_cubreasiento_deportivo_alcantara_1791205503234.jpg",
+      "images": [],
+      "additional_images": [],
+      "video": null,
+      "video_url": null,
+      "description": "Línea de máxima jerarquía con soporte lumbar anatómico y almohadillas ortopédicas laterales integradas. Brinda una postura de manejo perfecta, aliviando tensiones en la espalda durante viajes largos y uso diario exigente.",
+      "features": [
+        "Soporte lumbar ergonómico ortopédico integrado",
+        "Refuerzos laterales para contención de cintura y riñones",
+        "Cuero automotor microperforado para ventilación térmica",
+        "Ajuste firme que no se desplaza con el uso"
+      ],
+      "compatible_brands": [
+        "Universal",
+        "Toyota",
+        "Volkswagen",
+        "Ford",
+        "Chevrolet",
+        "Audi",
+        "BMW",
+        "Mercedes-Benz"
+      ],
+      "is_featured": true,
+      "material": "Cuero Automotor & Soporte Lumbar Ergonómico",
+      "rating": "5.00",
+      "reviews_count": 34,
+      "variants": [],
+      "created_at": "2026-10-07T18:49:41.012Z"
+    },
+    {
+      "id": "prod-6",
+      "name": "Cubre Volante Cuero Automotor Microperforado con Kit de Coser",
+      "category": "Cubre volantes",
+      "currency": "ARS",
+      "price_usd": "25.00",
+      "price_uyu": "1000.00",
+      "price_ars": "31250.00",
+      "stock": 60,
+      "sku": "DBA-VOL-CUERO-06",
+      "image": "/src/assets/images/product_cubreasiento_deportivo_alcantara_1791205503234.jpg",
+      "images": [],
+      "additional_images": [],
+      "video": null,
+      "video_url": null,
+      "description": "Funda para volante en cuero automotor microperforado de agarre deportivo. Incluye aguja e hilo encerado para una colocación firme al milímetro que renueva por completo la sensación de manejo.",
+      "features": [
+        "Grip antideslizante de textura microperforada",
+        "Incluye aguja e hilo encerado de alta resistencia",
+        "Se adapta a volantes de 37cm a 39cm de diámetro",
+        "Terminación deportiva profesional sin costuras molestas"
+      ],
+      "compatible_brands": [
+        "Universal"
+      ],
+      "is_featured": false,
+      "material": "Cuero Automotor Microperforado",
+      "rating": "4.90",
+      "reviews_count": 42,
+      "variants": [],
+      "created_at": "2026-10-07T18:49:41.012Z"
+    },
+    {
+      "id": "prod-7",
+      "name": "Cubrebaúl Termoformado Rígido con Superficie Antideslizante",
+      "category": "Accesorios",
+      "currency": "ARS",
+      "price_usd": "85.00",
+      "price_uyu": "3400.00",
+      "price_ars": "106250.00",
+      "stock": 22,
+      "sku": "DBA-ACC-BAUL-07",
+      "image": "/src/assets/images/product_alfombra_3d_termoformada_1791205493618.jpg",
+      "images": [],
+      "additional_images": [],
+      "video": null,
+      "video_url": null,
+      "description": "Bandeja protectora para el baúl con borde perimetral que evita el traspaso de suciedad, líquidos, herramientas o cochecitos al piso alfombrado original.",
+      "features": [
+        "Borde perimetral antiderrames de 4cm",
+        "Resistente a aceites, solventes y productos químicos",
+        "Fácil extracción y limpieza rápida",
+        "Superficie antideslizante de alta resistencia"
+      ],
+      "compatible_brands": [
+        "Universal",
+        "Toyota",
+        "Volkswagen",
+        "Ford",
+        "Chevrolet",
+        "Peugeot",
+        "Renault"
+      ],
+      "is_featured": false,
+      "material": "TPE Rígido Antideslizante",
+      "rating": "4.90",
+      "reviews_count": 19,
+      "variants": [],
+      "created_at": "2026-10-07T18:49:41.012Z"
+    },
+    {
+      "id": "prod-8",
+      "name": "Kit Premium Almohadillas Cervicales Viscoelásticas (Par)",
+      "category": "Accesorios",
+      "currency": "ARS",
+      "price_usd": "35.00",
+      "price_uyu": "1400.00",
+      "price_ars": "43750.00",
+      "stock": 45,
+      "sku": "DBA-ACC-CERV-08",
+      "image": "/src/assets/images/product_cubreasiento_cuero_deluxe_1791205480107.jpg",
+      "images": [],
+      "additional_images": [],
+      "video": null,
+      "video_url": null,
+      "description": "Par de almohadillas cervicales ergonómicas en cuero con interior de memory foam. Apoyo perfecto para cuello y nuca que reduce el cansancio en viajes cortos y largos.",
+      "features": [
+        "Espuma con memoria viscoelástica (Memory Foam)",
+        "Funda exterior desmontable y lavable",
+        "Correa elástica de sujeción al apoyacabezas",
+        "Diseño ergonómico para descanso cervical"
+      ],
+      "compatible_brands": [
+        "Universal"
+      ],
+      "is_featured": false,
+      "material": "Cuero Ecológico & Memory Foam",
+      "rating": "4.80",
+      "reviews_count": 31,
+      "variants": [],
+      "created_at": "2026-10-07T18:49:41.012Z"
+    }
+  ],
+  "categories": [
+    {
+      "id": "cat-accesorios",
+      "name": "Accesorios",
+      "slug": "accesorios",
+      "description": "Bandejas de baúl, almohadillas cervicales, organizadores y accesorios para tu vehículo",
+      "created_at": "2026-10-07T18:49:41.012Z"
+    },
+    {
+      "id": "cat-alfombras",
+      "name": "Alfombras",
+      "slug": "alfombras",
+      "description": "Bandejas termoformadas 3D, 5D y juegos de alfombras para retención total de suciedad",
+      "created_at": "2026-10-07T18:49:41.012Z"
+    },
+    {
+      "id": "cat-cubre-volantes",
+      "name": "Cubre volantes",
+      "slug": "cubre-volantes",
+      "description": "Cubrevolantes ergonómicos en cuero automotor y ecocuero con agarre deportivo",
+      "created_at": "2026-10-07T18:49:41.012Z"
+    },
+    {
+      "id": "cat-cuero-auto",
+      "name": "Cuero automotor",
+      "slug": "cuero-automotor",
+      "description": "Fundas de alta gama en cuero automotriz reforzado con terminación y textura original",
+      "created_at": "2026-10-07T18:49:41.012Z"
+    },
+    {
+      "id": "cat-cuero-lumbar",
+      "name": "Cuero automotor con soporte lumbar",
+      "slug": "cuero-automotor-con-soporte-lumbar",
+      "description": "Fundas de máxima categoría con soportes lumbares y riñoneras anatómicas integradas",
+      "created_at": "2026-10-07T18:49:41.012Z"
+    },
+    {
+      "id": "cat-eco-bondeado",
+      "name": "Ecocuero con bondeado línea intermedia",
+      "slug": "ecocuero-con-bondeado-linea-intermedia",
+      "description": "Fundas acolchadas con espuma bondeada para mayor confort y durabilidad en el uso diario",
+      "created_at": "2026-10-07T18:49:41.012Z"
+    },
+    {
+      "id": "cat-eco-econ",
+      "name": "Ecocuero línea económica",
+      "slug": "ecocuero-linea-economica",
+      "description": "Fundas en ecocuero resistente y de fácil colocación con la mejor relación precio-calidad",
+      "created_at": "2026-10-07T18:49:41.012Z"
+    }
+  ],
+  "settings": {
+    "id": "default",
+    "business_name": "Distribuidora Buenos Aires",
+    "company_legal_name": "Distribuidora Buenos Aires S.A.S.",
+    "company_rut": "21.849.201.0018",
+    "company_phone": "+54 9 11 1234-5678",
+    "company_email": "ventas@distribuidorabuenosaires.com",
+    "company_address": "Franklin D. Roosevelt 1700",
+    "company_city": "C1772 CABA, Buenos Aires, Argentina",
+    "whatsapp_number": "5491112345678",
+    "primary_color": "#0055ff",
+    "header_bg_color": "#ffffff",
+    "header_text_color": "#1e293b",
+    "hero_slides": [
+      {
+        "id": "slide-1",
+        "type": "image",
+        "title": "DISTRIBUIDORA BUENOS AIRES",
+        "mediaUrl": "/src/assets/images/hero_car_interior_dark_red_1791205466989.jpg",
+        "subtitle": "Fundas a medida y accesorios de alta durabilidad con colocación profesional garantizada y stock permanente.",
+        "buttonText": "Explorar Catálogo"
+      }
+    ],
+    "home_sections": [
+      {
+        "id": "productos",
+        "title": "Colección & Productos",
+        "visible": true,
+        "subtitle": "Calidad Premium"
+      },
+      {
+        "id": "alfombras",
+        "title": "Bandejas 3D Antiderrame",
+        "visible": true,
+        "subtitle": "Calce Original"
+      },
+      {
+        "id": "resenas",
+        "title": "Opiniones de Clientes",
+        "visible": true,
+        "subtitle": ""
+      }
+    ],
+    "contact_section": {
+      "badge": "Datos de contacto de la tienda",
+      "title": "Contactate con Nuestro Equipo",
+      "features": [],
+      "cardTitle": "Ubicacion",
+      "hoursText": "Lunes a Viernes: 08:30 a 18:30 hs · Sábados: 09:00 a 13:00 hs",
+      "hoursTitle": "Horarios de Atención",
+      "phonesText": "+54 9 11 1234-5678 · WhatsApp Ventas: +54 9 11 1234-5678",
+      "description": "Atención personalizada para la elección del material, pedidos mayoristas y envíos a todo el país.",
+      "phonesTitle": "Líneas de Atención Telefónica",
+      "mapIframeUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3285.9992332500856!2d-58.45380459999999!3d-34.5535748!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcb42dd70c6349%3A0x3a03ff44b1ea6ef3!2sFranklin%20D.%20Roosevelt%201700%2C%20C1772%20Cdad.%20Aut%C3%B3noma%20de%20Buenos%20Aires%2C%20Argentina!5e0!3m2!1ses!2suy!4v1791325820777!5m2!1ses!2suy",
+      "guaranteeText": "3 Años de Cobertura Total",
+      "locationTitle": "Sede Central & Showroom",
+      "mapGoogleLink": "https://maps.google.com/?q=Franklin+D.+Roosevelt+1700,+C1772+Buenos+Aires,+Argentina",
+      "guaranteeLabel": "Garantía Escrita",
+      "whatsappNumber": "5491112345678",
+      "cardDescription": "Franklin D. Roosevelt 1700, C1772 Cdad. Autónoma de Buenos Aires, Argentina",
+      "locationAddress": "Franklin D. Roosevelt 1700, C1772 Cdad. Autónoma de Buenos Aires, Argentina",
+      "whatsappMessage": "¡Hola! Quisiera realizar una consulta a Distribuidora Buenos Aires sobre sus productos y envíos.",
+      "whatsappButtonText": "Hablar con un Asesor por WhatsApp"
+    },
+    "footer_settings": {
+      "links": [
+        {
+          "id": "fl-1",
+          "label": "Probador Virtual 3D",
+          "target": "",
+          "actionType": "fitter"
+        },
+        {
+          "id": "fl-2",
+          "label": "Fundas Cuero Automotor",
+          "target": "productos",
+          "actionType": "section"
+        },
+        {
+          "id": "fl-3",
+          "label": "Alfombras & Accesorios",
+          "target": "productos",
+          "actionType": "section"
+        },
+        {
+          "id": "fl-4",
+          "label": "Venta Mayorista & Distribuidores",
+          "target": "",
+          "actionType": "wholesale"
+        }
+      ],
+      "subText": "Distribuidora Buenos Aires · Envíos a Todo el País",
+      "aboutText": "Distribuidora líder en cubreasientos, fundas para vehículos y accesorios automotrices de alta calidad en stock permanente para despacho inmediato.",
+      "badgeText": "Stock Inmediato y Envíos a Todo el País",
+      "column2Title": "Colección & Catálogo",
+      "column3Title": "Tu Cuenta",
+      "column4Title": "Local Central",
+      "copyrightText": "Todos los derechos reservados.",
+      "showroomHours": "Horario: Lun a Vie 08:30 a 18:30 hs",
+      "showroomPhone": "WhatsApp: +54 9 11 1234-5678",
+      "showroomAddress": "Franklin D. Roosevelt 1700, CABA, Argentina"
+    },
+    "updated_at": "2026-10-07T18:49:41.012Z",
+    "alfombras_section": {
+      "badge": "Protección Extrema para el Piso de tu Vehículo",
+      "title": "Alfombras Termoformadas 3D & 5D de Alta Cobertura",
+      "mediaUrl": "/src/assets/images/product_alfombra_3d_termoformada_1791205493618.jpg",
+      "cardBadge": "100% Antiderrame",
+      "cardTitle": "Bandejas Termoformadas 5D de Borde Alto",
+      "mediaType": "image",
+      "description": "Desarrolladas con polímeros TPE de alta densidad termo-moldeados con precisión digital. A diferencia de las alfombras universales planas que se doblan y dejan pasar la mugre, nuestras bandejas de borde perimetral elevado de 5 cm retienen agua, barro, nieve y café, manteniendo la alfombra original impecable como el primer día.",
+      "cardPriceTag": "$ 137.500",
+      "cardSubtitle": "Escaneo Láser 3D",
+      "feature1Title": "Retención Antiderrame",
+      "feature2Title": "Anclaje de Seguridad OEM",
+      "primaryButtonUrl": "",
+      "primaryButtonText": "Ver Modelos Disponibles",
+      "secondaryButtonUrl": "",
+      "feature1Description": "Paredes de 5 cm de altura que encapsulan suciedad y líquidos sin filtraciones.",
+      "feature2Description": "Fijación a las trabas originales del piso del auto, evitando cualquier deslizamiento hacia los pedales.",
+      "primaryButtonAction": "catalogo",
+      "secondaryButtonText": "Comprar Set de Alfombras",
+      "secondaryButtonAction": "addToCart",
+      "secondaryButtonProductId": "prod-bondeado-kit-150k"
+    },
+    "menu_items": [
+      {
+        "id": "m-todos",
+        "link": "todos",
+        "label": "Todos los Modelos"
+      },
+      {
+        "id": "m-eco-econ",
+        "link": "Ecocuero línea económica",
+        "label": "Ecocuero línea económica"
+      },
+      {
+        "id": "m-eco-bond",
+        "link": "Ecocuero con bondeado línea intermedia",
+        "label": "Ecocuero con bondeado línea intermedia"
+      },
+      {
+        "id": "m-cuero-auto",
+        "link": "Cuero automotor",
+        "label": "Cuero automotor"
+      },
+      {
+        "id": "m-cuero-lumbar",
+        "link": "Cuero automotor con soporte lumbar",
+        "label": "Cuero automotor con soporte lumbar"
+      },
+      {
+        "id": "m-alfombras",
+        "link": "Alfombras",
+        "label": "Alfombras"
+      },
+      {
+        "id": "m-cubre-volantes",
+        "link": "Cubre volantes",
+        "label": "Cubre volantes"
+      },
+      {
+        "id": "m-accesorios",
+        "link": "Accesorios",
+        "label": "Accesorios"
+      }
+    ]
+  },
+  "orders": [
+    {
+      "id": "ord-102",
+      "order_number": "DBA-9822",
+      "customer_name": "Lucía Fernández",
+      "customer_email": "lucia.fdez@montevideo.com.uy",
+      "customer_phone": "+59898765432",
+      "customer_address": "Rambla República de México 5400",
+      "customer_city": "Montevideo, Carrasco",
+      "car_details": {
+        "year": "2024",
+        "brand": "Volkswagen",
+        "model": "Nivus Highline"
+      },
+      "items": [
+        {
+          "image": "/src/assets/images/product_cubreasiento_deportivo_alcantara_1791205503234.jpg",
+          "price": 240,
+          "currency": "USD",
+          "quantity": 1,
+          "productId": "prod-4",
+          "productName": "Juego de Fundas Cuero Automotor con Soporte Lumbar Ergonómico"
+        }
+      ],
+      "total_usd": "240.00",
+      "total_ars": "300000.00",
+      "total_uyu": "9600.00",
+      "paid_currency": "USD",
+      "status": "Pendiente",
+      "payment_method": "transferencia",
+      "notes": "Esperando comprobante de transferencia bancaria BROU.",
+      "whatsapp_reminder_sent": false,
+      "created_at": "2026-10-04T09:15:00.000Z"
+    },
+    {
+      "id": "ord-103",
+      "order_number": "DBA-9823",
+      "customer_name": "Martín Benítez",
+      "customer_email": "martin.benitez@empresa.com.ar",
+      "customer_phone": "+5491145238890",
+      "customer_address": "Av. Libertador 7200",
+      "customer_city": "Buenos Aires, Nuñez",
+      "car_details": {
+        "year": "2023",
+        "brand": "Ford",
+        "model": "Ranger Raptor"
+      },
+      "items": [
+        {
+          "image": "/src/assets/images/product_cubreasiento_cuero_deluxe_1791205480107.jpg",
+          "price": 190,
+          "currency": "USD",
+          "quantity": 1,
+          "productId": "prod-3",
+          "productName": "Juego de Fundas Cuero Automotor Premium"
+        },
+        {
+          "image": "/src/assets/images/product_alfombra_3d_termoformada_1791205493618.jpg",
+          "price": 85,
+          "currency": "USD",
+          "quantity": 1,
+          "productId": "prod-7",
+          "productName": "Cubrebaúl Termoformado Rígido con Superficie Antideslizante"
+        }
+      ],
+      "total_usd": "275.00",
+      "total_ars": "343750.00",
+      "total_uyu": "11000.00",
+      "paid_currency": "ARS",
+      "status": "Pagado",
+      "payment_method": "tarjeta",
+      "notes": "Pago aprobado en 3 cuotas sin interés.",
+      "whatsapp_reminder_sent": true,
+      "created_at": "2026-10-03T18:40:00.000Z"
+    },
+    {
+      "id": "ord-101",
+      "order_number": "DBA-9821",
+      "customer_name": "Juan Ignacio Pérez",
+      "customer_email": "juan.perez@gmail.com",
+      "customer_phone": "+598 99 234 567",
+      "customer_address": "Av. Brasil 2450, Apto 501",
+      "customer_city": "Montevideo, Pocitos",
+      "car_details": {
+        "year": "2023",
+        "brand": "Toyota",
+        "model": "Hilux SRV"
+      },
+      "items": [
+        {
+          "image": "/src/assets/images/product_cubreasiento_cuero_deluxe_1791205480107.jpg",
+          "price": 130,
+          "currency": "USD",
+          "quantity": 1,
+          "productId": "prod-2",
+          "productName": "Juego de Fundas Ecocuero con Bondeado Intermedio - Costura Diamante",
+          "customization": {
+            "stitchingColor": "Rojo Ferrari"
+          }
+        },
+        {
+          "image": "/src/assets/images/product_alfombra_3d_termoformada_1791205493618.jpg",
+          "price": 110,
+          "currency": "USD",
+          "quantity": 1,
+          "productId": "prod-5",
+          "productName": "Alfombras Termoformadas 3D Bandeja Profunda (Set Completo)"
+        }
+      ],
+      "total_usd": "240.00",
+      "total_ars": "300000.00",
+      "total_uyu": "9600.00",
+      "paid_currency": "USD",
+      "status": "En Preparación",
+      "payment_method": "mercadopago",
+      "notes": "Cliente solicitó fundas en color negro con costura diamante.",
+      "whatsapp_reminder_sent": true,
+      "created_at": "2026-10-02T14:30:00.000Z"
+    },
+    {
+      "id": "ord-104",
+      "order_number": "DBA-9824",
+      "customer_name": "Gonzalo Méndez",
+      "customer_email": "gmendez99@hotmail.com",
+      "customer_phone": "+59891234890",
+      "customer_address": "Calle 24 entre 27 y 28",
+      "customer_city": "Punta del Este, Maldonado",
+      "car_details": {
+        "year": "2022",
+        "brand": "Audi",
+        "model": "Q5 45 TFSI"
+      },
+      "items": [
+        {
+          "image": "/src/assets/images/product_cubreasiento_cuero_deluxe_1791205480107.jpg",
+          "price": 85,
+          "currency": "USD",
+          "quantity": 1,
+          "productId": "prod-1",
+          "productName": "Juego de Fundas Ecocuero Línea Económica (Juego Completo)"
+        }
+      ],
+      "total_usd": "85.00",
+      "total_ars": "106250.00",
+      "total_uyu": "3400.00",
+      "paid_currency": "UYU",
+      "status": "Despachado",
+      "payment_method": "mercadopago",
+      "notes": "Despachado por Agencia Central con número de rastreo #DAC-88410.",
+      "whatsapp_reminder_sent": true,
+      "created_at": "2026-09-28T11:20:00.000Z"
+    },
+    {
+      "id": "ord-105",
+      "order_number": "DBA-9825",
+      "customer_name": "Valeria Soria",
+      "customer_email": "valeria.soria@adinet.com.uy",
+      "customer_phone": "+59894455667",
+      "customer_address": "Bulevar Artigas 1420",
+      "customer_city": "Montevideo, Tres Cruces",
+      "car_details": {
+        "year": "2024",
+        "brand": "Chevrolet",
+        "model": "Tracker Premier"
+      },
+      "items": [
+        {
+          "image": "/src/assets/images/product_alfombra_3d_termoformada_1791205493618.jpg",
+          "price": 110,
+          "currency": "USD",
+          "quantity": 1,
+          "productId": "prod-5",
+          "productName": "Alfombras Termoformadas 3D Bandeja Profunda (Set Completo)"
+        },
+        {
+          "image": "/src/assets/images/product_cubreasiento_deportivo_alcantara_1791205503234.jpg",
+          "price": 25,
+          "currency": "USD",
+          "quantity": 1,
+          "productId": "prod-6",
+          "productName": "Cubre Volante Cuero Automotor Microperforado con Kit de Coser"
+        }
+      ],
+      "total_usd": "135.00",
+      "total_ars": "168750.00",
+      "total_uyu": "5400.00",
+      "paid_currency": "USD",
+      "status": "Entregado",
+      "payment_method": "efectivo",
+      "notes": "Retiró en sucursal central.",
+      "whatsapp_reminder_sent": true,
+      "created_at": "2026-09-20T16:00:00.000Z"
+    }
+  ],
+  "users": [
+    {
+      "id": "usr-2",
+      "name": "Administrador General",
+      "email": "admin@distribuidorabuenosaires.com",
+      "password_hash": "admin123",
+      "phone": "+54 9 11 1234 5678",
+      "address": "Franklin D. Roosevelt 1700",
+      "city": "CABA, Buenos Aires",
+      "vehicles": [
+        {
+          "year": "2024",
+          "brand": "Ford",
+          "model": "Ranger Raptor"
+        }
+      ],
+      "role": "admin",
+      "status": "Activo",
+      "last_login": null,
+      "created_at": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "usr-2-legacy",
+      "name": "Administrador (La Casa del Cubreasiento)",
+      "email": "admin@lacasadelcubreasiento.com",
+      "password_hash": "admin123",
+      "phone": "+54 9 11 1234 5678",
+      "address": "Franklin D. Roosevelt 1700",
+      "city": "CABA, Buenos Aires",
+      "vehicles": [
+        {
+          "year": "2024",
+          "brand": "Ford",
+          "model": "Ranger Raptor"
+        }
+      ],
+      "role": "admin",
+      "status": "Activo",
+      "last_login": null,
+      "created_at": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "usr-1",
+      "name": "Juan Ignacio Pérez",
+      "email": "juan.perez@gmail.com",
+      "password_hash": "cliente123",
+      "phone": "+598 99 234 567",
+      "address": "Av. Brasil 2450, Apto 501",
+      "city": "Montevideo, Pocitos",
+      "vehicles": [
+        {
+          "year": "2023",
+          "brand": "Toyota",
+          "model": "Hilux SRV"
+        },
+        {
+          "year": "2024",
+          "brand": "Volkswagen",
+          "model": "Nivus Highline"
+        }
+      ],
+      "role": "customer",
+      "status": "Activo",
+      "last_login": null,
+      "created_at": "2026-08-15T10:00:00.000Z"
+    },
+    {
+      "id": "usr-4",
+      "name": "Martín Delgado",
+      "email": "martin.delgado@correo.uy",
+      "password_hash": "cliente123",
+      "phone": "+598 92 888 777",
+      "address": "Av. 8 de Octubre 3100",
+      "city": "Montevideo",
+      "vehicles": [
+        {
+          "year": "2021",
+          "brand": "Nissan",
+          "model": "Frontier"
+        }
+      ],
+      "role": "customer",
+      "status": "Rechazado",
+      "last_login": null,
+      "created_at": "2026-10-04T16:20:00.000Z"
+    },
+    {
+      "id": "usr-3",
+      "name": "Carolina Méndez",
+      "email": "caro.mendez@empresa.com",
+      "password_hash": "cliente123",
+      "phone": "+598 94 555 123",
+      "address": "Bvar. Artigas 1200",
+      "city": "Montevideo",
+      "vehicles": [
+        {
+          "year": "2022",
+          "brand": "Chevrolet",
+          "model": "Tracker"
+        }
+      ],
+      "role": "customer",
+      "status": "Pendiente",
+      "last_login": null,
+      "created_at": "2026-10-05T14:10:00.000Z"
+    }
+  ]
+}

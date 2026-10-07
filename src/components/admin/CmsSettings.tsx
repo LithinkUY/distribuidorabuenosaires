@@ -25,6 +25,7 @@ import {
   Video,
   ShoppingBag,
   Droplets,
+  RefreshCw,
 } from 'lucide-react';
 import { HomeSection, HeroSlide, MenuItem, ContactSectionSettings, FooterSettings, FooterLink, AlfombrasSectionSettings } from '../../types';
 import { saveMediaBlob, resolveMediaUrl } from '../../utils/mediaStorage';
@@ -148,15 +149,20 @@ export const CmsSettings: React.FC = () => {
     if (!file) return;
 
     if (file.type.startsWith('video/')) {
-      try {
-        const mediaKey = `alfombras_section_video_${Date.now()}`;
-        const ref = await saveMediaBlob(mediaKey, file);
-        updateAlfombrasField('mediaUrl', ref);
-        updateAlfombrasField('mediaType', 'video');
-      } catch (err) {
-        console.error('Error saving video:', err);
-        alert('Error al guardar el video en el navegador.');
+      if (file.size > 4.5 * 1024 * 1024) {
+        alert(
+          `El archivo de video pesa ${(file.size / (1024 * 1024)).toFixed(1)}MB.\n` +
+          `Para que se guarde en la base de datos de Neon y se vea en Incógnito, móviles y en Vercel, debe pesar menos de 4MB.\n` +
+          `Te sugerimos comprimirlo (con Clipchamp, Handbrake o herramientas online) o pegar un enlace web directo en el campo de texto.`
+        );
       }
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        const dataUrl = ev.target?.result as string;
+        updateAlfombrasField('mediaUrl', dataUrl);
+        updateAlfombrasField('mediaType', 'video');
+      };
+      reader.readAsDataURL(file);
     } else {
       const reader = new FileReader();
       reader.onload = (ev) => {
@@ -257,11 +263,29 @@ export const CmsSettings: React.FC = () => {
 
   const currentSections = settings.homeSections && settings.homeSections.length > 0 ? settings.homeSections : defaultSections;
 
-  const handleSave = (e: React.FormEvent) => {
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
+
+  const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    updateStoreSettings(settings);
-    setIsSaved(true);
-    setTimeout(() => setIsSaved(false), 3000);
+    setIsSaving(true);
+    try {
+      const res = await updateStoreSettings(settings);
+      if (res && !res.success) {
+        alert('Aviso al guardar en la nube (Neon DB): ' + (res.error || 'Error desconocido'));
+      } else {
+        setSaveSuccess(true);
+        setIsSaved(true);
+        setTimeout(() => {
+          setSaveSuccess(false);
+          setIsSaved(false);
+        }, 4000);
+      }
+    } catch (err: any) {
+      alert('Error al guardar: ' + err.message);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   // Move section UP
@@ -1274,17 +1298,22 @@ export const CmsSettings: React.FC = () => {
                             if (!file) return;
 
                             if (file.type.startsWith('video/')) {
-                              try {
-                                const mediaKey = `hero_slide_video_${slide.id}_${Date.now()}`;
-                                const ref = await saveMediaBlob(mediaKey, file);
+                              if (file.size > 4.5 * 1024 * 1024) {
+                                alert(
+                                  `El video seleccionado pesa ${(file.size / (1024 * 1024)).toFixed(1)}MB.\n` +
+                                  `Para guardarse en la nube (Neon DB) y verse en Incógnito y Vercel, debe pesar menos de 4MB.\n` +
+                                  `Te recomendamos comprimirlo a menos de 4MB o pegar un enlace web directo (MP4, YouTube, Cloudinary, etc.).`
+                                );
+                              }
+                              const reader = new FileReader();
+                              reader.onload = (ev) => {
+                                const dataUrl = ev.target?.result as string;
                                 updateSlide(slide.id, {
-                                  mediaUrl: ref,
+                                  mediaUrl: dataUrl,
                                   type: 'video',
                                 });
-                              } catch (err) {
-                                console.error('Error saving video:', err);
-                                alert('Error al procesar el archivo de video en el navegador.');
-                              }
+                              };
+                              reader.readAsDataURL(file);
                             } else {
                               const reader = new FileReader();
                               reader.onload = (ev) => {
@@ -1661,11 +1690,39 @@ export const CmsSettings: React.FC = () => {
         <div className="flex justify-end pt-2">
           <button
             type="submit"
-            className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-3 rounded-xl shadow-lg shadow-blue-500/20 text-sm flex items-center gap-2 transition-all active:scale-95"
+            disabled={isSaving}
+            className={`font-bold px-8 py-3.5 rounded-xl shadow-lg text-sm flex items-center gap-2 transition-all active:scale-95 disabled:opacity-50 ${
+              saveSuccess
+                ? 'bg-emerald-600 text-white shadow-emerald-500/20'
+                : 'bg-blue-600 hover:bg-blue-500 text-white shadow-blue-500/20'
+            }`}
           >
-            <Save className="w-4 h-4" /> Guardar Cambios de CMS & Home
+            {isSaving ? (
+              <>
+                <RefreshCw className="w-4 h-4 animate-spin" /> Guardando en la nube (Neon DB)...
+              </>
+            ) : saveSuccess ? (
+              <>
+                <CheckCircle className="w-4 h-4" /> ¡Cambios de CMS y Home Guardados con Éxito!
+              </>
+            ) : (
+              <>
+                <Save className="w-4 h-4" /> Guardar Cambios de CMS & Home
+              </>
+            )}
           </button>
         </div>
+
+        {/* NOTIFICACION FLOTANTE SIEMPRE VISIBLE */}
+        {saveSuccess && (
+          <div className="fixed bottom-6 right-6 z-50 bg-emerald-600 text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 animate-fade-in border border-emerald-400">
+            <CheckCircle className="w-5 h-5 text-emerald-200" />
+            <div>
+              <p className="text-xs font-bold">¡Guardado con éxito!</p>
+              <p className="text-[11px] text-emerald-100">Los cambios se actualizaron en Neon DB para todos los visitantes e incógnito.</p>
+            </div>
+          </div>
+        )}
       </form>
     </div>
   );

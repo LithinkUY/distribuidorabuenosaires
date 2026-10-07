@@ -1,21 +1,38 @@
 import React, { useState } from 'react';
 import { useStore } from '../../context/StoreContext';
-import { Save, Palette, Image as ImageIcon, Building2, Phone, Mail, MapPin, CheckCircle, FileText } from 'lucide-react';
+import { Save, Palette, Image as ImageIcon, Building2, Phone, Mail, MapPin, CheckCircle, FileText, RefreshCw } from 'lucide-react';
 
 export const AppearanceSettings: React.FC = () => {
   const { storeSettings, updateStoreSettings } = useStore();
   const [settings, setSettings] = useState(storeSettings);
   const [isSaved, setIsSaved] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setSettings({ ...settings, [e.target.name]: e.target.value });
   };
 
-  const handleSave = (e: React.FormEvent) => {
+  const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    updateStoreSettings(settings);
-    setIsSaved(true);
-    setTimeout(() => setIsSaved(false), 3000);
+    setIsSaving(true);
+    try {
+      const res = await updateStoreSettings(settings);
+      if (res && !res.success) {
+        alert('Aviso al guardar en la nube (Neon DB): ' + (res.error || 'Error desconocido'));
+      } else {
+        setSaveSuccess(true);
+        setIsSaved(true);
+        setTimeout(() => {
+          setSaveSuccess(false);
+          setIsSaved(false);
+        }, 4000);
+      }
+    } catch (err: any) {
+      alert('Error al guardar: ' + err.message);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -370,11 +387,39 @@ export const AppearanceSettings: React.FC = () => {
         <div className="flex justify-end pt-2">
           <button
             type="submit"
-            className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-3 rounded-xl shadow-lg shadow-blue-500/20 text-sm flex items-center gap-2 transition-all active:scale-95"
+            disabled={isSaving}
+            className={`font-bold px-8 py-3.5 rounded-xl shadow-lg text-sm flex items-center gap-2 transition-all active:scale-95 disabled:opacity-50 ${
+              saveSuccess
+                ? 'bg-emerald-600 text-white shadow-emerald-500/20'
+                : 'bg-blue-600 hover:bg-blue-500 text-white shadow-blue-500/20'
+            }`}
           >
-            <Save className="w-4 h-4" /> Guardar Cambios de Apariencia
+            {isSaving ? (
+              <>
+                <RefreshCw className="w-4 h-4 animate-spin" /> Guardando en la nube (Neon DB)...
+              </>
+            ) : saveSuccess ? (
+              <>
+                <CheckCircle className="w-4 h-4" /> ¡Apariencia y Logo Guardados con Éxito!
+              </>
+            ) : (
+              <>
+                <Save className="w-4 h-4" /> Guardar Cambios de Apariencia
+              </>
+            )}
           </button>
         </div>
+
+        {/* NOTIFICACION FLOTANTE SIEMPRE VISIBLE */}
+        {saveSuccess && (
+          <div className="fixed bottom-6 right-6 z-50 bg-emerald-600 text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 animate-fade-in border border-emerald-400">
+            <CheckCircle className="w-5 h-5 text-emerald-200" />
+            <div>
+              <p className="text-xs font-bold">¡Logo y Apariencia Guardados!</p>
+              <p className="text-[11px] text-emerald-100">Los cambios se actualizaron en Neon DB para todos los visitantes e incógnito.</p>
+            </div>
+          </div>
+        )}
       </form>
     </div>
   );

@@ -79,7 +79,7 @@ export const AlfombrasSection: React.FC = () => {
           {/* Left Column: Visual Asset (Image or Video) */}
           <div className="lg:col-span-6 relative">
             <div className="relative aspect-[4/3] rounded-3xl overflow-hidden border border-slate-200 shadow-2xl group bg-slate-900">
-              {cfg.mediaType === 'video' ? (
+              {cfg.mediaType === 'video' && resolvedUrl && !resolvedUrl.startsWith('idb:') ? (
                 <video
                   key={resolvedUrl}
                   src={resolvedUrl}
@@ -91,8 +91,8 @@ export const AlfombrasSection: React.FC = () => {
                 />
               ) : (
                 <img
-                  key={resolvedUrl}
-                  src={resolvedUrl}
+                  key={resolvedUrl || 'default-alfombras'}
+                  src={resolvedUrl && !resolvedUrl.startsWith('idb:') ? resolvedUrl : '/src/assets/images/product_alfombra_3d_termoformada_1791205493618.jpg'}
                   alt={cfg.cardTitle || 'Alfombras termoformadas'}
                   referrerPolicy="no-referrer"
                   className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"

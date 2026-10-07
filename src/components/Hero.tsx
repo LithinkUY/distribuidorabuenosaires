@@ -46,7 +46,7 @@ export const Hero: React.FC<HeroProps> = ({ onExplore }) => {
     <section className="relative min-h-[92vh] flex items-center justify-center overflow-hidden bg-slate-50">
       {/* Background Media */}
       <div className="absolute inset-0 z-0">
-        {slide.type === 'video' ? (
+        {slide.type === 'video' && resolvedUrl && !resolvedUrl.startsWith('idb:') ? (
           <video
             key={resolvedUrl}
             src={resolvedUrl}
@@ -58,8 +58,8 @@ export const Hero: React.FC<HeroProps> = ({ onExplore }) => {
           />
         ) : (
           <img
-            key={resolvedUrl}
-            src={resolvedUrl}
+            key={resolvedUrl || 'default-hero'}
+            src={resolvedUrl && !resolvedUrl.startsWith('idb:') ? resolvedUrl : '/src/assets/images/hero_car_interior_dark_red_1791205466989.jpg'}
             alt="Hero Background"
             referrerPolicy="no-referrer"
             className="w-full h-full object-cover object-center filter brightness-[0.9] contrast-[1.1] animate-fade-in"

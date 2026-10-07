@@ -304,7 +304,7 @@ interface StoreContextType {
   
   // CMS settings
   storeSettings: StoreSettings;
-  updateStoreSettings: (newSettings: Partial<StoreSettings>) => void;
+  updateStoreSettings: (newSettings: Partial<StoreSettings>) => Promise<{ success: boolean; error?: string }>;
 
   // Cloud Sync (Neon DB)
   syncToCloud: () => Promise<{ success: boolean; error?: string }>;
@@ -949,21 +949,35 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }).catch((err) => console.warn('Could not update product in cloud:', err));
   };
 
-  const updateStoreSettings = (newSettings: Partial<StoreSettings>) => {
+  const updateStoreSettings = async (newSettings: Partial<StoreSettings>): Promise<{ success: boolean; error?: string }> => {
+    let next: StoreSettings | null = null;
     setStoreSettings((prev) => {
-      const next = { ...prev, ...newSettings };
+      next = { ...prev, ...newSettings };
       try {
         localStorage.setItem('lcc_store_settings', JSON.stringify(next));
       } catch (err) {
         console.warn('Quota exceeded when saving settings to localStorage:', err);
       }
-      fetch('/api/settings', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(next),
-      }).catch((err) => console.warn('Could not save settings to cloud:', err));
       return next;
     });
+
+    try {
+      const payload = next || { ...storeSettings, ...newSettings };
+      const res = await fetch('/api/settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (res.ok) {
+        setIsCloudConnected(true);
+        return { success: true };
+      }
+      const errData = await res.json().catch(() => ({}));
+      return { success: false, error: errData.error || res.statusText };
+    } catch (err: any) {
+      console.warn('Could not save settings to cloud:', err);
+      return { success: false, error: err.message };
+    }
   };
 
   const deleteProduct = (id: string) => {

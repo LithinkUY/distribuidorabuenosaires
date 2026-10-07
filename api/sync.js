@@ -123,14 +123,18 @@ export default async function handler(req, res) {
            id, business_name, company_legal_name, company_rut,
            company_phone, company_email, company_address, company_city,
            whatsapp_number, primary_color, header_bg_color, header_text_color,
-           hero_slides, home_sections, menu_items, contact_section,
-           footer_settings, alfombras_section, updated_at
+           logo_url, logo_size, home_hero_title, home_hero_subtitle,
+           default_currency, addresses, hero_slides, home_sections,
+           menu_items, contact_section, footer_settings, alfombras_section,
+           extra_data, updated_at
          ) VALUES (
            'default', $1, $2, $3,
            $4, $5, $6, $7,
            $8, $9, $10, $11,
            $12, $13, $14, $15,
-           $16, $17, CURRENT_TIMESTAMP
+           $16, $17, $18, $19,
+           $20, $21, $22, $23,
+           $24, CURRENT_TIMESTAMP
          )
          ON CONFLICT (id) DO UPDATE SET
            business_name = EXCLUDED.business_name,
@@ -144,12 +148,19 @@ export default async function handler(req, res) {
            primary_color = EXCLUDED.primary_color,
            header_bg_color = EXCLUDED.header_bg_color,
            header_text_color = EXCLUDED.header_text_color,
+           logo_url = EXCLUDED.logo_url,
+           logo_size = EXCLUDED.logo_size,
+           home_hero_title = EXCLUDED.home_hero_title,
+           home_hero_subtitle = EXCLUDED.home_hero_subtitle,
+           default_currency = EXCLUDED.default_currency,
+           addresses = EXCLUDED.addresses,
            hero_slides = EXCLUDED.hero_slides,
            home_sections = EXCLUDED.home_sections,
            menu_items = EXCLUDED.menu_items,
            contact_section = EXCLUDED.contact_section,
            footer_settings = EXCLUDED.footer_settings,
            alfombras_section = EXCLUDED.alfombras_section,
+           extra_data = EXCLUDED.extra_data,
            updated_at = CURRENT_TIMESTAMP;`,
         [
           s.businessName || 'Distribuidora Buenos Aires',
@@ -163,12 +174,19 @@ export default async function handler(req, res) {
           s.primaryColor || '#0055ff',
           s.headerBgColor || '#ffffff',
           s.headerTextColor || '#1e293b',
+          s.logoUrl || null,
+          parseInt(s.logoSize, 10) || 48,
+          s.homeHeroTitle || '',
+          s.homeHeroSubtitle || '',
+          s.defaultCurrency || 'ARS',
+          JSON.stringify(s.addresses || []),
           JSON.stringify(s.heroSlides || []),
           JSON.stringify(s.homeSections || []),
           JSON.stringify(s.menuItems || []),
           JSON.stringify(s.contactSection || {}),
           JSON.stringify(s.footerSettings || {}),
           JSON.stringify(s.alfombrasSection || {}),
+          JSON.stringify(s),
         ]
       );
     }
