@@ -22,7 +22,7 @@ export const DEFAULT_ALFOMBRAS_SECTION: AlfombrasSectionSettings = {
   primaryButtonUrl: '',
   secondaryButtonText: 'Comprar Set de Alfombras',
   secondaryButtonAction: 'addToCart',
-  secondaryButtonProductId: 'prod-5',
+  secondaryButtonProductId: 'prod-bondeado-kit-150k',
   secondaryButtonUrl: '',
 };
 
@@ -328,8 +328,21 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   };
 
+  const [deletedProductIds, setDeletedProductIds] = useState<string[]>(() => {
+    const loaded = loadLocal<string[]>('deleted_product_ids', ['prod-5']);
+    if (!loaded.includes('prod-5')) loaded.push('prod-5');
+    try { localStorage.setItem('lcc_deleted_product_ids', JSON.stringify(loaded)); } catch (e) {}
+    return loaded;
+  });
+
   const [products, setProducts] = useState<Product[]>(() => {
-    const loaded = loadLocal('products', INITIAL_PRODUCTS);
+    const deletedIds = loadLocal<string[]>('deleted_product_ids', ['prod-5']);
+    const stored = localStorage.getItem('lcc_products');
+    let loaded: Product[] = stored ? JSON.parse(stored) : INITIAL_PRODUCTS;
+
+    // Filter out ANY product whose ID is in deletedIds, or is prod-5
+    loaded = loaded.filter((p) => !deletedIds.includes(p.id) && p.id !== 'prod-5');
+
     const hasOldCategories = loaded.some(p => 
       p.category === 'Cubreasientos a Medida' || 
       p.category === 'Cubreasientos Premium' || 
@@ -338,16 +351,13 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       p.category === 'Alfombras 3D y 5D' ||
       p.category === 'Accesorios & Confort'
     );
-    if (hasOldCategories || loaded.length === 0) {
-      try { localStorage.setItem('lcc_products', JSON.stringify(INITIAL_PRODUCTS)); } catch (e) {}
-      return INITIAL_PRODUCTS;
+    if (hasOldCategories) {
+      const fresh = INITIAL_PRODUCTS.filter(p => !deletedIds.includes(p.id) && p.id !== 'prod-5');
+      try { localStorage.setItem('lcc_products', JSON.stringify(fresh)); } catch (e) {}
+      return fresh;
     }
-    const missingInitial = INITIAL_PRODUCTS.filter(ip => !loaded.some(p => p.id === ip.id));
-    if (missingInitial.length > 0) {
-      const merged = [...missingInitial, ...loaded];
-      try { localStorage.setItem('lcc_products', JSON.stringify(merged)); } catch (e) {}
-      return merged;
-    }
+
+    try { localStorage.setItem('lcc_products', JSON.stringify(loaded)); } catch (e) {}
     return loaded;
   });
 
@@ -506,6 +516,32 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   useEffect(() => {
     localStorage.setItem('lcc_user_passwords', JSON.stringify(passwordsMap));
   }, [passwordsMap]);
+
+  // Sync changes across browser tabs in real time
+  useEffect(() => {
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'lcc_products' && e.newValue) {
+        try {
+          const updated = JSON.parse(e.newValue);
+          setProducts(updated);
+        } catch (err) {}
+      }
+      if (e.key === 'lcc_categories' && e.newValue) {
+        try {
+          const updated = JSON.parse(e.newValue);
+          setCategories(updated);
+        } catch (err) {}
+      }
+      if (e.key === 'lcc_deleted_product_ids' && e.newValue) {
+        try {
+          const updated = JSON.parse(e.newValue);
+          setDeletedProductIds(updated);
+        } catch (err) {}
+      }
+    };
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
 
   // Auth Operations
   const registerUser = (data: {
@@ -808,7 +844,31 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   };
 
   const deleteProduct = (id: string) => {
-    setProducts((prev) => prev.filter((p) => p.id !== id));
+    // 1. Persist to deleted IDs list so it can never be revived on reload
+    const currentDeleted: string[] = loadLocal('deleted_product_ids', ['prod-5']);
+    const updatedDeleted = Array.from(new Set([...currentDeleted, id]));
+    try {
+      localStorage.setItem('lcc_deleted_product_ids', JSON.stringify(updatedDeleted));
+    } catch (e) {}
+    setDeletedProductIds(updatedDeleted);
+
+    // 2. Remove product from state and persist to localStorage immediately
+    setProducts((prev) => {
+      const next = prev.filter((p) => p.id !== id);
+      try {
+        localStorage.setItem('lcc_products', JSON.stringify(next));
+      } catch (e) {}
+      return next;
+    });
+
+    // 3. Remove product from cart if present
+    setCart((prev) => {
+      const nextCart = prev.filter((item) => item.product.id !== id);
+      try {
+        localStorage.setItem('lcc_cart', JSON.stringify(nextCart));
+      } catch (e) {}
+      return nextCart;
+    });
   };
 
   const updateStock = (id: string, newStock: number) => {
