@@ -280,10 +280,11 @@ export const AuthModal: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => {
-                    setEmail('admin@lacasadelcubreasiento.com');
+                    setEmail('admin@distribuidorabuenosaires.com');
                     setPassword('admin123');
                   }}
                   className="flex-1 py-1.5 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-lg text-[10px] text-slate-700 font-mono"
+                  title="Acceso Administrador (admin123)"
                 >
                   Admin Demo
                 </button>

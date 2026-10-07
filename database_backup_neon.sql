@@ -1,7 +1,7 @@
 -- =========================================================================
 -- DISTRIBUIDORA BUENOS AIRES - BACKUP & SCHEMA POSTGRESQL / NEON DB
 -- Generado para: https://github.com/LithinkUY/distribuidorabuenosaires
--- Fecha: 2026-10-07T18:48:59.326Z
+-- Fecha: 2026-10-07T19:33:40.483Z
 -- =========================================================================
 
 -- 1. TABLA: categories
@@ -430,6 +430,20 @@ VALUES (
   'usr-2',
   'Administrador General',
   'admin@distribuidorabuenosaires.com',
+  'admin123',
+  '+54 9 11 1234 5678',
+  'Franklin D. Roosevelt 1700',
+  'CABA, Buenos Aires',
+  '[{"brand":"Ford","model":"Ranger Raptor","year":"2024"}]'::jsonb,
+  'admin',
+  'Activo',
+  '2026-01-01T00:00:00Z'
+) ON CONFLICT (email) DO UPDATE SET name = EXCLUDED.name, role = EXCLUDED.role;
+INSERT INTO users (id, name, email, password_hash, phone, address, city, vehicles, role, status, created_at)
+VALUES (
+  'usr-2-legacy',
+  'Administrador (La Casa del Cubreasiento)',
+  'admin@lacasadelcubreasiento.com',
   'admin123',
   '+54 9 11 1234 5678',
   'Franklin D. Roosevelt 1700',
