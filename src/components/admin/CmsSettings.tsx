@@ -159,17 +159,33 @@ export const CmsSettings: React.FC = () => {
       }
     } else {
       const reader = new FileReader();
-      reader.onload = async (event) => {
-        const dataUrl = event.target?.result as string;
-        try {
-          const mediaKey = `alfombras_section_img_${Date.now()}`;
-          const ref = await saveMediaBlob(mediaKey, file);
-          updateAlfombrasField('mediaUrl', ref || dataUrl);
+      reader.onload = (ev) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+          const MAX = 1920;
+          if (width > height) {
+            if (width > MAX) {
+              height *= MAX / width;
+              width = MAX;
+            }
+          } else {
+            if (height > MAX) {
+              width *= MAX / height;
+              height = MAX;
+            }
+          }
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx?.drawImage(img, 0, 0, width, height);
+          const compressed = canvas.toDataURL('image/jpeg', 0.82);
+          updateAlfombrasField('mediaUrl', compressed);
           updateAlfombrasField('mediaType', 'image');
-        } catch {
-          updateAlfombrasField('mediaUrl', dataUrl);
-          updateAlfombrasField('mediaType', 'image');
-        }
+        };
+        img.src = ev.target?.result as string;
       };
       reader.readAsDataURL(file);
     }

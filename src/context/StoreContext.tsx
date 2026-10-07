@@ -305,6 +305,10 @@ interface StoreContextType {
   // CMS settings
   storeSettings: StoreSettings;
   updateStoreSettings: (newSettings: Partial<StoreSettings>) => void;
+
+  // Cloud Sync (Neon DB)
+  syncToCloud: () => Promise<{ success: boolean; error?: string }>;
+  isCloudConnected: boolean;
 }
 
 const StoreContext = createContext<StoreContextType | undefined>(undefined);
@@ -542,6 +546,86 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     window.addEventListener('storage', handleStorageChange);
     return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
+
+  const [isCloudConnected, setIsCloudConnected] = useState(true);
+
+  // Sync with Neon DB on startup so incognito mode & all visitors get live data
+  useEffect(() => {
+    let isCurrent = true;
+
+    // 1. Fetch products from Neon DB
+    fetch('/api/products')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((serverProducts) => {
+        if (isCurrent && Array.isArray(serverProducts) && serverProducts.length > 0) {
+          setIsCloudConnected(true);
+          setProducts(serverProducts);
+          try {
+            localStorage.setItem('lcc_products', JSON.stringify(serverProducts));
+          } catch (e) {}
+        }
+      })
+      .catch(() => {
+        if (isCurrent) setIsCloudConnected(false);
+      });
+
+    // 2. Fetch categories from Neon DB
+    fetch('/api/categories')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((serverCategories) => {
+        if (isCurrent && Array.isArray(serverCategories) && serverCategories.length > 0) {
+          setCategories(serverCategories);
+          try {
+            localStorage.setItem('lcc_categories', JSON.stringify(serverCategories));
+          } catch (e) {}
+        }
+      })
+      .catch(() => {});
+
+    // 3. Fetch store settings from Neon DB
+    fetch('/api/settings')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((serverSettings) => {
+        if (isCurrent && serverSettings && typeof serverSettings === 'object') {
+          setStoreSettings((prev) => ({
+            ...prev,
+            ...serverSettings,
+            alfombrasSection: serverSettings.alfombrasSection || prev.alfombrasSection || DEFAULT_ALFOMBRAS_SECTION,
+          }));
+          try {
+            localStorage.setItem('lcc_store_settings', JSON.stringify(serverSettings));
+          } catch (e) {}
+        }
+      })
+      .catch(() => {});
+
+    return () => {
+      isCurrent = false;
+    };
+  }, []);
+
+  const syncToCloud = async (): Promise<{ success: boolean; error?: string }> => {
+    try {
+      const res = await fetch('/api/sync', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          products,
+          categories,
+          storeSettings,
+        }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || 'Error al sincronizar con Neon DB');
+      }
+      setIsCloudConnected(true);
+      return { success: true };
+    } catch (err: any) {
+      console.error('Error syncing to cloud:', err);
+      return { success: false, error: err.message };
+    }
+  };
 
   // Auth Operations
   const registerUser = (data: {
@@ -821,6 +905,11 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       reviewsCount: 1,
     };
     setProducts((prev) => [newProduct, ...prev]);
+    fetch('/api/products', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newProduct),
+    }).catch((err) => console.warn('Could not save product to cloud:', err));
   };
 
   const updateProduct = (updated: Product) => {
@@ -829,6 +918,11 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       localStorage.setItem('lcc_products', JSON.stringify(next));
       return next;
     });
+    fetch('/api/products', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(updated),
+    }).catch((err) => console.warn('Could not update product in cloud:', err));
   };
 
   const updateStoreSettings = (newSettings: Partial<StoreSettings>) => {
@@ -839,6 +933,11 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       } catch (err) {
         console.warn('Quota exceeded when saving settings to localStorage:', err);
       }
+      fetch('/api/settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(next),
+      }).catch((err) => console.warn('Could not save settings to cloud:', err));
       return next;
     });
   };
@@ -869,6 +968,11 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       } catch (e) {}
       return nextCart;
     });
+
+    // 4. Delete from cloud database
+    fetch(`/api/products?id=${id}`, {
+      method: 'DELETE',
+    }).catch((err) => console.warn('Could not delete product from cloud:', err));
   };
 
   const updateStock = (id: string, newStock: number) => {
@@ -888,21 +992,37 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const deleteVariantType = (id: string) => { setVariantTypes(prev => prev.filter(v => v.id !== id)); };
 
   const addCategory = (name: string, description: string) => {
+    const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
     const newCat: Category = {
       id: `cat-${Date.now()}`,
       name,
-      slug: name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+      slug,
       description,
     };
     setCategories((prev) => [...prev, newCat]);
+    fetch('/api/categories', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newCat),
+    }).catch((err) => console.warn('Could not save category to cloud:', err));
   };
 
   const updateCategory = (id: string, name: string, description: string) => {
-    setCategories((prev) => prev.map(c => c.id === id ? { ...c, name, description, slug: name.toLowerCase().replace(/[^a-z0-9]+/g, '-') } : c));
+    const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    const updatedCat = { id, name, description, slug };
+    setCategories((prev) => prev.map(c => c.id === id ? updatedCat : c));
+    fetch('/api/categories', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(updatedCat),
+    }).catch((err) => console.warn('Could not update category in cloud:', err));
   };
 
   const deleteCategory = (id: string) => {
     setCategories((prev) => prev.filter((c) => c.id !== id));
+    fetch(`/api/categories?id=${id}`, {
+      method: 'DELETE',
+    }).catch((err) => console.warn('Could not delete category from cloud:', err));
   };
 
   // Orders CRUD
@@ -1678,6 +1798,8 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         adminApproveUser,
         storeSettings,
         updateStoreSettings,
+        syncToCloud,
+        isCloudConnected,
       }}
     >
       {children}
