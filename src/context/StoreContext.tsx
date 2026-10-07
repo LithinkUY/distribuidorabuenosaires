@@ -415,7 +415,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       menuItems: DEFAULT_MENU_ITEMS,
       homeSections: [
         { id: 'productos', title: 'Colección & Productos', subtitle: 'Calidad Premium', visible: true },
-        { id: 'alfombras', title: 'Bandejas 3D Antiderrame', subtitle: 'Calce Original', visible: true },
+        { id: 'alfombras', title: 'Sección Nosotros', subtitle: 'Información institucional, características y presentación', visible: true },
         { id: 'resenas', title: 'Opiniones de Clientes', subtitle: '', visible: true }
       ],
       addresses: ['Franklin D. Roosevelt 1700, C1772 CABA, Argentina'],

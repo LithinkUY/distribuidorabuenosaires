@@ -234,7 +234,7 @@ export const CmsSettings: React.FC = () => {
   // Default home sections if none exist
   const defaultSections: HomeSection[] = [
     { id: 'productos', title: 'Colección & Catálogo Principal', subtitle: 'Fundas listas para colocar con stock permanente garantizado', visible: true },
-    { id: 'alfombras', title: 'Bandejas Termoformadas 3D & 5D', subtitle: 'Impermeabilidad total y protección contra barro y líquidos', visible: true },
+    { id: 'alfombras', title: 'Sección Nosotros', subtitle: 'Información institucional, características y presentación', visible: true },
     { id: 'resenas', title: 'Opiniones Reales de Clientes', subtitle: 'Más de 1.500 vehículos equipados en todo el país', visible: true },
     { id: 'contacto', title: 'Datos de contacto de la tienda', subtitle: 'Atención personalizada y asesoramiento en el acto', visible: true },
   ];
@@ -386,7 +386,7 @@ export const CmsSettings: React.FC = () => {
                       Posición #{index + 1}
                     </span>
                     <span className="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 border border-blue-200 px-2.5 py-1 rounded-lg">
-                      {section.id}
+                      {section.id === 'alfombras' ? 'sección nosotros' : section.id}
                     </span>
                     {!section.visible && (
                       <span className="text-xs font-bold text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-lg flex items-center gap-1">
@@ -465,13 +465,13 @@ export const CmsSettings: React.FC = () => {
                 {section.id === 'alfombras' && (
                   <div className="mt-3 pt-2.5 border-t border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                     <span className="text-[11px] text-slate-500 font-medium">
-                      Personaliza fotos, videos desde tu PC, textos descriptivos y botones de acción:
+                      Personaliza fotos, videos desde tu PC, textos descriptivos y botones de la Sección Nosotros:
                     </span>
                     <a
                       href="#editor-alfombras"
                       className="text-xs bg-indigo-100/70 hover:bg-indigo-100 text-indigo-800 font-bold px-3 py-1.5 rounded-lg transition-colors inline-flex items-center gap-1.5 shrink-0"
                     >
-                      <Layers className="w-3.5 h-3.5 text-indigo-600" /> Ir a Personalizar Alfombras Termoformadas ↓
+                      <Layers className="w-3.5 h-3.5 text-indigo-600" /> Ir a Sección Nosotros ↓
                     </a>
                   </div>
                 )}
@@ -494,15 +494,12 @@ export const CmsSettings: React.FC = () => {
           </div>
         </div>
 
-        {/* PERSONALIZACIÓN DE SECCIÓN ALFOMBRAS TERMOFORMADAS */}
+        {/* PERSONALIZACIÓN DE SECCIÓN NOSOTROS */}
         <div id="editor-alfombras" className="bg-white border-2 border-indigo-200 rounded-2xl p-6 shadow-sm space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-3">
             <div>
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700 text-[11px] font-bold uppercase tracking-wider mb-1">
-                <Layers className="w-3.5 h-3.5" /> Sección del Home
-              </div>
-              <h3 className="text-slate-900 font-extrabold text-lg flex items-center gap-2">
-                Personalizar "Alfombras Termoformadas 3D & 5D"
+              <h3 className="text-slate-900 font-extrabold text-xl flex items-center gap-2">
+                <Layers className="w-5 h-5 text-indigo-600" /> Sección Nosotros
               </h3>
               <p className="text-xs text-slate-500 mt-0.5">
                 Modifica los títulos, descripción completa, sube imágenes o videos desde tu PC, ajusta los 2 pilares destacados y configura los botones y enlaces.
