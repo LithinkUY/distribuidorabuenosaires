@@ -553,16 +553,23 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   useEffect(() => {
     let isCurrent = true;
 
-    // 1. Fetch products from Neon DB
+    // 1. Fetch products from Neon DB safely merging with any local additions
     fetch('/api/products')
       .then((res) => (res.ok ? res.json() : null))
       .then((serverProducts) => {
         if (isCurrent && Array.isArray(serverProducts) && serverProducts.length > 0) {
           setIsCloudConnected(true);
-          setProducts(serverProducts);
-          try {
-            localStorage.setItem('lcc_products', JSON.stringify(serverProducts));
-          } catch (e) {}
+          setProducts((prev) => {
+            const currentDeleted = loadLocal('deleted_product_ids', ['prod-5']);
+            const serverIds = new Set(serverProducts.map((p: Product) => p.id));
+            // Keep any products created locally that aren't deleted and not yet on the server
+            const localOnly = prev.filter((p) => !serverIds.has(p.id) && !currentDeleted.includes(p.id));
+            const merged = [...serverProducts, ...localOnly];
+            try {
+              localStorage.setItem('lcc_products', JSON.stringify(merged));
+            } catch (e) {}
+            return merged;
+          });
         }
       })
       .catch(() => {
@@ -582,19 +589,36 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       })
       .catch(() => {});
 
-    // 3. Fetch store settings from Neon DB
+    // 3. Fetch store settings from Neon DB safely preserving custom local edits
     fetch('/api/settings')
       .then((res) => (res.ok ? res.json() : null))
       .then((serverSettings) => {
         if (isCurrent && serverSettings && typeof serverSettings === 'object') {
-          setStoreSettings((prev) => ({
-            ...prev,
-            ...serverSettings,
-            alfombrasSection: serverSettings.alfombrasSection || prev.alfombrasSection || DEFAULT_ALFOMBRAS_SECTION,
-          }));
-          try {
-            localStorage.setItem('lcc_store_settings', JSON.stringify(serverSettings));
-          } catch (e) {}
+          setStoreSettings((prev) => {
+            const serverAlf = serverSettings.alfombrasSection;
+            const prevAlf = prev.alfombrasSection;
+            const validServerAlf = serverAlf && typeof serverAlf === 'object' && Object.keys(serverAlf).length > 2 && serverAlf.title;
+            const validPrevAlf = prevAlf && typeof prevAlf === 'object' && Object.keys(prevAlf).length > 2 && prevAlf.title;
+
+            const mergedAlfombras = validServerAlf
+              ? { ...DEFAULT_ALFOMBRAS_SECTION, ...serverAlf }
+              : (validPrevAlf ? prevAlf : DEFAULT_ALFOMBRAS_SECTION);
+
+            const mergedMenuItems = (serverSettings.menuItems && Array.isArray(serverSettings.menuItems) && serverSettings.menuItems.length > 0)
+              ? serverSettings.menuItems
+              : (prev.menuItems && prev.menuItems.length > 0 ? prev.menuItems : DEFAULT_MENU_ITEMS);
+
+            const merged = {
+              ...prev,
+              ...serverSettings,
+              alfombrasSection: mergedAlfombras,
+              menuItems: mergedMenuItems,
+            };
+            try {
+              localStorage.setItem('lcc_store_settings', JSON.stringify(merged));
+            } catch (e) {}
+            return merged;
+          });
         }
       })
       .catch(() => {});
