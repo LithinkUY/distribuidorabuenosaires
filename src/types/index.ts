@@ -226,6 +226,29 @@ export interface FooterSettings {
   subText: string;
 }
 
+export interface AlfombrasSectionSettings {
+  badge: string;
+  title: string;
+  description: string;
+  mediaType: 'image' | 'video';
+  mediaUrl: string;
+  cardBadge: string;
+  cardSubtitle: string;
+  cardTitle: string;
+  cardPriceTag: string;
+  feature1Title: string;
+  feature1Description: string;
+  feature2Title: string;
+  feature2Description: string;
+  primaryButtonText: string;
+  primaryButtonAction: 'catalogo' | 'productos' | 'whatsapp' | 'url';
+  primaryButtonUrl?: string;
+  secondaryButtonText: string;
+  secondaryButtonAction: 'addToCart' | 'catalogo' | 'whatsapp' | 'url';
+  secondaryButtonProductId?: string;
+  secondaryButtonUrl?: string;
+}
+
 export interface StoreSettings {
   businessName: string;
   companyLegalName?: string;
@@ -255,4 +278,5 @@ export interface StoreSettings {
   paypalClientId: string;
   contactSection?: ContactSectionSettings;
   footerSettings?: FooterSettings;
+  alfombrasSection?: AlfombrasSectionSettings;
 }

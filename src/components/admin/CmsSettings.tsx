@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useStore, DEFAULT_CONTACT_SECTION, DEFAULT_FOOTER_SETTINGS } from '../../context/StoreContext';
+import { useStore, DEFAULT_CONTACT_SECTION, DEFAULT_FOOTER_SETTINGS, DEFAULT_ALFOMBRAS_SECTION } from '../../context/StoreContext';
 import {
   Save,
   Layout,
@@ -21,9 +21,60 @@ import {
   Car,
   ShieldCheck,
   PanelBottom,
+  Image as ImageIcon,
+  Video,
+  ShoppingBag,
+  Droplets,
 } from 'lucide-react';
-import { HomeSection, HeroSlide, MenuItem, ContactSectionSettings, FooterSettings, FooterLink } from '../../types';
+import { HomeSection, HeroSlide, MenuItem, ContactSectionSettings, FooterSettings, FooterLink, AlfombrasSectionSettings } from '../../types';
 import { saveMediaBlob, resolveMediaUrl } from '../../utils/mediaStorage';
+
+const AlfombrasMediaPreview: React.FC<{ mediaUrl: string; mediaType: 'image' | 'video' }> = ({ mediaUrl, mediaType }) => {
+  const [resolvedUrl, setResolvedUrl] = useState<string>(mediaUrl);
+
+  useEffect(() => {
+    let isCurrent = true;
+    resolveMediaUrl(mediaUrl).then((url) => {
+      if (isCurrent) setResolvedUrl(url || mediaUrl);
+    });
+    return () => {
+      isCurrent = false;
+    };
+  }, [mediaUrl]);
+
+  if (!mediaUrl) return null;
+
+  return (
+    <div className="mt-3 flex items-center gap-3 p-3 bg-white rounded-xl border border-slate-200">
+      {mediaType === 'video' ? (
+        <video
+          key={resolvedUrl}
+          src={resolvedUrl}
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="w-40 h-28 object-cover rounded-lg border border-slate-300"
+        />
+      ) : (
+        <img
+          key={resolvedUrl}
+          src={resolvedUrl}
+          alt="Preview"
+          className="w-40 h-28 object-cover rounded-lg border border-slate-300"
+        />
+      )}
+      <div className="text-xs">
+        <span className="font-bold text-slate-800 block">
+          {mediaType === 'video' ? '🎬 Video cargado correctamente' : '🖼️ Imagen cargada'}
+        </span>
+        <span className="text-[10px] text-emerald-600 font-semibold block">
+          {mediaUrl.startsWith('idb:') ? 'Almacenado localmente en base de datos del navegador' : 'URL de imagen/video'}
+        </span>
+      </div>
+    </div>
+  );
+};
 
 const SlideMediaPreview: React.FC<{ slide: HeroSlide }> = ({ slide }) => {
   const [resolvedUrl, setResolvedUrl] = useState<string>(slide.mediaUrl);
@@ -74,12 +125,55 @@ const SlideMediaPreview: React.FC<{ slide: HeroSlide }> = ({ slide }) => {
 
 
 export const CmsSettings: React.FC = () => {
-  const { storeSettings, updateStoreSettings } = useStore();
+  const { storeSettings, updateStoreSettings, products } = useStore();
   const [settings, setSettings] = useState(storeSettings);
   const [isSaved, setIsSaved] = useState(false);
 
   const contact = settings.contactSection || DEFAULT_CONTACT_SECTION;
   const footer = settings.footerSettings || DEFAULT_FOOTER_SETTINGS;
+  const alfombras = settings.alfombrasSection || DEFAULT_ALFOMBRAS_SECTION;
+
+  const updateAlfombrasField = (field: keyof AlfombrasSectionSettings, value: any) => {
+    setSettings((prev) => ({
+      ...prev,
+      alfombrasSection: {
+        ...(prev.alfombrasSection || DEFAULT_ALFOMBRAS_SECTION),
+        [field]: value,
+      },
+    }));
+  };
+
+  const handleAlfombrasFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (file.type.startsWith('video/')) {
+      try {
+        const mediaKey = `alfombras_section_video_${Date.now()}`;
+        const ref = await saveMediaBlob(mediaKey, file);
+        updateAlfombrasField('mediaUrl', ref);
+        updateAlfombrasField('mediaType', 'video');
+      } catch (err) {
+        console.error('Error saving video:', err);
+        alert('Error al guardar el video en el navegador.');
+      }
+    } else {
+      const reader = new FileReader();
+      reader.onload = async (event) => {
+        const dataUrl = event.target?.result as string;
+        try {
+          const mediaKey = `alfombras_section_img_${Date.now()}`;
+          const ref = await saveMediaBlob(mediaKey, file);
+          updateAlfombrasField('mediaUrl', ref || dataUrl);
+          updateAlfombrasField('mediaType', 'image');
+        } catch {
+          updateAlfombrasField('mediaUrl', dataUrl);
+          updateAlfombrasField('mediaType', 'image');
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const updateFooterField = (field: keyof FooterSettings, value: any) => {
     setSettings((prev) => ({
@@ -368,6 +462,20 @@ export const CmsSettings: React.FC = () => {
                   </div>
                 </div>
 
+                {section.id === 'alfombras' && (
+                  <div className="mt-3 pt-2.5 border-t border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <span className="text-[11px] text-slate-500 font-medium">
+                      Personaliza fotos, videos desde tu PC, textos descriptivos y botones de acción:
+                    </span>
+                    <a
+                      href="#editor-alfombras"
+                      className="text-xs bg-indigo-100/70 hover:bg-indigo-100 text-indigo-800 font-bold px-3 py-1.5 rounded-lg transition-colors inline-flex items-center gap-1.5 shrink-0"
+                    >
+                      <Layers className="w-3.5 h-3.5 text-indigo-600" /> Ir a Personalizar Alfombras Termoformadas ↓
+                    </a>
+                  </div>
+                )}
+
                 {section.id === 'contacto' && (
                   <div className="mt-3 pt-2.5 border-t border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                     <span className="text-[11px] text-slate-500 font-medium">
@@ -383,6 +491,361 @@ export const CmsSettings: React.FC = () => {
                 )}
               </div>
             ))}
+          </div>
+        </div>
+
+        {/* PERSONALIZACIÓN DE SECCIÓN ALFOMBRAS TERMOFORMADAS */}
+        <div id="editor-alfombras" className="bg-white border-2 border-indigo-200 rounded-2xl p-6 shadow-sm space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-3">
+            <div>
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700 text-[11px] font-bold uppercase tracking-wider mb-1">
+                <Layers className="w-3.5 h-3.5" /> Sección del Home
+              </div>
+              <h3 className="text-slate-900 font-extrabold text-lg flex items-center gap-2">
+                Personalizar "Alfombras Termoformadas 3D & 5D"
+              </h3>
+              <p className="text-xs text-slate-500 mt-0.5">
+                Modifica los títulos, descripción completa, sube imágenes o videos desde tu PC, ajusta los 2 pilares destacados y configura los botones y enlaces.
+              </p>
+            </div>
+            <button
+              type="submit"
+              className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-2 rounded-xl text-xs flex items-center gap-1.5 shadow-sm transition-colors shrink-0"
+            >
+              <Save className="w-3.5 h-3.5" /> Guardar Cambios
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Columna Izquierda: Multimedia y Tarjeta Visual */}
+            <div className="space-y-4 bg-slate-50/70 p-5 rounded-2xl border border-slate-200">
+              <h4 className="font-bold text-slate-900 text-xs uppercase tracking-wider flex items-center gap-2 text-indigo-700 border-b border-slate-200 pb-2">
+                <ImageIcon className="w-4 h-4" /> Portada Visual (Foto o Video) y Etiquetas Superpuestas
+              </h4>
+
+              {/* Selector de Tipo de Medio */}
+              <div className="grid grid-cols-2 gap-2 bg-white p-2 rounded-xl border border-slate-200">
+                <button
+                  type="button"
+                  onClick={() => updateAlfombrasField('mediaType', 'image')}
+                  className={`py-2 px-3 rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-all ${
+                    alfombras.mediaType === 'image'
+                      ? 'bg-indigo-600 text-white shadow-sm'
+                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                  }`}
+                >
+                  <ImageIcon className="w-3.5 h-3.5" /> Imagen / Fotografía
+                </button>
+                <button
+                  type="button"
+                  onClick={() => updateAlfombrasField('mediaType', 'video')}
+                  className={`py-2 px-3 rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-all ${
+                    alfombras.mediaType === 'video'
+                      ? 'bg-indigo-600 text-white shadow-sm'
+                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                  }`}
+                >
+                  <Video className="w-3.5 h-3.5" /> Video (MP4 / WebM)
+                </button>
+              </div>
+
+              {/* Archivo o URL */}
+              <div>
+                <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                  Cargar desde tu PC o ingresar URL directa
+                </label>
+                <div className="flex flex-col sm:flex-row gap-2">
+                  <input
+                    type="text"
+                    value={alfombras.mediaUrl || ''}
+                    onChange={(e) => updateAlfombrasField('mediaUrl', e.target.value)}
+                    placeholder="URL del archivo o sube directamente desde tu PC..."
+                    className="flex-1 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs font-mono text-slate-800 focus:border-indigo-500 outline-none"
+                  />
+                  <label className="cursor-pointer bg-slate-900 hover:bg-slate-800 text-white px-4 py-2 rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5 shrink-0 shadow-sm">
+                    <Upload className="w-3.5 h-3.5" /> Subir desde PC
+                    <input
+                      type="file"
+                      accept="image/*,video/*"
+                      className="hidden"
+                      onChange={handleAlfombrasFileUpload}
+                    />
+                  </label>
+                </div>
+                <p className="text-[10px] text-slate-500 mt-1">
+                  Puedes seleccionar tanto fotos (JPG, PNG, WEBP) como videos (MP4, WEBM). Se reproducirá con efecto continuo y silencioso.
+                </p>
+              </div>
+
+              {/* Vista Previa */}
+              {alfombras.mediaUrl && (
+                <AlfombrasMediaPreview mediaUrl={alfombras.mediaUrl} mediaType={alfombras.mediaType} />
+              )}
+
+              {/* Etiquetas Superpuestas sobre la Foto/Video */}
+              <div className="bg-white p-4 rounded-xl border border-slate-200 space-y-3">
+                <div className="font-bold text-slate-800 text-[11px] flex items-center gap-1.5 text-indigo-700">
+                  <Sparkles className="w-3.5 h-3.5" /> Textos Superpuestos en la Tarjeta Visual
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-[10px] text-slate-500 font-semibold mb-0.5">Insignia Flotante (Esquina Superior)</label>
+                    <input
+                      type="text"
+                      value={alfombras.cardBadge || ''}
+                      onChange={(e) => updateAlfombrasField('cardBadge', e.target.value)}
+                      placeholder="100% Antiderrame"
+                      className="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-900"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] text-slate-500 font-semibold mb-0.5">Etiqueta de Precio / Tag</label>
+                    <input
+                      type="text"
+                      value={alfombras.cardPriceTag || ''}
+                      onChange={(e) => updateAlfombrasField('cardPriceTag', e.target.value)}
+                      placeholder="$ 137.500"
+                      className="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-900"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] text-slate-500 font-semibold mb-0.5">Subtítulo Técnico Inferior</label>
+                    <input
+                      type="text"
+                      value={alfombras.cardSubtitle || ''}
+                      onChange={(e) => updateAlfombrasField('cardSubtitle', e.target.value)}
+                      placeholder="Escaneo Láser 3D"
+                      className="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-800"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] text-slate-500 font-semibold mb-0.5">Título del Modelo Inferior</label>
+                    <input
+                      type="text"
+                      value={alfombras.cardTitle || ''}
+                      onChange={(e) => updateAlfombrasField('cardTitle', e.target.value)}
+                      placeholder="Bandejas Termoformadas 5D de Borde Alto"
+                      className="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs font-bold text-slate-900"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Columna Derecha: Textos, Pilares y Botones */}
+            <div className="space-y-4 bg-slate-50/70 p-5 rounded-2xl border border-slate-200">
+              <h4 className="font-bold text-slate-900 text-xs uppercase tracking-wider flex items-center gap-2 text-indigo-700 border-b border-slate-200 pb-2">
+                <Layers className="w-4 h-4" /> Textos Principales, Beneficios y Botones
+              </h4>
+
+              <div>
+                <label className="block text-[11px] font-bold text-slate-700 mb-1">Etiqueta Superior (Badge de Sección)</label>
+                <input
+                  type="text"
+                  value={alfombras.badge || ''}
+                  onChange={(e) => updateAlfombrasField('badge', e.target.value)}
+                  placeholder="Protección Extrema para el Piso de tu Vehículo"
+                  className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs font-semibold text-slate-900 focus:border-indigo-500 outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-bold text-slate-700 mb-1">Título Principal de la Sección</label>
+                <input
+                  type="text"
+                  value={alfombras.title || ''}
+                  onChange={(e) => updateAlfombrasField('title', e.target.value)}
+                  placeholder="Alfombras Termoformadas 3D & 5D de Alta Cobertura"
+                  className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs font-bold text-slate-900 focus:border-indigo-500 outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-bold text-slate-700 mb-1">Texto Descriptivo / Explicación</label>
+                <textarea
+                  rows={4}
+                  value={alfombras.description || ''}
+                  onChange={(e) => updateAlfombrasField('description', e.target.value)}
+                  placeholder="Desarrolladas con polímeros TPE de alta densidad termo-moldeados..."
+                  className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-800 focus:border-indigo-500 outline-none leading-relaxed"
+                />
+              </div>
+
+              {/* Pilares / Cajas de Beneficios */}
+              <div className="bg-white p-4 rounded-xl border border-slate-200 space-y-3">
+                <div className="font-bold text-slate-800 text-[11px] flex items-center gap-1.5 text-indigo-700">
+                  <ShieldCheck className="w-3.5 h-3.5" /> 2 Pilares / Características Técnicas Destacadas
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {/* Beneficio 1 */}
+                  <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+                    <span className="text-[10px] font-bold text-indigo-600 block uppercase">Pilar #1</span>
+                    <div>
+                      <label className="block text-[10px] text-slate-500 font-semibold mb-0.5">Título</label>
+                      <input
+                        type="text"
+                        value={alfombras.feature1Title || ''}
+                        onChange={(e) => updateAlfombrasField('feature1Title', e.target.value)}
+                        placeholder="Retención Antiderrame"
+                        className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs font-bold text-slate-900"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] text-slate-500 font-semibold mb-0.5">Descripción</label>
+                      <textarea
+                        rows={2}
+                        value={alfombras.feature1Description || ''}
+                        onChange={(e) => updateAlfombrasField('feature1Description', e.target.value)}
+                        placeholder="Paredes de 5 cm de altura que encapsulan suciedad..."
+                        className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-800"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Beneficio 2 */}
+                  <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+                    <span className="text-[10px] font-bold text-indigo-600 block uppercase">Pilar #2</span>
+                    <div>
+                      <label className="block text-[10px] text-slate-500 font-semibold mb-0.5">Título</label>
+                      <input
+                        type="text"
+                        value={alfombras.feature2Title || ''}
+                        onChange={(e) => updateAlfombrasField('feature2Title', e.target.value)}
+                        placeholder="Anclaje de Seguridad OEM"
+                        className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs font-bold text-slate-900"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] text-slate-500 font-semibold mb-0.5">Descripción</label>
+                      <textarea
+                        rows={2}
+                        value={alfombras.feature2Description || ''}
+                        onChange={(e) => updateAlfombrasField('feature2Description', e.target.value)}
+                        placeholder="Fijación a las trabas originales del piso del auto..."
+                        className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-800"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Configuración de Botones de Acción */}
+              <div className="bg-white p-4 rounded-xl border border-slate-200 space-y-3">
+                <div className="font-bold text-slate-800 text-[11px] flex items-center gap-1.5 text-indigo-700">
+                  <ShoppingBag className="w-3.5 h-3.5" /> Botones y Enlaces de Acción
+                </div>
+
+                {/* Botón Principal (Azul) */}
+                <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+                  <span className="text-[10px] font-bold text-blue-700 block uppercase">Botón Principal (Azul)</span>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <div>
+                      <label className="block text-[10px] text-slate-500 font-semibold mb-0.5">Texto del Botón</label>
+                      <input
+                        type="text"
+                        value={alfombras.primaryButtonText || ''}
+                        onChange={(e) => updateAlfombrasField('primaryButtonText', e.target.value)}
+                        placeholder="Ver Modelos Disponibles"
+                        className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs font-bold text-slate-900"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] text-slate-500 font-semibold mb-0.5">Acción al hacer clic</label>
+                      <select
+                        value={alfombras.primaryButtonAction || 'catalogo'}
+                        onChange={(e) => updateAlfombrasField('primaryButtonAction', e.target.value)}
+                        className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 font-medium outline-none"
+                      >
+                        <option value="catalogo">Ir a Catálogo Completo (/catalogo)</option>
+                        <option value="productos">Filtrar Sección Productos por Alfombras</option>
+                        <option value="whatsapp">Abrir Chat de WhatsApp</option>
+                        <option value="url">Abrir Enlace Web Personalizado</option>
+                      </select>
+                    </div>
+                  </div>
+                  {alfombras.primaryButtonAction === 'url' && (
+                    <div>
+                      <label className="block text-[10px] text-slate-500 font-semibold mb-0.5">URL del enlace</label>
+                      <input
+                        type="text"
+                        value={alfombras.primaryButtonUrl || ''}
+                        onChange={(e) => updateAlfombrasField('primaryButtonUrl', e.target.value)}
+                        placeholder="https://..."
+                        className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-800"
+                      />
+                    </div>
+                  )}
+                </div>
+
+                {/* Botón Secundario (Gris) */}
+                <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+                  <span className="text-[10px] font-bold text-slate-700 block uppercase">Botón Secundario (Gris / Carrito)</span>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <div>
+                      <label className="block text-[10px] text-slate-500 font-semibold mb-0.5">Texto del Botón</label>
+                      <input
+                        type="text"
+                        value={alfombras.secondaryButtonText || ''}
+                        onChange={(e) => updateAlfombrasField('secondaryButtonText', e.target.value)}
+                        placeholder="Comprar Set de Alfombras"
+                        className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs font-bold text-slate-900"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] text-slate-500 font-semibold mb-0.5">Acción al hacer clic</label>
+                      <select
+                        value={alfombras.secondaryButtonAction || 'addToCart'}
+                        onChange={(e) => updateAlfombrasField('secondaryButtonAction', e.target.value)}
+                        className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 font-medium outline-none"
+                      >
+                        <option value="addToCart">Agregar Producto al Carrito</option>
+                        <option value="catalogo">Ir a Catálogo Completo (/catalogo)</option>
+                        <option value="whatsapp">Consultar por WhatsApp</option>
+                        <option value="url">Abrir Enlace Web Personalizado</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {alfombras.secondaryButtonAction === 'addToCart' && (
+                    <div>
+                      <label className="block text-[10px] text-slate-500 font-semibold mb-0.5">
+                        Selecciona el Producto a añadir al carrito:
+                      </label>
+                      <select
+                        value={alfombras.secondaryButtonProductId || ''}
+                        onChange={(e) => updateAlfombrasField('secondaryButtonProductId', e.target.value)}
+                        className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 font-semibold outline-none"
+                      >
+                        <option value="">Seleccionar un producto...</option>
+                        {products.map((p) => (
+                          <option key={p.id} value={p.id}>
+                            {p.name} ({p.category}) - ${p.price?.toLocaleString()}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
+
+                  {alfombras.secondaryButtonAction === 'url' && (
+                    <div>
+                      <label className="block text-[10px] text-slate-500 font-semibold mb-0.5">URL del enlace</label>
+                      <input
+                        type="text"
+                        value={alfombras.secondaryButtonUrl || ''}
+                        onChange={(e) => updateAlfombrasField('secondaryButtonUrl', e.target.value)}
+                        placeholder="https://..."
+                        className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-800"
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 

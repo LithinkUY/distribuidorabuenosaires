@@ -1,7 +1,30 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { Category, Currency, Order, OrderItem, OrderStatus, Product, Review, User, VehicleSelection, Brand, VariantType, Quotation, QuotationItem, ContactSectionSettings, FooterSettings, FooterLink } from '../types';
+import { Category, Currency, Order, OrderItem, OrderStatus, Product, Review, User, VehicleSelection, Brand, VariantType, Quotation, QuotationItem, ContactSectionSettings, FooterSettings, FooterLink, AlfombrasSectionSettings } from '../types';
 import { INITIAL_CATEGORIES, INITIAL_ORDERS, INITIAL_PRODUCTS, INITIAL_REVIEWS, MONTHLY_SALES_STATS } from '../data/initialData';
 import jsPDF from 'jspdf';
+
+export const DEFAULT_ALFOMBRAS_SECTION: AlfombrasSectionSettings = {
+  badge: 'Protección Extrema para el Piso de tu Vehículo',
+  title: 'Alfombras Termoformadas 3D & 5D de Alta Cobertura',
+  description: 'Desarrolladas con polímeros TPE de alta densidad termo-moldeados con precisión digital. A diferencia de las alfombras universales planas que se doblan y dejan pasar la mugre, nuestras bandejas de borde perimetral elevado de 5 cm retienen agua, barro, nieve y café, manteniendo la alfombra original impecable como el primer día.',
+  mediaType: 'image',
+  mediaUrl: '/src/assets/images/product_alfombra_3d_termoformada_1791205493618.jpg',
+  cardBadge: '100% Antiderrame',
+  cardSubtitle: 'Escaneo Láser 3D',
+  cardTitle: 'Bandejas Termoformadas 5D de Borde Alto',
+  cardPriceTag: '$ 137.500',
+  feature1Title: 'Retención Antiderrame',
+  feature1Description: 'Paredes de 5 cm de altura que encapsulan suciedad y líquidos sin filtraciones.',
+  feature2Title: 'Anclaje de Seguridad OEM',
+  feature2Description: 'Fijación a las trabas originales del piso del auto, evitando cualquier deslizamiento hacia los pedales.',
+  primaryButtonText: 'Ver Modelos Disponibles',
+  primaryButtonAction: 'catalogo',
+  primaryButtonUrl: '',
+  secondaryButtonText: 'Comprar Set de Alfombras',
+  secondaryButtonAction: 'addToCart',
+  secondaryButtonProductId: 'prod-5',
+  secondaryButtonUrl: '',
+};
 
 export const DEFAULT_CONTACT_SECTION: ContactSectionSettings = {
   badge: 'Datos de contacto de la tienda',
@@ -406,6 +429,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       footerTextColor: '#94a3b8',
       contactSection: DEFAULT_CONTACT_SECTION,
       footerSettings: DEFAULT_FOOTER_SETTINGS,
+      alfombrasSection: DEFAULT_ALFOMBRAS_SECTION,
     });
 
     const hasOldMenu = !loaded.menuItems || loaded.menuItems.length < 5 || loaded.menuItems.some((m: any) =>
