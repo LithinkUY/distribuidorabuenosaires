@@ -5,7 +5,7 @@ import jsPDF from 'jspdf';
 
 export const DEFAULT_ALFOMBRAS_SECTION: AlfombrasSectionSettings = {
   badge: 'Protección Extrema para el Piso de tu Vehículo',
-  title: 'Alfombras Termoformadas 3D & 5D de Alta Cobertura',
+  title: 'Sobre Nuestra Empresa',
   description: 'Desarrolladas con polímeros TPE de alta densidad termo-moldeados con precisión digital. A diferencia de las alfombras universales planas que se doblan y dejan pasar la mugre, nuestras bandejas de borde perimetral elevado de 5 cm retienen agua, barro, nieve y café, manteniendo la alfombra original impecable como el primer día.',
   mediaType: 'image',
   mediaUrl: '/src/assets/images/product_alfombra_3d_termoformada_1791205493618.jpg',
@@ -1855,3 +1855,4 @@ export const useStore = () => {
   }
   return context;
 };
+

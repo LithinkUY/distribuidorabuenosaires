@@ -696,7 +696,7 @@ export const CmsSettings: React.FC = () => {
                   type="text"
                   value={alfombras.title || ''}
                   onChange={(e) => updateAlfombrasField('title', e.target.value)}
-                  placeholder="Alfombras Termoformadas 3D & 5D de Alta Cobertura"
+                  placeholder="Sobre Nuestra Empresa"
                   className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs font-bold text-slate-900 focus:border-indigo-500 outline-none"
                 />
               </div>
@@ -1727,3 +1727,4 @@ export const CmsSettings: React.FC = () => {
     </div>
   );
 };
+
