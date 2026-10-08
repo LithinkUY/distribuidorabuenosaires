@@ -50,8 +50,16 @@ export const AuthModal: React.FC = () => {
     e.preventDefault();
     setErrorMessage('');
     const res = loginUser(email, password, rememberMe);
-    if (res.success) {
+    if (res.success && res.user) {
       handleClose();
+      
+      const onAdminRoute = window.location.pathname.startsWith('/admin');
+      
+      if (res.user.role !== 'admin' && onAdminRoute) {
+        window.location.href = '/';
+      } else if (res.user.role !== 'admin') {
+        setTimeout(() => setIsProfileModalOpen(true), 150);
+      }
     } else {
       setErrorMessage(res.error || 'Error al iniciar sesión.');
     }
@@ -494,3 +502,4 @@ export const AuthModal: React.FC = () => {
     </div>
   );
 };
+

@@ -186,7 +186,7 @@ interface StoreContextType {
   currentUser: User | null;
   users: User[];
   registerUser: (data: { name: string; email: string; password: string; phone: string; carBrand?: string; carModel?: string; carYear?: string }) => { success: boolean; error?: string };
-  loginUser: (email: string, password: string, rememberMe?: boolean) => { success: boolean; error?: string };
+  loginUser: (email: string, password: string, rememberMe?: boolean) => { success: boolean; error?: string; user?: User };
   logoutUser: () => void;
   updateUserProfile: (data: Partial<User>) => void;
   recoverPassword: (email: string) => { success: boolean; message: string; tempCode?: string };
@@ -716,7 +716,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     return { success: true };
   };
 
-  const loginUser = (email: string, password: string, rememberMe = true): { success: boolean; error?: string } => {
+  const loginUser = (email: string, password: string, rememberMe = true): { success: boolean; error?: string; user?: User } => {
     const normalizedEmail = email.toLowerCase().trim();
     let user = users.find((u) => u.email.toLowerCase() === normalizedEmail);
 
@@ -777,7 +777,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       setSelectedVehicle(user.vehicles[0]);
     }
 
-    return { success: true };
+    return { success: true, user: updatedUser };
   };
 
   const logoutUser = () => {
@@ -1902,6 +1902,7 @@ export const useStore = () => {
   }
   return context;
 };
+
 
 
 
