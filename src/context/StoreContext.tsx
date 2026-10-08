@@ -576,7 +576,25 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         if (isCurrent) setIsCloudConnected(false);
       });
 
-    // 2. Fetch categories from Neon DB
+    // 1.5 Fetch orders from Neon DB safely
+      fetch('/api/orders')
+        .then((res) => (res.ok ? res.json() : null))
+        .then((serverOrders) => {
+          if (isCurrent && Array.isArray(serverOrders) && serverOrders.length > 0) {
+            setOrders((prev) => {
+              const serverIds = new Set(serverOrders.map((o) => o.id));
+              const localOnly = prev.filter((o) => !serverIds.has(o.id));
+              const merged = [...serverOrders, ...localOnly].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+              try {
+                localStorage.setItem('lcc_orders', JSON.stringify(merged));
+              } catch (e) {}
+              return merged;
+            });
+          }
+        })
+        .catch(() => {});
+
+      // 2. Fetch categories from Neon DB
     fetch('/api/categories')
       .then((res) => (res.ok ? res.json() : null))
       .then((serverCategories) => {
@@ -1083,23 +1101,52 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
     setOrders((prev) => [newOrder, ...prev]);
     clearCart();
+
+    // Persist to Neon DB
+    fetch('/api/orders', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newOrder),
+    }).catch(err => console.warn('Could not save order to cloud:', err));
+
     return newOrder;
   };
 
   const updateOrderStatus = (orderId: string, status: OrderStatus) => {
-    setOrders((prev) =>
-      prev.map((ord) => (ord.id === orderId ? { ...ord, status } : ord))
-    );
+    setOrders((prev) => {
+      const next = prev.map((ord) => (ord.id === orderId ? { ...ord, status } : ord));
+      const updatedOrd = next.find(o => o.id === orderId);
+      if (updatedOrd) {
+        fetch('/api/orders', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(updatedOrd),
+        }).catch(err => console.warn('Could not update order status in cloud:', err));
+      }
+      return next;
+    });
   };
 
   const updateOrder = (orderId: string, updatedData: Partial<Order>) => {
-    setOrders((prev) =>
-      prev.map((ord) => (ord.id === orderId ? { ...ord, ...updatedData } : ord))
-    );
+    setOrders((prev) => {
+      const next = prev.map((ord) => (ord.id === orderId ? { ...ord, ...updatedData } : ord));
+      const updatedOrd = next.find(o => o.id === orderId);
+      if (updatedOrd) {
+        fetch('/api/orders', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(updatedOrd),
+        }).catch(err => console.warn('Could not update order in cloud:', err));
+      }
+      return next;
+    });
   };
 
   const deleteOrder = (orderId: string) => {
     setOrders((prev) => prev.filter((ord) => ord.id !== orderId));
+    fetch(`/api/orders?id=${orderId}`, {
+      method: 'DELETE',
+    }).catch((err) => console.warn('Could not delete order from cloud:', err));
   };
 
   // Quotations CRUD & PDF Export
@@ -1855,4 +1902,7 @@ export const useStore = () => {
   }
   return context;
 };
+
+
+
 
