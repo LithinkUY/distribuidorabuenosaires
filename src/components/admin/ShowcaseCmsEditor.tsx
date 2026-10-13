@@ -5,6 +5,7 @@ import {
   ShowcaseCard,
   ShowcaseStep,
   ShowcaseTestimonial,
+  FullWidthSlide,
   resolveShowcase,
 } from '../showcase/showcaseConfig';
 import { Product } from '../../types';
@@ -16,7 +17,10 @@ import {
   Factory,
   Image as ImageIcon,
   Upload,
-  Link,
+  SlidersHorizontal,
+  Monitor,
+  Plus,
+  Trash2,
 } from 'lucide-react';
 
 interface ShowcaseCmsEditorProps {
@@ -32,6 +36,83 @@ export const ShowcaseCmsEditor: React.FC<ShowcaseCmsEditorProps> = ({
 }) => {
   const cfg = resolveShowcase(showcase);
 
+  // 1. Carousel handlers
+  const updateCarousel = (field: string, val: any) => {
+    onChange({
+      ...cfg,
+      carousel: { ...cfg.carousel, [field]: val },
+    });
+  };
+
+  // 2. FullWidth slider handlers
+  const updateFullWidthSlide = (index: number, field: keyof FullWidthSlide, val: any) => {
+    const updated = [...(cfg.fullWidthSlider?.slides || [])];
+    updated[index] = { ...updated[index], [field]: val };
+    onChange({
+      ...cfg,
+      fullWidthSlider: { slides: updated },
+    });
+  };
+
+  const addFullWidthSlide = () => {
+    const newSlide: FullWidthSlide = {
+      id: 'fws-' + Date.now(),
+      title: 'NUEVA COLECCIÓN\nEDICIÓN LIMITADA',
+      subtitle: 'Confección premium a medida para tu vehículo con garantía total.',
+      bgImage: '/wix/hero_full_seats_bg.jpg',
+      buttonText: 'COMPRAR AHORA ↗',
+      buttonAction: 'catalogo',
+    };
+    onChange({
+      ...cfg,
+      fullWidthSlider: { slides: [...(cfg.fullWidthSlider?.slides || []), newSlide] },
+    });
+  };
+
+  const removeFullWidthSlide = (index: number) => {
+    const slides = cfg.fullWidthSlider?.slides || [];
+    if (slides.length <= 1) {
+      alert('Debe haber al menos 1 slide en el banner de pantalla completa.');
+      return;
+    }
+    const updated = slides.filter((_, i) => i !== index);
+    onChange({
+      ...cfg,
+      fullWidthSlider: { slides: updated },
+    });
+  };
+
+  const handleFullWidthImageUpload = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        let width = img.width;
+        let height = img.height;
+        const MAX = 1920;
+        if (width > height && width > MAX) {
+          height *= MAX / width;
+          width = MAX;
+        } else if (height > MAX) {
+          width *= MAX / height;
+          height = MAX;
+        }
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx?.drawImage(img, 0, 0, width, height);
+        const compressed = canvas.toDataURL('image/jpeg', 0.85);
+        updateFullWidthSlide(index, 'bgImage', compressed);
+      };
+      img.src = ev.target?.result as string;
+    };
+    reader.readAsDataURL(file);
+  };
+
+  // 3. Models handlers
   const updateModels = (field: string, val: any) => {
     onChange({
       ...cfg,
@@ -39,6 +120,7 @@ export const ShowcaseCmsEditor: React.FC<ShowcaseCmsEditorProps> = ({
     });
   };
 
+  // 4. Banners handlers
   const updateBanner = (index: number, field: keyof ShowcaseBanner, val: any) => {
     const updated = [...cfg.banners];
     updated[index] = { ...updated[index], [field]: val };
@@ -75,6 +157,7 @@ export const ShowcaseCmsEditor: React.FC<ShowcaseCmsEditorProps> = ({
     reader.readAsDataURL(file);
   };
 
+  // 5. Maintenance handlers
   const updateMaintenanceCard = (index: number, field: keyof ShowcaseCard, val: any) => {
     const updated = [...cfg.maintenance.cards];
     updated[index] = { ...updated[index], [field]: val };
@@ -84,6 +167,7 @@ export const ShowcaseCmsEditor: React.FC<ShowcaseCmsEditorProps> = ({
     });
   };
 
+  // 6. Manufacturers handlers
   const updateManufacturers = (field: string, val: any) => {
     onChange({
       ...cfg,
@@ -100,6 +184,7 @@ export const ShowcaseCmsEditor: React.FC<ShowcaseCmsEditorProps> = ({
     });
   };
 
+  // 7. Shipping handlers
   const updateShipping = (field: string, val: any) => {
     onChange({
       ...cfg,
@@ -107,6 +192,7 @@ export const ShowcaseCmsEditor: React.FC<ShowcaseCmsEditorProps> = ({
     });
   };
 
+  // 8. Testimonials handlers
   const updateTestimonial = (index: number, field: keyof ShowcaseTestimonial, val: any) => {
     const updated = [...cfg.testimonials.items];
     updated[index] = { ...updated[index], [field]: val };
@@ -116,27 +202,180 @@ export const ShowcaseCmsEditor: React.FC<ShowcaseCmsEditorProps> = ({
     });
   };
 
+  const fullWidthSlides = cfg.fullWidthSlider?.slides || [];
+
   return (
     <div className="bg-white border-2 border-slate-900 rounded-2xl p-6 shadow-sm space-y-8">
       {/* Header */}
       <div className="border-b border-slate-100 pb-4">
         <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-red-50 text-red-700 text-[11px] font-bold uppercase tracking-wider mb-2">
           <Sparkles className="w-3.5 h-3.5" />
-          <span>Diseño Catálogo Wix (Digital Fundas)</span>
+          <span>Diseño Catálogo Wix & Nuevas Secciones</span>
         </div>
         <h3 className="text-xl font-extrabold text-slate-900 flex items-center gap-2">
-          Personalizar Secciones y Efectos del Home
+          Personalizar Secciones y Sliders del Home
         </h3>
         <p className="text-xs text-slate-500 mt-1">
-          Edita los textos, banners de categorías, tarjetas de mantenimiento, información de fábrica y testimonios del nuevo diseño.
+          Edita el carrusel de productos, el banner de pantalla completa con degradé, los banners de categorías y todas las secciones.
         </p>
       </div>
 
-      {/* 1. SECCIÓN MODELOS CON AJUSTE PERFECTO */}
+      {/* A. CARRUSEL / SLIDER DE PRODUCTOS (ABASJO DEL HERO) */}
+      <div className="space-y-4 bg-slate-50 p-5 rounded-xl border border-slate-200">
+        <div className="flex items-center justify-between">
+          <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800 flex items-center gap-2">
+            <SlidersHorizontal className="w-4 h-4 text-red-600" />
+            <span>1. Slider Carrusel de Productos (Abajo del Hero)</span>
+          </h4>
+          <span className="text-[10px] bg-red-100 text-red-700 font-bold px-2 py-0.5 rounded">
+            Fila Deslizable
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <div>
+            <label className="block text-[11px] font-bold text-slate-700 mb-1">Título (Opcional)</label>
+            <input
+              type="text"
+              value={cfg.carousel?.title || ''}
+              onChange={(e) => updateCarousel('title', e.target.value)}
+              placeholder="Ej. MODELOS CON AJUSTE PERFECTO"
+              className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-bold text-slate-900"
+            />
+          </div>
+          <div>
+            <label className="block text-[11px] font-bold text-slate-700 mb-1">Subtítulo (Opcional)</label>
+            <input
+              type="text"
+              value={cfg.carousel?.subtitle || ''}
+              onChange={(e) => updateCarousel('subtitle', e.target.value)}
+              placeholder="Ej. Desliza para explorar nuestros productos"
+              className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs text-slate-900"
+            />
+          </div>
+          <div>
+            <label className="block text-[11px] font-bold text-slate-700 mb-1">Texto del Botón</label>
+            <input
+              type="text"
+              value={cfg.carousel?.buttonText || '+ comprar'}
+              onChange={(e) => updateCarousel('buttonText', e.target.value)}
+              className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs font-bold text-slate-900"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* B. SLIDER PANTALLA COMPLETA CON DEGRADE */}
+      <div className="space-y-4 bg-slate-50 p-5 rounded-xl border border-slate-200">
+        <div className="flex items-center justify-between">
+          <div>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800 flex items-center gap-2">
+              <Monitor className="w-4 h-4 text-red-600" />
+              <span>2. Slider Pantalla Completa con Degradé</span>
+            </h4>
+            <p className="text-[11px] text-slate-500 mt-0.5">
+              Banner gigante de butacas de cuero con degradé oscuro y botón de compra. Puedes tener una o varias diapositivas.
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={addFullWidthSlide}
+            className="px-3 py-1.5 bg-red-600 hover:bg-red-500 text-white font-bold text-xs rounded-lg transition-colors inline-flex items-center gap-1.5 shadow-sm"
+          >
+            <Plus className="w-3.5 h-3.5" />
+            <span>Agregar Slide</span>
+          </button>
+        </div>
+
+        <div className="space-y-4 pt-2">
+          {fullWidthSlides.map((slide, idx) => (
+            <div key={slide.id || idx} className="p-4 bg-white rounded-xl border border-slate-300 space-y-3 shadow-xs">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-2">
+                <span className="text-xs font-bold text-slate-800">
+                  Slide #{idx + 1}
+                </span>
+                {fullWidthSlides.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() => removeFullWidthSlide(idx)}
+                    className="text-xs text-rose-600 hover:text-rose-800 font-bold inline-flex items-center gap-1"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                    <span>Eliminar Slide</span>
+                  </button>
+                )}
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-[10px] font-semibold text-slate-600 mb-0.5">
+                    Título Principal (admite saltos de línea)
+                  </label>
+                  <textarea
+                    rows={2}
+                    value={slide.title}
+                    onChange={(e) => updateFullWidthSlide(idx, 'title', e.target.value)}
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs font-bold text-slate-900 font-mono"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[10px] font-semibold text-slate-600 mb-0.5">Texto del Botón</label>
+                  <input
+                    type="text"
+                    value={slide.buttonText}
+                    onChange={(e) => updateFullWidthSlide(idx, 'buttonText', e.target.value)}
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs font-bold text-slate-900"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-[10px] font-semibold text-slate-600 mb-0.5">Descripción</label>
+                <textarea
+                  rows={2}
+                  value={slide.subtitle}
+                  onChange={(e) => updateFullWidthSlide(idx, 'subtitle', e.target.value)}
+                  className="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs text-slate-900"
+                />
+              </div>
+
+              {/* Background Image & Upload */}
+              <div className="flex flex-col sm:flex-row items-center gap-3 pt-1">
+                <img
+                  src={slide.bgImage}
+                  alt={slide.title}
+                  className="w-24 h-14 object-cover rounded-md border border-slate-300 shrink-0 bg-black"
+                />
+                <div className="flex-1 w-full space-y-1">
+                  <input
+                    type="text"
+                    value={slide.bgImage}
+                    onChange={(e) => updateFullWidthSlide(idx, 'bgImage', e.target.value)}
+                    placeholder="URL de la imagen de fondo"
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1 text-xs text-slate-700"
+                  />
+                  <label className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-slate-300 hover:bg-slate-100 rounded text-[11px] font-bold text-slate-700 cursor-pointer transition-colors">
+                    <Upload className="w-3 h-3 text-red-600" />
+                    <span>Cambiar imagen de fondo desde la PC</span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={(e) => handleFullWidthImageUpload(idx, e)}
+                    />
+                  </label>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* C. SECCIÓN MODELOS CON AJUSTE PERFECTO */}
       <div className="space-y-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
         <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800 flex items-center gap-2">
           <Layers className="w-4 h-4 text-red-600" />
-          <span>1. Grilla: Modelos con Ajuste Perfecto</span>
+          <span>3. Grilla: Modelos con Ajuste Perfecto</span>
         </h4>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           <div>
@@ -161,11 +400,11 @@ export const ShowcaseCmsEditor: React.FC<ShowcaseCmsEditorProps> = ({
         </div>
       </div>
 
-      {/* 2. BANNERS DE CATEGORÍAS (Alfombras, Volante, Lumbar) */}
+      {/* D. BANNERS DE CATEGORÍAS (Alfombras, Volante, Lumbar) */}
       <div className="space-y-4">
         <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800 flex items-center gap-2">
           <ImageIcon className="w-4 h-4 text-red-600" />
-          <span>2. Banners Destacados de Categorías</span>
+          <span>4. Banners Destacados de Categorías</span>
         </h4>
 
         <div className="space-y-4">
@@ -243,11 +482,11 @@ export const ShowcaseCmsEditor: React.FC<ShowcaseCmsEditorProps> = ({
         </div>
       </div>
 
-      {/* 3. MANTENIMIENTO PRO */}
+      {/* E. MANTENIMIENTO PRO */}
       <div className="space-y-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
         <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800 flex items-center gap-2">
           <Sparkles className="w-4 h-4 text-red-600" />
-          <span>3. Mantenimiento Pro (Productos en Desarrollo)</span>
+          <span>5. Mantenimiento Pro (Productos en Desarrollo)</span>
         </h4>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -271,11 +510,11 @@ export const ShowcaseCmsEditor: React.FC<ShowcaseCmsEditorProps> = ({
         </div>
       </div>
 
-      {/* 4. SOMOS FABRICANTES & PASOS DEL PEDIDO */}
+      {/* F. SOMOS FABRICANTES & PASOS DEL PEDIDO */}
       <div className="space-y-4">
         <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800 flex items-center gap-2">
           <Factory className="w-4 h-4 text-red-600" />
-          <span>4. Somos Fabricantes & Proceso del Pedido</span>
+          <span>6. Somos Fabricantes & Proceso del Pedido</span>
         </h4>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -331,11 +570,11 @@ export const ShowcaseCmsEditor: React.FC<ShowcaseCmsEditorProps> = ({
         </div>
       </div>
 
-      {/* 5. ENVÍOS ANDREANI */}
+      {/* G. ENVÍOS ANDREANI */}
       <div className="space-y-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
         <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800 flex items-center gap-2">
           <Truck className="w-4 h-4 text-red-600" />
-          <span>5. Logística & Envíos Andreani</span>
+          <span>7. Logística & Envíos Andreani</span>
         </h4>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           <div>
@@ -368,11 +607,11 @@ export const ShowcaseCmsEditor: React.FC<ShowcaseCmsEditorProps> = ({
         </div>
       </div>
 
-      {/* 6. TESTIMONIOS */}
+      {/* H. TESTIMONIOS */}
       <div className="space-y-4">
         <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800 flex items-center gap-2">
           <MessageSquare className="w-4 h-4 text-red-600" />
-          <span>6. Experiencias de los Usuarios (Testimonios)</span>
+          <span>8. Experiencias de los Usuarios (Testimonios)</span>
         </h4>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">

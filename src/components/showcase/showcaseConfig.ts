@@ -33,9 +33,28 @@ export interface ShowcaseTestimonial {
   text: string;
 }
 
+export interface ProductCarouselConfig {
+  title: string;
+  subtitle: string;
+  productIds: string[];
+  buttonText: string;
+}
+
+export interface FullWidthSlide {
+  id: string;
+  title: string;
+  subtitle: string;
+  bgImage: string;
+  buttonText: string;
+  buttonAction: 'catalogo' | 'whatsapp' | 'url' | 'producto';
+  buttonTarget?: string;
+}
+
 export interface ShowcaseSettings {
   theme: { bg: string; surface: string; text: string; muted: string; accent: string };
   animations: boolean;
+  carousel: ProductCarouselConfig;
+  fullWidthSlider: { slides: FullWidthSlide[] };
   models: { title: string; subtitle: string; productIds: string[]; buttonText: string; maxItems: number };
   banners: ShowcaseBanner[];
   maintenance: { kicker: string; title: string; cards: ShowcaseCard[] };
@@ -57,6 +76,24 @@ const W = '/wix/';
 export const DEFAULT_SHOWCASE: ShowcaseSettings = {
   theme: { bg: '#000000', surface: '#111111', text: '#ffffff', muted: '#a3a3a3', accent: '#e53935' },
   animations: true,
+  carousel: {
+    title: '',
+    subtitle: '',
+    productIds: [],
+    buttonText: '+ comprar',
+  },
+  fullWidthSlider: {
+    slides: [
+      {
+        id: 'fws-1',
+        title: 'FUNDAS PARA AUTOS\nA MEDIDA EN\nARGENTINA',
+        subtitle: 'Fundas para autos premium, hechas a medida para tu vehículo. Protegé tus butacas con materiales de alta calidad y envío a todo el país.',
+        bgImage: W + 'hero_full_seats_bg.jpg',
+        buttonText: 'COMPRAR AHORA ↗',
+        buttonAction: 'catalogo',
+      },
+    ],
+  },
   models: {
     title: 'MODELOS CON AJUSTE PERFECTO',
     subtitle: '',
@@ -151,6 +188,12 @@ export function resolveShowcase(saved?: Partial<ShowcaseSettings> | null): Showc
   return {
     theme: { ...d.theme, ...(s.theme || {}) },
     animations: s.animations ?? d.animations,
+    carousel: { ...d.carousel, ...(s.carousel || {}) },
+    fullWidthSlider: {
+      slides: Array.isArray(s.fullWidthSlider?.slides) && s.fullWidthSlider.slides.length > 0
+        ? s.fullWidthSlider.slides
+        : d.fullWidthSlider.slides,
+    },
     models: { ...d.models, ...(s.models || {}) },
     banners: Array.isArray(s.banners) ? s.banners : d.banners,
     maintenance: { ...d.maintenance, ...(s.maintenance || {}) },
@@ -161,6 +204,8 @@ export function resolveShowcase(saved?: Partial<ShowcaseSettings> | null): Showc
 }
 
 export const SHOWCASE_SECTION_IDS = [
+  'carrusel_productos',
+  'slider_pantalla_completa',
   'destacado_wix',
   'modelos',
   'banners',
@@ -171,6 +216,8 @@ export const SHOWCASE_SECTION_IDS = [
 ] as const;
 
 export const SHOWCASE_SECTION_LABELS: Record<string, { title: string; subtitle: string }> = {
+  carrusel_productos: { title: 'Carrusel / Slider de Productos (Abajo del Hero)', subtitle: 'Fila horizontal deslizable de productos con botón +comprar' },
+  slider_pantalla_completa: { title: 'Slider Pantalla Completa con Degrade', subtitle: 'Banner gigante de butacas de cuero con degradé y botón comprar ahora' },
   destacado_wix: { title: 'Producto Destacado Interactivo (Wix)', subtitle: 'Selector de colores, miniaturas verticales y compra rápida' },
   modelos: { title: 'Modelos con ajuste perfecto', subtitle: 'Grilla de productos destacados (estilo catálogo)' },
   banners: { title: 'Banners de categorías', subtitle: 'Alfombras, cubre volante, apoyo lumbar...' },
@@ -208,6 +255,8 @@ export function mergeHomeSections(saved: Sec[] | undefined | null): Sec[] {
     const contacto = old.find((s) => s.id === 'contacto');
     const others = old.filter((s) => s.id !== 'contacto').map((s) => ({ ...s, visible: false }));
     return [
+      mk('carrusel_productos'),
+      mk('slider_pantalla_completa'),
       mk('destacado_wix'),
       mk('modelos'),
       mk('banners'),
@@ -219,7 +268,7 @@ export function mergeHomeSections(saved: Sec[] | undefined | null): Sec[] {
       ...others,
     ];
   }
-  // Agrega cualquier sección nueva faltante al final
+  // Agrega cualquier sección nueva faltante al principio o al final
   const missing = SHOWCASE_SECTION_IDS.filter((id) => !list.some((s) => s.id === id)).map((id) => mk(id));
   return [...list, ...missing];
 }

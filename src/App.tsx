@@ -21,6 +21,8 @@ import { CatalogPage } from './pages/CatalogPage';
 import { ErrorBoundary } from './components/ErrorBoundary';
 
 // Wix-style Showcase Components
+import { ProductSliderCarousel } from './components/showcase/ProductSliderCarousel';
+import { FullWidthDegradeSlider } from './components/showcase/FullWidthDegradeSlider';
 import { FeaturedHeroProduct } from './components/showcase/FeaturedHeroProduct';
 import { ShowcaseModelsGrid } from './components/showcase/ShowcaseModelsGrid';
 import { ShowcaseBanners } from './components/showcase/ShowcaseBanners';
@@ -90,13 +92,31 @@ function StorefrontContent() {
       {/* Main Content Sections */}
       <main className="flex-1 bg-black">
         {/* Hero Banner matching image.png */}
-        <Hero onExplore={() => scrollToSection('modelos')} />
+        <Hero onExplore={() => scrollToSection('carrusel-productos')} />
 
         {/* Dynamic Home Sections (Reorderable & Configurable via CMS) */}
         {homeSections
           .filter((sec) => sec.visible !== false)
           .map((sec) => {
             switch (sec.id) {
+              case 'carrusel_productos':
+                return (
+                  <ProductSliderCarousel
+                    key="carrusel_productos"
+                    title={sec.title || showcaseConfig.carousel.title}
+                    subtitle={sec.subtitle || showcaseConfig.carousel.subtitle}
+                    productIds={showcaseConfig.carousel.productIds}
+                    buttonText={showcaseConfig.carousel.buttonText || '+ comprar'}
+                  />
+                );
+              case 'slider_pantalla_completa':
+                return (
+                  <FullWidthDegradeSlider
+                    key="slider_pantalla_completa"
+                    slides={showcaseConfig.fullWidthSlider?.slides}
+                    onOpenCatalog={() => scrollToSection('productos')}
+                  />
+                );
               case 'destacado_wix':
                 return (
                   <FeaturedHeroProduct
