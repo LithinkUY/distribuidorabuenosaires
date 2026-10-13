@@ -279,4 +279,5 @@ export interface StoreSettings {
   contactSection?: ContactSectionSettings;
   footerSettings?: FooterSettings;
   alfombrasSection?: AlfombrasSectionSettings;
+  showcase?: any;
 }

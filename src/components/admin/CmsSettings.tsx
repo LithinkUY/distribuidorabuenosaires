@@ -29,6 +29,8 @@ import {
 } from 'lucide-react';
 import { HomeSection, HeroSlide, MenuItem, ContactSectionSettings, FooterSettings, FooterLink, AlfombrasSectionSettings } from '../../types';
 import { saveMediaBlob, resolveMediaUrl } from '../../utils/mediaStorage';
+import { ShowcaseCmsEditor } from './ShowcaseCmsEditor';
+import { mergeHomeSections, SHOWCASE_SECTION_LABELS } from '../showcase/showcaseConfig';
 
 const AlfombrasMediaPreview: React.FC<{ mediaUrl: string; mediaType: 'image' | 'video' }> = ({ mediaUrl, mediaType }) => {
   const [resolvedUrl, setResolvedUrl] = useState<string>(mediaUrl);
@@ -261,7 +263,7 @@ export const CmsSettings: React.FC = () => {
     { id: 'contacto', title: 'Datos de contacto de la tienda', subtitle: 'Atención personalizada y asesoramiento en el acto', visible: true },
   ];
 
-  const currentSections = settings.homeSections && settings.homeSections.length > 0 ? settings.homeSections : defaultSections;
+  const currentSections = mergeHomeSections(settings.homeSections);
 
   const [isSaving, setIsSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
@@ -426,7 +428,7 @@ export const CmsSettings: React.FC = () => {
                       Posición #{index + 1}
                     </span>
                     <span className="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 border border-blue-200 px-2.5 py-1 rounded-lg">
-                      {section.id === 'alfombras' ? 'sección nosotros' : section.id}
+                      {SHOWCASE_SECTION_LABELS[section.id]?.title || (section.id === 'alfombras' ? 'sección nosotros' : section.id)}
                     </span>
                     {!section.visible && (
                       <span className="text-xs font-bold text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-lg flex items-center gap-1">
@@ -533,6 +535,13 @@ export const CmsSettings: React.FC = () => {
             ))}
           </div>
         </div>
+
+        {/* PERSONALIZACIÓN DE SECCIONES ESTILO CATÁLOGO WIX */}
+        <ShowcaseCmsEditor
+          showcase={settings.showcase}
+          onChange={(updated) => setSettings((prev) => ({ ...prev, showcase: updated }))}
+          products={products}
+        />
 
         {/* PERSONALIZACIÓN DE SECCIÓN NOSOTROS */}
         <div id="editor-alfombras" className="bg-white border-2 border-indigo-200 rounded-2xl p-6 shadow-sm space-y-6">

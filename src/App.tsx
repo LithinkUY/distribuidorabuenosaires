@@ -18,16 +18,23 @@ import { ProfileModal } from './components/auth/ProfileModal';
 import { AdminDashboard } from './components/admin/AdminDashboard';
 import { Footer } from './components/Footer';
 import { CatalogPage } from './pages/CatalogPage';
-import { Car, ShieldCheck, PhoneCall, Mail, MapPin, Sparkles, Heart } from 'lucide-react';
 import { ErrorBoundary } from './components/ErrorBoundary';
+
+// Wix-style Showcase Components
+import { FeaturedHeroProduct } from './components/showcase/FeaturedHeroProduct';
+import { ShowcaseModelsGrid } from './components/showcase/ShowcaseModelsGrid';
+import { ShowcaseBanners } from './components/showcase/ShowcaseBanners';
+import { ShowcaseMaintenance } from './components/showcase/ShowcaseMaintenance';
+import { ShowcaseManufacturers } from './components/showcase/ShowcaseManufacturers';
+import { ShowcaseShipping } from './components/showcase/ShowcaseShipping';
+import { ShowcaseTestimonials } from './components/showcase/ShowcaseTestimonials';
+import { resolveShowcase, mergeHomeSections } from './components/showcase/showcaseConfig';
 
 
 function AdminRoute() {
-  const { isAdmin, setIsAuthModalOpen, currentUser } = useStore();
+  const { isAdmin, setIsAuthModalOpen } = useStore();
   
   if (!isAdmin) {
-    // If not logged in as admin, we should maybe show a specific admin login or trigger AuthModal
-    // For simplicity, let's render a basic login directly here
     return (
       <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4">
         <div className="bg-white border border-slate-200 p-8 rounded-3xl max-w-md w-full text-center">
@@ -44,7 +51,15 @@ function AdminRoute() {
 }
 
 function StorefrontContent() {
-  const { isAdmin, setIsFitterOpen, setIsWholesaleOpen, setIsAuthModalOpen, currentUser, setIsProfileModalOpen, storeSettings } = useStore();
+  const {
+    isAdmin,
+    setIsFitterOpen,
+    setIsWholesaleOpen,
+    setIsAuthModalOpen,
+    setIsProfileModalOpen,
+    setIsCheckoutOpen,
+    storeSettings,
+  } = useStore();
   const [activeSection, setActiveSection] = useState('hero');
 
   if (isAdmin) {
@@ -63,32 +78,90 @@ function StorefrontContent() {
     }
   };
 
-
+  const showcaseConfig = resolveShowcase(storeSettings?.showcase);
+  const homeSections = mergeHomeSections(storeSettings?.homeSections);
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col selection:bg-blue-600 selection:text-white">
+    <div className="min-h-screen bg-black text-white flex flex-col selection:bg-red-600 selection:text-white">
       
       {/* Top Navigation Bar */}
       <Header onNavigate={scrollToSection} activeSection={activeSection} />
 
       {/* Main Content Sections */}
-      <main className="flex-1">
+      <main className="flex-1 bg-black">
         {/* Hero Banner matching image.png */}
-        <Hero onExplore={() => scrollToSection('productos')} />
+        <Hero onExplore={() => scrollToSection('modelos')} />
 
         {/* Dynamic Home Sections (Reorderable & Configurable via CMS) */}
-        {(storeSettings?.homeSections && storeSettings.homeSections.length > 0
-          ? storeSettings.homeSections
-          : [
-              { id: 'productos', title: '', visible: true },
-              { id: 'alfombras', title: '', visible: true },
-              { id: 'resenas', title: '', visible: true },
-              { id: 'contacto', title: '', visible: true },
-            ]
-        )
+        {homeSections
           .filter((sec) => sec.visible !== false)
           .map((sec) => {
             switch (sec.id) {
+              case 'destacado_wix':
+                return (
+                  <FeaturedHeroProduct
+                    key="destacado_wix"
+                    productId={showcaseConfig.models.productIds[0]}
+                    onOpenCheckout={() => setIsCheckoutOpen(true)}
+                  />
+                );
+              case 'modelos':
+                return (
+                  <ShowcaseModelsGrid
+                    key="modelos"
+                    title={sec.title || showcaseConfig.models.title}
+                    subtitle={sec.subtitle || showcaseConfig.models.subtitle}
+                  />
+                );
+              case 'banners':
+                return (
+                  <ShowcaseBanners
+                    key="banners"
+                    banners={showcaseConfig.banners}
+                    onOpenCatalog={() => scrollToSection('productos')}
+                  />
+                );
+              case 'mantenimiento':
+                return (
+                  <ShowcaseMaintenance
+                    key="mantenimiento"
+                    kicker={showcaseConfig.maintenance.kicker}
+                    title={sec.title || showcaseConfig.maintenance.title}
+                    cards={showcaseConfig.maintenance.cards}
+                  />
+                );
+              case 'fabricantes':
+                return (
+                  <ShowcaseManufacturers
+                    key="fabricantes"
+                    title={sec.title || showcaseConfig.manufacturers.title}
+                    text={sec.subtitle || showcaseConfig.manufacturers.text}
+                    image={showcaseConfig.manufacturers.image}
+                    orderKicker={showcaseConfig.manufacturers.orderKicker}
+                    orderTitle={showcaseConfig.manufacturers.orderTitle}
+                    orderText={showcaseConfig.manufacturers.orderText}
+                    steps={showcaseConfig.manufacturers.steps}
+                  />
+                );
+              case 'envios':
+                return (
+                  <ShowcaseShipping
+                    key="envios"
+                    title={sec.title || showcaseConfig.shipping.title}
+                    text={sec.subtitle || showcaseConfig.shipping.text}
+                    image={showcaseConfig.shipping.image}
+                    buttonText={showcaseConfig.shipping.buttonText}
+                    buttonUrl={showcaseConfig.shipping.buttonUrl}
+                  />
+                );
+              case 'testimonios':
+                return (
+                  <ShowcaseTestimonials
+                    key="testimonios"
+                    title={sec.title || showcaseConfig.testimonials.title}
+                    items={showcaseConfig.testimonials.items}
+                  />
+                );
               case 'productos':
                 return <ProductCatalog key="productos" />;
               case 'alfombras':
