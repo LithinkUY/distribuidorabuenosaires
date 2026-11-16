@@ -1,0 +1,76 @@
+{
+  "project_title": "Distribuidora Buenos Aires E-commerce & Admin CMS",
+  "theme_archetype": "Modern Automotive Minimalist & High-Performance E-commerce",
+  "css_variables_default": {
+    "--primary": "#121212",
+    "--secondary": "#333333",
+    "--bg-main": "#F8F9FA",
+    "--bg-card": "#FFFFFF",
+    "--bg-header": "#000000",
+    "--bg-footer": "#0F0F0F",
+    "--text-main": "#1A1A1A",
+    "--btn": "#121212",
+    "--sale": "#E53935",
+    "--radius": "0.5rem",
+    "--font-family": "Outfit, sans-serif"
+  },
+  "typography": {
+    "font_family_options": [
+      { "name": "Outfit", "value": "Outfit, sans-serif", "google_font_url": "https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" },
+      { "name": "Montserrat", "value": "Montserrat, sans-serif", "google_font_url": "https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" },
+      { "name": "Space Grotesk", "value": "Space Grotesk, sans-serif", "google_font_url": "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" }
+    ],
+    "headings": {
+      "h1": "text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight",
+      "h2": "text-2xl sm:text-3xl font-semibold tracking-tight",
+      "h3": "text-xl sm:text-2xl font-medium",
+      "h4": "text-lg font-medium"
+    },
+    "body": "text-sm sm:text-base leading-relaxed"
+  },
+  "layout_patterns": {
+    "storefront": {
+      "topbar": "Sticky/fixed notice banner for sales, free shipping, or financing offers in ARS with switcher ARS/USD",
+      "header": "Clean white or dark navbar with brand logo, multi-level hover menu, Mercado Libre-style autocomplete search input with instant thumbnail dropdown, cart drawer trigger, user menu",
+      "hero_section": "Modular slider featuring high-res car interior seat covers and steering wheel craftsmanship, CTA buttons",
+      "categories_grid": "Bento or card grid featuring Fundas de Asiento, Cubre Volantes, Alfombras, Organizadores, Accesorios",
+      "product_card": "Minimalist card with hover image switch, price in ARS/USD, badge for 'Envío Gratis' or 'Cuotas sin Interés', quick add to cart, sale price highlight using var(--sale)",
+      "product_detail": "Gallery with zoom, interactive variant selectors (material, color, car brand/model fit), stock indicator, price calculator, financing breakdown (e.g. 3 cuotas sin interés), direct WhatsApp consultation button, add to cart",
+      "cart_drawer": "Slide-over drawer with item preview, quantity controls, shipping cost estimator, promo code input, direct checkout trigger",
+      "checkout": "3-step accordion checkout: datos personales, opción de envío/retiro en local, método de pago (Mercado Pago, transferencia bancaria con descuento, contra entrega), confirmación con envío automático a WhatsApp",
+      "footer": "Deep dark background, brand info, store locator map preview, payment method icons, social links, floating WhatsApp action button"
+    },
+    "admin_dashboard": {
+      "layout": "Sidebar navigation + topbar header with theme switcher and currency toggle",
+      "dashboard_home": "Analytics charts (sales in ARS/USD, top selling products, recent orders status, conversion rate)",
+      "theme_builder": "Real-time theme customizer with color pickers for all CSS variables (--primary, --secondary, --bg-main, --bg-card, --bg-header, --bg-footer, --text-main, --btn, --sale, --radius, --font-family), font family selector, radius control, and live storefront preview iframe/view",
+      "drag_drop_home_editor": "Reorderable section list (Hero Slider, Categories, Featured Products, Promo Banners, Testimonials, FAQ) with toggle enable/disable",
+      "section_editors": "Editors for Header, Topbar, Search, Popup, Footer, Floating WhatsApp, Extra Pages (Nosotros, Términos, FAQ)",
+      "crud_modules": "Complete CRUD tables with filters and pagination for Products & Variants, Categories, Brands (Marcas), Product Types (Tipos), Bulk Prices (Precios Masivos), Coupons, Orders, Users, Payment Gateways"
+    }
+  },
+  "image_urls": {
+    "hero_banner_1": "https://images.unsplash.com/photo-1611251953880-611e66e904e9?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzV8MHwxfHNlYXJjaHwzfHxjYXIlMjBzZWF0JTIwY292ZXIlMjBsZWF0aGVyJTIwaW50ZXJpb3IlMjBhdXRvbW90aXZlJTIwYWNjZXNzb3JpZXN8ZW58MHx8fHwxNzk0NzY5NDU2fDA&ixlib=rb-4.1.0&q=85",
+    "hero_banner_2": "https://images.unsplash.com/photo-1616196334411-1d8d09708ca6?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzV8MHwxfHNlYXJjaHwxfHxjYXIlMjBzZWF0JTIwY292ZXIlMjBsZWF0aGVyJTIwaW50ZXJpb3IlMjBhdXRvbW90aXZlJTIwYWNjZXNzb3JpZXN8ZW58MHx8fHwxNzk0NzY5NDU2fDA&ixlib=rb-4.1.0&q=85",
+    "category_fundas": "https://images.unsplash.com/photo-1667893530449-e58102223524?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzV8MHwxfHNlYXJjaHw0fHxjYXIlMjBzZWF0JTIwY292ZXIlMjBsZWF0aGVyJTIwaW50ZXJpb3IlMjBhdXRvbW90aXZlJTIwYWNjZXNzb3JpZXN8ZW58MHx8fHwxNzk0NzY5NDU2fDA&ixlib=rb-4.1.0&q=85",
+    "category_volantes": "https://images.unsplash.com/photo-1555426218-51a0ee0e3599?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzV8MHwxfHNlYXJjaHwyfHxzdGVlcmluZyUyMHdoZWVsJTIwY2FyJTIwaW50ZXJpb3IlMjBsZWF0aGVyJTIwY2xvc2UlMjB1cHxlbnwwfHx8fDE3OTQ3Njk0NjF8MA&ixlib=rb-4.1.0&q=85",
+    "category_accesorios": "https://images.pexels.com/photos/14667496/pexels-photo-14667496.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "product_1": "https://images.unsplash.com/photo-1614530499660-fe1fbd7921d6?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzV8MHwxfHNlYXJjaHwyfHxjYXIlMjBzZWF0JTIwY292ZXIlMjBsZWF0aGVyJTIwaW50ZXJpb3IlMjBhdXRvbW90aXZlJTIwYWNjZXNzb3JpZXN8ZW58MHx8fHwxNzk0NzY5NDU2fDA&ixlib=rb-4.1.0&q=85",
+    "product_2": "https://images.pexels.com/photos/8886310/pexels-photo-8886310.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+    "product_3": "https://images.unsplash.com/photo-1542834506-979b3951bc9a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzV8MHwxfHNlYXJjaHwxfHxzdGVlcmluZyUyMHdoZWVsJTIwY2FyJTIwaW50ZXJpb3IlMjBsZWF0aGVyJTIwY2xvc2UlMjB1cHxlbnwwfHx8fDE3OTQ3Njk0NjF8MA&ixlib=rb-4.1.0&q=85",
+    "brand_logo_default": "https://images.unsplash.com/photo-1522071018552-533f5cadba1b?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTF8MHwxfHNlYXJjaHwzfHxzdGVlcmluZyUyMHdoZWVsJTIwY2FyJTIwaW50ZXJpb3IlMjBsZWF0aGVyJTIwY2xvc2UlMjB1cHxlbnwwfHx8fDE3OTQ3Njk0NjF8MA&ixlib=rb-4.1.0&q=85"
+  },
+  "instructions_to_main_agent": [
+    "1. Read theme configurations from ThemeContext injecting dynamic CSS variables on document.documentElement component level or root element.",
+    "2. All buttons, headers, cards, badges, and textual accents must strictly use standard style expressions referring to var(--primary), var(--secondary), var(--bg-main), var(--bg-card), var(--bg-header), var(--bg-footer), var(--text-main), var(--btn), var(--sale), var(--radius), var(--font-family).",
+    "3. Implement Mercado Libre style instant autocomplete search in header displaying item image thumbnail, title, brand tag, price (ARS/USD), and stock status pill.",
+    "4. Ensure currency switcher dynamically recalculates prices across Storefront (e.g. 1 USD = 1100 ARS rate configurable in admin).",
+    "5. Ensure all interactive buttons, inputs, modals, tabs, and filters include explicit data-testid attributes (kebab-case).",
+    "6. Build the live preview in Theme Customizer so changing color pickers immediately reflects on the storefront preview mode.",
+    "7. Include full Spanish language copy for all storefront components, messages, popups, checkout steps, and admin tools."
+  ],
+  "testing_and_accessibility": {
+    "data_testid_convention": "kebab-case, role/function based (e.g., data-testid=\"search-input\", data-testid=\"cart-drawer-toggle\", data-testid=\"checkout-submit-button\", data-testid=\"admin-theme-primary-color-picker\")",
+    "contrast_requirement": "All dynamic CSS background and text combinations must maintain accessible contrast ratio (>= 4.5:1 for standard text)."
+  }
+}

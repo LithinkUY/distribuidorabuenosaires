@@ -1,0 +1,1583 @@
+{
+  "settings": [
+    {
+      "_id": "site",
+      "usd_rate": 1250,
+      "theme": {
+        "primary": "#111111",
+        "secondary": "#E8E4DD",
+        "bg_main": "#000000",
+        "bg_card": "#000000",
+        "bg_header": "#000000",
+        "header_text": "#FFFFFF",
+        "bg_footer": "#111111",
+        "footer_text": "#F2F2F2",
+        "text_main": "#FFFFFF",
+        "btn": "#111111",
+        "btn_text": "#FFFFFF",
+        "sale": "#E53935",
+        "font": "Outfit",
+        "radius": 6
+      },
+      "identity": {
+        "site_title": "Distribuidora Buenos Aires",
+        "meta_description": "Fundas de asiento, cubre volantes y accesorios para autos. Envíos a todo el país.",
+        "logo": "/api/files/cabana-store/uploads/9685bc7c-53d4-46a1-ad8c-55e54e9b0045.png",
+        "logo_dark": "",
+        "favicon": "",
+        "brand_name": "Distribuidora Buenos Aires"
+      },
+      "custom_css": "",
+      "topbar": {
+        "enabled": true,
+        "rotate": false,
+        "bg": "#EA2A2A",
+        "color": "#FFFFFF",
+        "messages": [
+          "ENVÍOS GRATIS SUPERANDO $150.000",
+          "20% OFF PAGANDO CON TRANSFERENCIA",
+          "3 Y 6 CUOTAS SIN INTERÉS"
+        ]
+      },
+      "header": {
+        "logo_height": 60,
+        "bg": "",
+        "transparent": false,
+        "sticky": true
+      },
+      "menu": [
+        {
+          "id": "5ec7d2ea-4b03-4030-9497-1eb15eb7f646",
+          "label": "Inicio",
+          "url": "/",
+          "children": []
+        },
+        {
+          "id": "e0440af6-7ebb-4fc8-adaa-3d5f0c3c4285",
+          "label": "Productos",
+          "url": "/catalogo",
+          "children": [
+            {
+              "id": "14ca30c8-bdad-4c9a-84d1-ba01aed66317",
+              "label": "Fundas de Asiento",
+              "url": "/catalogo?category=fundas-de-asiento",
+              "children": [
+                {
+                  "id": "37aceeec-8243-4a0e-bb13-57b0fae7cc1c",
+                  "label": "Juegos Completos",
+                  "url": "/catalogo?category=juegos-completos",
+                  "children": []
+                },
+                {
+                  "id": "15045eba-4538-42f3-9d96-8dc148546bd7",
+                  "label": "Delanteras",
+                  "url": "/catalogo?category=delanteras",
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": "ff5b4326-91c0-496b-9cf9-24635c9aa5c6",
+              "label": "Cubre Volantes",
+              "url": "/catalogo?category=cubre-volantes",
+              "children": []
+            },
+            {
+              "id": "914b2ce1-f099-4fd6-ba20-fbaad1e38f3a",
+              "label": "Accesorios",
+              "url": "/catalogo?category=accesorios",
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "1cf23225-f925-4486-bec4-90b6b8bb45e4",
+          "label": "Ofertas",
+          "url": "/catalogo?tag=ofertas",
+          "children": []
+        },
+        {
+          "id": "d3652f4d-e191-4033-87d3-db63d4dc6f20",
+          "label": "Nosotros",
+          "url": "/pagina/nosotros",
+          "children": []
+        },
+        {
+          "id": "6975c76b-3e25-430a-9483-735b5b31ff10",
+          "label": "Contacto",
+          "url": "/pagina/contacto",
+          "children": []
+        },
+        {
+          "id": "p1a54npfmwjr8nvd",
+          "label": "¿COMO COMPRAR?",
+          "url": "/pagina/como-comprar",
+          "children": []
+        },
+        {
+          "id": "st1jljf4mwjr8u28",
+          "label": "Garantias",
+          "url": "/pagina/terminos-y-condiciones",
+          "children": []
+        }
+      ],
+      "search": {
+        "placeholder": "Buscar fundas, volantes, accesorios...",
+        "bg": "#F2F1EE",
+        "border": "#E2E0DA",
+        "text": "#1A1A1A",
+        "icon": "#111111",
+        "radius": 999,
+        "dropdown_bg": "#FFFFFF"
+      },
+      "card": {
+        "show_brand": true,
+        "show_stock": true,
+        "show_dual": false,
+        "show_discount": true,
+        "show_quick_buy": true
+      },
+      "shipping": {
+        "home_enabled": true,
+        "home_cost": 9500,
+        "free_over": 150000,
+        "pickup_enabled": true,
+        "pickup_address": "Av. Corrientes 1234, CABA - Lun a Vie 10 a 18hs"
+      },
+      "payments": {
+        "mercadopago": {
+          "enabled": true,
+          "mode": "sandbox",
+          "public_key": "TEST-cc96f303-6775-4769-bf02-843ad9952d1c",
+          "access_token": "TEST-1472723254399803-111618-d4626a7c25101e736d34613295b8eec6-3425477195",
+          "adjust_pct": 20,
+          "title": "Mercado Pago",
+          "description": "Tarjetas de crédito, débito y dinero en cuenta"
+        },
+        "cod": {
+          "enabled": true,
+          "title": "Pago contra entrega",
+          "instructions": "Abonás en efectivo al recibir tu pedido.",
+          "zones": "CABA, GBA Norte, GBA Oeste",
+          "discount_pct": 5
+        },
+        "transfer": {
+          "enabled": true,
+          "title": "Transferencia bancaria",
+          "bank": "Banco Galicia",
+          "holder": "distribuidora Buenos aires",
+          "cbu": "0070000000000000000000",
+          "alias": "distribuidora Buenos aires",
+          "discount_pct": 20
+        }
+      },
+      "footer": {
+        "bg": "",
+        "text": "",
+        "about": "Fundas de asiento y accesorios para autos fabricados en Argentina.",
+        "columns": [
+          {
+            "id": "8ecb4f67-7871-460a-b29b-58e83430aab6",
+            "title": "Tienda",
+            "links": [
+              {
+                "id": "0c4a0f28-c4c5-478a-83bd-ff6aae194904",
+                "label": "Catálogo",
+                "url": "/catalogo"
+              },
+              {
+                "id": "4429d951-edb9-43cf-9923-9ccdbf7bf307",
+                "label": "Ofertas",
+                "url": "/catalogo?tag=ofertas"
+              }
+            ]
+          },
+          {
+            "id": "ab562b74-64ca-494b-b678-50176d1b4c95",
+            "title": "Información",
+            "links": [
+              {
+                "id": "a0b6345c-1169-4e4d-bfa3-8b5d930fdcf0",
+                "label": "Nosotros",
+                "url": "/pagina/nosotros"
+              },
+              {
+                "id": "9d4e64fa-a1da-4e67-a9a9-85d632c9d603",
+                "label": "Contacto",
+                "url": "/pagina/contacto"
+              }
+            ]
+          }
+        ],
+        "socials": {
+          "instagram": "https://www.facebook.com/distribuidorabsas/",
+          "facebook": "https://www.facebook.com/distribuidorabsas/",
+          "tiktok": "",
+          "youtube": ""
+        },
+        "legal": "© 2026  Distribuidora BA - Todos los derechos reservados. Defensa del consumidor.",
+        "contact": "ventas@distribuidoraba.com · +54 9 11 3354-9747",
+        "map_enabled": true,
+        "map_iframe": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3285.9992332500856!2d-58.45380459999999!3d-34.5535748!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcb42dd70c6349%3A0x3a03ff44b1ea6ef3!2sFranklin%20D.%20Roosevelt%201700%2C%20C1772%20Cdad.%20Aut%C3%B3noma%20de%20Buenos%20Aires%2C%20Argentina!5e0!3m2!1ses!2suy!4v1794862799736!5m2!1ses!2suy"
+      },
+      "whatsapp": {
+        "enabled": true,
+        "position": "right",
+        "number": "+54911 33549747",
+        "message": "Hola! Quiero hacer una consulta.",
+        "bubble": "¿Necesitás ayuda?"
+      },
+      "popup": {
+        "enabled": false,
+        "image": "https://images.unsplash.com/photo-1616196334411-1d8d09708ca6?crop=entropy&cs=srgb&fm=jpg&q=85&w=1800",
+        "title": "10% OFF en tu primera compra",
+        "text": "Usá el cupón BIENVENIDO10 al finalizar tu compra.",
+        "btn_text": "Ver productos",
+        "btn_link": "/catalogo",
+        "delay": 2
+      },
+      "home_sections": [
+        {
+          "id": "da78b04d-f866-46b5-8b26-04e91072d06a",
+          "type": "hero",
+          "title": "Slider principal",
+          "enabled": true,
+          "config": {
+            "height": 900,
+            "autoplay": 6,
+            "slides": [
+              {
+                "id": "4f32d88b-97b6-4f18-bddd-24f6717703f1",
+                "image": "/api/files/cabana-store/uploads/e9c817cc-ad1f-48e4-80e7-0824dd15e908.png",
+                "title": "",
+                "subtitle": "Diseños exclusivos, fabricación nacional",
+                "align": "right",
+                "overlay": 0,
+                "btn_text": "Ver colección",
+                "btn_link": "/catalogo",
+                "btn_bg": "#FFFFFF",
+                "btn_color": "#111111"
+              }
+            ]
+          }
+        },
+        {
+          "id": "1uj6emvlmwjpcisq",
+          "type": "categories",
+          "title": "CATEGORIAS DE PRODUCTOS",
+          "enabled": true,
+          "config": {
+            "items": [
+              {
+                "id": "2c6fwfzcmwjpcxg2",
+                "name": "Fundas de Asiento",
+                "image": "/api/files/cabana-store/uploads/366e3e7d-0a9f-4b8a-aada-bfb74c4d88ea.jpg",
+                "link": "/catalogo?category=fundas-de-asiento"
+              },
+              {
+                "id": "xk1smnommwjpcxg2",
+                "name": "Cubre Volantes",
+                "image": "/api/files/cabana-store/uploads/a9ec230a-2844-495b-af17-b41c95f2811b.jpg",
+                "link": "/catalogo?category=cubre-volantes"
+              },
+              {
+                "id": "hh6lqj8lmwjpcxg2",
+                "name": "Alfombras",
+                "image": "/api/files/cabana-store/uploads/46034fd1-e446-4175-847a-6e286690fd34.jpg",
+                "link": "/catalogo?category=alfombras"
+              }
+            ]
+          }
+        },
+        {
+          "id": "9725672a-dfe0-4c19-a8a7-14eb9f3de636",
+          "type": "categories",
+          "title": "Categorías destacadas",
+          "enabled": true,
+          "config": {
+            "items": [
+              {
+                "id": "rdrwnqx4mwjotraq",
+                "name": "KIT COMPLETO",
+                "image": "/api/files/cabana-store/uploads/9c0ac1c0-a5b9-4add-9522-d353f0610622.jpg",
+                "link": "catalogo?category=juegos-completos"
+              },
+              {
+                "id": "1n15qakfmwjotraq",
+                "name": "LINEA ECONOMICA",
+                "image": "/api/files/cabana-store/uploads/a355868d-de07-456f-8c81-335c5734b7f4.jpg",
+                "link": "/catalogo?category=linea-economica"
+              },
+              {
+                "id": "nvxxekiemwjotraq",
+                "name": "LINEA INTERMEDIA",
+                "image": "/api/files/cabana-store/uploads/7999d136-7cc8-4a15-907e-29a3751b9e88.jpg",
+                "link": "/catalogo?category=linea-intermedia"
+              }
+            ]
+          }
+        },
+        {
+          "id": "fab33d6c-29f0-4aa9-8f77-22d544ad93b0",
+          "type": "products",
+          "title": "Ofertas",
+          "enabled": true,
+          "config": {
+            "source": "tag",
+            "value": "OFERTAS",
+            "limit": 8,
+            "layout": "carousel"
+          }
+        },
+        {
+          "id": "d8aa3e13-3edd-45b5-8fe0-10ea655907ec",
+          "type": "products",
+          "title": "Destacados",
+          "enabled": true,
+          "config": {
+            "source": "tag",
+            "value": "DESTACADOS",
+            "limit": 8,
+            "layout": "carousel"
+          }
+        },
+        {
+          "id": "da522d55-854e-453c-91ed-e516367b92ab",
+          "type": "products",
+          "title": "Lanzamientos",
+          "enabled": true,
+          "config": {
+            "source": "tag",
+            "value": "lanzamientos",
+            "limit": 8,
+            "layout": "carousel"
+          }
+        },
+        {
+          "id": "ce1be4aa-2266-4605-8a7c-27aaf9449a2e",
+          "type": "comments",
+          "title": "Comentarios de clientes",
+          "enabled": true,
+          "config": {
+            "subtitle": "Experiencias reales de quienes ya renovaron el interior de su auto",
+            "allow_submit": true,
+            "limit": 12
+          }
+        },
+        {
+          "id": "f78af4bf-8a54-4d0c-b916-3adfeae3873a",
+          "type": "banner",
+          "title": "Banner mayoristas",
+          "enabled": true,
+          "config": {
+            "image": "https://images.pexels.com/photos/8723327/pexels-photo-8723327.jpeg?auto=compress&cs=tinysrgb&w=900",
+            "title": "¿Tenés un local?",
+            "text": "Sumate a nuestra red de revendedores",
+            "btn_text": "CONSULTA NUESTROS PRECIOS DE FABRICA ",
+            "link": "/pagina/mayoristas",
+            "height": 340,
+            "overlay": 50
+          }
+        }
+      ]
+    }
+  ],
+  "categories": [
+    {
+      "id": "f10b1b92-ebb0-4d63-9e7d-74aa57ee5b42",
+      "name": "Fundas de Asiento",
+      "slug": "fundas-de-asiento",
+      "image": "https://images.unsplash.com/photo-1667893530449-e58102223524?crop=entropy&cs=srgb&fm=jpg&q=85&w=900",
+      "parent_id": null,
+      "order": 1
+    },
+    {
+      "id": "9b5b7876-40a6-4f81-a59c-9f4f8dfc720b",
+      "name": "Cubre Volantes",
+      "slug": "cubre-volantes",
+      "image": "https://images.unsplash.com/photo-1555426218-51a0ee0e3599?crop=entropy&cs=srgb&fm=jpg&q=85&w=900",
+      "parent_id": null,
+      "order": 2
+    },
+    {
+      "id": "22072847-c5d5-45e6-b791-b9305c63fa7c",
+      "name": "Accesorios",
+      "slug": "accesorios",
+      "image": "https://images.pexels.com/photos/8886311/pexels-photo-8886311.jpeg?auto=compress&cs=tinysrgb&w=900",
+      "parent_id": null,
+      "order": 3
+    },
+    {
+      "id": "db4d6e66-e2c7-4398-b714-b0cd603cbef0",
+      "name": "Juegos Completos",
+      "slug": "juegos-completos",
+      "image": "/api/files/cabana-store/uploads/7955bfe5-3027-4861-9685-c2fee46ea8d0.jpg",
+      "parent_id": "f10b1b92-ebb0-4d63-9e7d-74aa57ee5b42",
+      "order": 1
+    },
+    {
+      "id": "2a3bfead-eadc-4d05-a543-221b7b4bbed5",
+      "name": "Alfombras",
+      "slug": "alfombras",
+      "image": "/api/files/cabana-store/uploads/ee7b00b1-e183-4c81-a6b4-8ad559b8729b.jpg",
+      "parent_id": "22072847-c5d5-45e6-b791-b9305c63fa7c",
+      "order": 1
+    },
+    {
+      "name": "Linea economica",
+      "image": "/api/files/cabana-store/uploads/ef1a5357-8ff7-4cbd-b08e-e11b020fc428.jpg",
+      "order": 4,
+      "parent_id": "f10b1b92-ebb0-4d63-9e7d-74aa57ee5b42",
+      "id": "00462293-a788-4198-b64d-384f5a91e4b6",
+      "slug": "linea-economica"
+    },
+    {
+      "name": "Alfombras",
+      "image": "/api/files/cabana-store/uploads/415f9e12-bbf9-4e5f-8a3d-50a3e1260a58.jpeg",
+      "order": 4,
+      "parent_id": null,
+      "id": "388aaeeb-1d57-498b-9ad1-963d0f38c960",
+      "slug": "alfombras"
+    },
+    {
+      "name": "Linea intermedia",
+      "image": "/api/files/cabana-store/uploads/0ec3bc98-8394-42c7-912d-9330d86d77ed.jpg",
+      "order": 4,
+      "parent_id": "f10b1b92-ebb0-4d63-9e7d-74aa57ee5b42",
+      "id": "c32f5020-8ef6-4ca7-9e42-e7a12ab42df0",
+      "slug": "linea-intermedia"
+    }
+  ],
+  "brands": [],
+  "types": [
+    {
+      "id": "b2a2fe60-cc4d-40c4-a040-7df5a43360be",
+      "name": "Tela acolchada",
+      "slug": "tela-acolchada"
+    },
+    {
+      "id": "4682aaf7-946a-46a5-a1f6-4a7cead754b2",
+      "name": "Eco cuero",
+      "slug": "eco-cuero"
+    },
+    {
+      "id": "33a9eef9-e88e-42a0-90c5-ea00e31bcca7",
+      "name": "Goma",
+      "slug": "goma"
+    },
+    {
+      "name": "Cuero automotor",
+      "image": "",
+      "order": 4,
+      "parent_id": "",
+      "id": "98238ac1-cb77-4cc0-95dc-7b850f0ef791",
+      "slug": "cuero-automotor"
+    }
+  ],
+  "products": [
+    {
+      "id": "8adaee58-2dba-4555-8af5-42412f6504ba",
+      "name": "Funda de Asiento Línea Glitter Rosa",
+      "slug": "funda-de-asiento-linea-glitter-rosa",
+      "description": "<p>Funda de asiento <strong>premium</strong> con acolchado de alta densidad. Protege tus asientos originales y renueva el interior de tu auto.</p><ul><li>Instalación fácil en 15 minutos</li><li>Costuras reforzadas</li><li>Compatible con airbag lateral</li></ul>",
+      "specs": [
+        {
+          "key": "Material",
+          "value": "Tela acolchada triple capa"
+        },
+        {
+          "key": "Compatibilidad",
+          "value": "Universal con airbag lateral"
+        },
+        {
+          "key": "Lavable",
+          "value": "Sí, a mano"
+        },
+        {
+          "key": "Origen",
+          "value": "Argentina"
+        }
+      ],
+      "category_id": "f10b1b92-ebb0-4d63-9e7d-74aa57ee5b42",
+      "subcategory_id": "db4d6e66-e2c7-4398-b714-b0cd603cbef0",
+      "brand_id": "dfa04b8f-c55e-4f38-a8ec-04e7f7950d14",
+      "type_id": "b2a2fe60-cc4d-40c4-a040-7df5a43360be",
+      "images": [
+        "https://images.unsplash.com/photo-1614527255138-018e29ff34ee?crop=entropy&cs=srgb&fm=jpg&q=85&w=900",
+        "https://images.pexels.com/photos/8723327/pexels-photo-8723327.jpeg?auto=compress&cs=tinysrgb&w=900"
+      ],
+      "tags": [
+        "destacados",
+        "lanzamientos",
+        "ofertas"
+      ],
+      "active": true,
+      "variants": [
+        {
+          "id": "f4e30d78-bdd7-4093-8264-6fb6fa9f18a0",
+          "attrs": {
+            "Medida": "Juego completo",
+            "Color": "Rosa"
+          },
+          "sku": "GL-ROS-JC",
+          "price_usd": 156,
+          "sale_usd": 132.6,
+          "ars_manual": false,
+          "price_ars": 0,
+          "sale_ars": 0,
+          "stock": 12,
+          "image": "https://images.unsplash.com/photo-1614527255138-018e29ff34ee?crop=entropy&cs=srgb&fm=jpg&q=85&w=900"
+        },
+        {
+          "id": "91c3df3e-b7fe-4f44-8810-8cee70ba97d7",
+          "attrs": {
+            "Medida": "Delanteras",
+            "Color": "Rosa"
+          },
+          "sku": "GL-ROS-DL",
+          "price_usd": 96,
+          "sale_usd": 0,
+          "ars_manual": false,
+          "price_ars": 0,
+          "sale_ars": 0,
+          "stock": 8,
+          "image": "https://images.pexels.com/photos/8723327/pexels-photo-8723327.jpeg?auto=compress&cs=tinysrgb&w=900"
+        },
+        {
+          "id": "631bf314-f496-4d4c-9111-0fc4fa9a2766",
+          "attrs": {
+            "Medida": "Juego completo",
+            "Color": "Fucsia"
+          },
+          "sku": "GL-FUC-JC",
+          "price_usd": 156,
+          "sale_usd": 132.6,
+          "ars_manual": false,
+          "price_ars": 0,
+          "sale_ars": 0,
+          "stock": 3,
+          "image": "https://images.pexels.com/photos/8723327/pexels-photo-8723327.jpeg?auto=compress&cs=tinysrgb&w=900"
+        }
+      ],
+      "created_at": "2026-11-05T19:57:07.609872+00:00",
+      "featured": true,
+      "lanzamiento": true,
+      "on_sale": true
+    },
+    {
+      "id": "5d375f0b-61da-43b3-a800-1e5db10d1257",
+      "name": "Funda de Asiento Línea ECONOMICA",
+      "slug": "funda-de-asiento-linea-sport-negro",
+      "description": "<p>Funda de asiento <strong>premium</strong> con acolchado de alta densidad. Protege tus asientos originales y renueva el interior de tu auto.</p><ul><li>Instalación fácil en 15 minutos</li><li>Costuras reforzadas</li><li>Compatible con airbag lateral</li></ul>",
+      "specs": [
+        {
+          "key": "Material",
+          "value": "GOMA "
+        },
+        {
+          "key": "Compatibilidad",
+          "value": "Universal con airbag lateral"
+        },
+        {
+          "key": "Lavable",
+          "value": "Sí, a mano"
+        },
+        {
+          "key": "Origen",
+          "value": "Argentina"
+        }
+      ],
+      "category_id": "f10b1b92-ebb0-4d63-9e7d-74aa57ee5b42",
+      "subcategory_id": "00462293-a788-4198-b64d-384f5a91e4b6",
+      "brand_id": "dfa04b8f-c55e-4f38-a8ec-04e7f7950d14",
+      "type_id": "33a9eef9-e88e-42a0-90c5-ea00e31bcca7",
+      "images": [
+        "/api/files/cabana-store/uploads/a859c4cc-ea33-4a40-9197-3ed04011c9be.jpeg",
+        "/api/files/cabana-store/uploads/efeff39e-7d07-49b6-bffe-ec10071abd58.jpeg",
+        "/api/files/cabana-store/uploads/cdf87858-3cd3-4121-8396-1f1aacde293b.jpeg",
+        "/api/files/cabana-store/uploads/0dd9e05b-de84-4f5c-ac8b-ffd2ae16bad2.jpeg",
+        "/api/files/cabana-store/uploads/219fbbb0-3b3e-4a28-b068-64cbfc889891.jpeg"
+      ],
+      "tags": [
+        "destacados",
+        "lanzamientos",
+        "ofertas"
+      ],
+      "active": true,
+      "variants": [
+        {
+          "id": "ab79aa64-525d-4488-a236-d2bec26772c4",
+          "attrs": {
+            "Medida": "COMPLETO",
+            "Color": "Negro"
+          },
+          "sku": "SP-NEG-JC",
+          "price_usd": 0.0,
+          "sale_usd": 0.0,
+          "ars_manual": true,
+          "price_ars": 79000.0,
+          "sale_ars": 0.0,
+          "stock": 19,
+          "image": "/api/files/cabana-store/uploads/9259d76d-3742-4d61-ab1c-74fc6c5c403b.jpg"
+        },
+        {
+          "id": "55e0fe8b-ecf8-4e41-a30b-b76d8e1dbed0",
+          "attrs": {
+            "Medida": "COMPLETO",
+            "Color": "ROJO"
+          },
+          "sku": "SP-ROJ-DL",
+          "price_usd": 0.0,
+          "sale_usd": 0.0,
+          "ars_manual": true,
+          "price_ars": 79000.0,
+          "sale_ars": 0.0,
+          "stock": 20,
+          "image": "/api/files/cabana-store/uploads/b8aa1ebd-53dd-4d2a-aae2-ea769802ddda.jpeg"
+        },
+        {
+          "id": "0fa2c04c-46df-4aa4-a1ac-23383f4beef3",
+          "attrs": {
+            "Medida": "COMPLETO",
+            "Color": "BLANCO"
+          },
+          "sku": "SP-BLAN-JC",
+          "price_usd": 0.0,
+          "sale_usd": 0.0,
+          "ars_manual": true,
+          "price_ars": 79000.0,
+          "sale_ars": 0.0,
+          "stock": 20,
+          "image": "/api/files/cabana-store/uploads/01c1b02a-ec03-4ecb-a4cb-80017bc1b9a7.jpeg"
+        },
+        {
+          "id": "4ff8x15fmwjs7lb5",
+          "attrs": {
+            "Medida": "COMPLETO",
+            "Color": "GRIS"
+          },
+          "sku": "SP-GRIS-JC",
+          "price_usd": 0.0,
+          "sale_usd": 0.0,
+          "ars_manual": true,
+          "price_ars": 79000.0,
+          "sale_ars": 0.0,
+          "stock": 20,
+          "image": "/api/files/cabana-store/uploads/681b7c83-93bc-4a35-b551-630b42fd7209.jpeg"
+        }
+      ],
+      "created_at": "2026-11-06T19:57:07.609872+00:00",
+      "featured": true,
+      "lanzamiento": true,
+      "on_sale": true
+    },
+    {
+      "id": "7bc2f399-6e75-4733-bfa7-55a04cb79c26",
+      "name": "ECOCUERO PREMIUM CON BONDEADO  KIT COMPLETO",
+      "slug": "juego-fundas-eco-cuero-premium",
+      "description": "<p>Funda de asiento <strong>premium</strong> con acolchado de alta densidad. Protege tus asientos originales y renueva el interior de tu auto.</p><ul><li>Instalación fácil en 15 minutos</li><li>Costuras reforzadas</li><li>Compatible con airbag lateral</li></ul>",
+      "specs": [
+        {
+          "key": "Material",
+          "value": "ECO CUERO PREMIUM"
+        },
+        {
+          "key": "Compatibilidad",
+          "value": "Universal con airbag lateral"
+        },
+        {
+          "key": "Lavable",
+          "value": "Sí, a mano"
+        },
+        {
+          "key": "Origen",
+          "value": "Argentina"
+        }
+      ],
+      "category_id": "f10b1b92-ebb0-4d63-9e7d-74aa57ee5b42",
+      "subcategory_id": "c32f5020-8ef6-4ca7-9e42-e7a12ab42df0",
+      "brand_id": "5469228e-1c1c-481d-b1dc-8941183edb19",
+      "type_id": "4682aaf7-946a-46a5-a1f6-4a7cead754b2",
+      "images": [
+        "/api/files/cabana-store/uploads/945d0caa-b684-4649-82f9-9d9deec552ee.jpg",
+        "/api/files/cabana-store/uploads/dde43e19-a350-4101-9d2a-577164a3351b.jpg",
+        "/api/files/cabana-store/uploads/4099a88d-fa38-4c80-aacd-f2978ee5d966.jpg",
+        "/api/files/cabana-store/uploads/a381b0ac-99b6-4c54-9c82-36dc2d234bdd.jpg"
+      ],
+      "tags": [
+        "destacados",
+        "lanzamientos",
+        "ofertas"
+      ],
+      "active": true,
+      "variants": [
+        {
+          "id": "16e40299-2f28-417c-836a-2a2617ae5089",
+          "attrs": {
+            "Medida": "JUEGO COMPLETO",
+            "Color": "Blanco"
+          },
+          "sku": "EC-BLA-DL",
+          "price_usd": 0.0,
+          "sale_usd": 0.0,
+          "ars_manual": true,
+          "price_ars": 150000.0,
+          "sale_ars": 0.0,
+          "stock": 19,
+          "image": "/api/files/cabana-store/uploads/0f27919c-f527-44d0-8c0f-0b4c3289e629.jpg"
+        },
+        {
+          "id": "091196b1-e128-4237-97ba-3e85c35cc29b",
+          "attrs": {
+            "Medida": "JUEGO COMPLETO",
+            "Color": "Azul"
+          },
+          "sku": "EC-AZUL-DL",
+          "price_usd": 0.0,
+          "sale_usd": 0.0,
+          "ars_manual": true,
+          "price_ars": 150000.0,
+          "sale_ars": 0.0,
+          "stock": 20,
+          "image": "/api/files/cabana-store/uploads/f084d5e1-12fa-4452-bb63-aa68e08caebf.jpg"
+        },
+        {
+          "id": "bb1f2c57-fe04-446c-8b4e-f195f5ceb17b",
+          "attrs": {
+            "Medida": "JUEGO COMPLETO",
+            "Color": "ROJO"
+          },
+          "sku": "EC-ROJO-DL",
+          "price_usd": 0.0,
+          "sale_usd": 0.0,
+          "ars_manual": true,
+          "price_ars": 150000.0,
+          "sale_ars": 0.0,
+          "stock": 20,
+          "image": "/api/files/cabana-store/uploads/e3ec715e-4784-4f94-9f30-f8e570b813f0.jpg"
+        },
+        {
+          "id": "ck39b97qmwjrzskl",
+          "attrs": {
+            "Medida": "JUEGO COMPLETO",
+            "Color": "NEGRO"
+          },
+          "sku": "EC-NEGRO-DL",
+          "price_usd": 0.0,
+          "sale_usd": 0.0,
+          "ars_manual": true,
+          "price_ars": 150000.0,
+          "sale_ars": 0.0,
+          "stock": 0,
+          "image": "/api/files/cabana-store/uploads/3e0a4201-f6fb-4ed9-b597-ecd30157479e.jpg"
+        }
+      ],
+      "created_at": "2026-11-07T19:57:07.609872+00:00",
+      "featured": true,
+      "lanzamiento": true,
+      "on_sale": true
+    },
+    {
+      "id": "0c3419ce-af3a-4d4c-96e0-9511158140b7",
+      "name": "Cubre Volante Deportivo Antideslizante",
+      "slug": "cubre-volante-deportivo-antideslizante",
+      "description": "<p>Funda de asiento <strong>premium</strong> con acolchado de alta densidad. Protege tus asientos originales y renueva el interior de tu auto.</p><ul><li>Instalación fácil en 15 minutos</li><li>Costuras reforzadas</li><li>Compatible con airbag lateral</li></ul>",
+      "specs": [
+        {
+          "key": "Material",
+          "value": "Tela acolchada triple capa"
+        },
+        {
+          "key": "Compatibilidad",
+          "value": "Universal con airbag lateral"
+        },
+        {
+          "key": "Lavable",
+          "value": "Sí, a mano"
+        },
+        {
+          "key": "Origen",
+          "value": "Argentina"
+        }
+      ],
+      "category_id": "9b5b7876-40a6-4f81-a59c-9f4f8dfc720b",
+      "subcategory_id": null,
+      "brand_id": "",
+      "type_id": "b2a2fe60-cc4d-40c4-a040-7df5a43360be",
+      "images": [
+        "/api/files/cabana-store/uploads/ed619acb-1d89-4cc7-b32b-d9339af6201c.jpeg",
+        "/api/files/cabana-store/uploads/b56de785-8058-4e23-bef2-8e66bd43df7b.jpeg",
+        "/api/files/cabana-store/uploads/39c59284-7964-4b4d-a5da-f932f8f3f31a.jpeg"
+      ],
+      "tags": [
+        "destacados",
+        "lanzamientos",
+        "ofertas"
+      ],
+      "active": true,
+      "variants": [
+        {
+          "id": "095fba03-37af-45ad-bf86-e3d6621c3563",
+          "attrs": {
+            "Medida": "37 cm",
+            "Color": "Negro"
+          },
+          "sku": "CV-NEG-37",
+          "price_usd": 0.0,
+          "sale_usd": 0.0,
+          "ars_manual": true,
+          "price_ars": 0.0,
+          "sale_ars": 0.0,
+          "stock": 30,
+          "image": "/api/files/cabana-store/uploads/4dda1e8a-1d9c-4642-8ec8-ab7fd56e1d06.jpeg"
+        }
+      ],
+      "created_at": "2026-11-08T19:57:07.609872+00:00",
+      "featured": true,
+      "lanzamiento": true,
+      "on_sale": true
+    },
+    {
+      "id": "85c7a2b0-eb73-4b5a-8cb7-c68649fd4adb",
+      "name": "Cuero automotor  Kit completo ",
+      "slug": "cuero automotor",
+      "description": "<p>Funda de asiento <strong>premium</strong> con acolchado de alta densidad. Protege tus asientos originales y renueva el interior de tu auto.</p><ul><li>Instalación fácil en 15 minutos</li><li>Costuras reforzadas</li><li>Compatible con airbag lateral</li></ul>",
+      "specs": [
+        {
+          "key": "Material",
+          "value": "CUERO"
+        },
+        {
+          "key": "Lavable",
+          "value": "Sí, a mano"
+        },
+        {
+          "key": "Origen",
+          "value": "Argentina"
+        }
+      ],
+      "category_id": "f10b1b92-ebb0-4d63-9e7d-74aa57ee5b42",
+      "subcategory_id": "db4d6e66-e2c7-4398-b714-b0cd603cbef0",
+      "brand_id": "",
+      "type_id": "98238ac1-cb77-4cc0-95dc-7b850f0ef791",
+      "images": [
+        "/api/files/cabana-store/uploads/c8d8fb15-24a4-47ee-b656-f5ade596db6c.jpeg",
+        "/api/files/cabana-store/uploads/01dd1b82-98d3-4bd3-bcdb-46895e5e1adf.jpeg",
+        "/api/files/cabana-store/uploads/5858fd18-7f5a-4fa3-84a9-f0d4c17d1807.jpeg",
+        "/api/files/cabana-store/uploads/9e19b9bc-b206-4c00-93f6-6c1a54b07527.jpeg"
+      ],
+      "tags": [
+        "destacados",
+        "lanzamientos",
+        "ofertas"
+      ],
+      "active": true,
+      "variants": [
+        {
+          "id": "9bbfa125-5764-4083-9fba-57f8401bd433",
+          "attrs": {
+            "Medida": "Universal 4 piezas",
+            "Color": "Blaco"
+          },
+          "sku": "CU-BLANC-4P",
+          "price_usd": 0.0,
+          "sale_usd": 0.0,
+          "ars_manual": true,
+          "price_ars": 220000.0,
+          "sale_ars": 0.0,
+          "stock": 20,
+          "image": "/api/files/cabana-store/uploads/4f588c7e-6e91-4f68-ba69-c65af50a18d1.jpeg"
+        },
+        {
+          "id": "8c7e61be-088c-470d-acd2-244f26601009",
+          "attrs": {
+            "Medida": "Universal 5 piezas",
+            "Color": "Azul"
+          },
+          "sku": "CU-AZUL-4P",
+          "price_usd": 0.0,
+          "sale_usd": 52.0,
+          "ars_manual": true,
+          "price_ars": 220000.0,
+          "sale_ars": 0.0,
+          "stock": 20,
+          "image": "/api/files/cabana-store/uploads/4f8f80a0-e46e-4c81-ba7c-72a30fe0820d.jpeg"
+        },
+        {
+          "id": "bff125b3-31eb-4875-881c-650dcfd81c4f",
+          "attrs": {
+            "Medida": "Universal 4 piezas",
+            "Color": "Rojo"
+          },
+          "sku": "CU-ROJO-4P",
+          "price_usd": 0.0,
+          "sale_usd": 0.0,
+          "ars_manual": true,
+          "price_ars": 220000.0,
+          "sale_ars": 0.0,
+          "stock": 20,
+          "image": "/api/files/cabana-store/uploads/9d3eb679-5738-4715-9919-e859c431293d.jpeg"
+        },
+        {
+          "id": "sw59dyh8mwjmv6tc",
+          "attrs": {
+            "Medida": "Universal 4 piezas",
+            "Color": "Negro"
+          },
+          "sku": "CU-NEG-4P",
+          "price_usd": 0.0,
+          "sale_usd": 0.0,
+          "ars_manual": true,
+          "price_ars": 220000.0,
+          "sale_ars": 0.0,
+          "stock": 20,
+          "image": "/api/files/cabana-store/uploads/e07b9f32-7308-4b3b-8b9c-52dae3131767.jpeg"
+        }
+      ],
+      "created_at": "2026-11-09T19:57:07.609872+00:00",
+      "featured": true,
+      "lanzamiento": true,
+      "on_sale": true
+    }
+  ],
+  "coupons": [
+    {
+      "id": "4f64cd92-223d-4548-9026-d70d8a3d4346",
+      "code": "BIENVENIDO10",
+      "type": "pct",
+      "value": 10,
+      "expires_at": "2027-05-14",
+      "max_uses": 500,
+      "uses": 12,
+      "active": true
+    },
+    {
+      "id": "76e6d5ff-9ab8-4573-b253-69c641210e0b",
+      "code": "ENVIO5000",
+      "type": "fixed",
+      "value": 5000,
+      "expires_at": "2027-01-14",
+      "max_uses": 100,
+      "uses": 3,
+      "active": true
+    },
+    {
+      "id": "e27c1eca-a003-4ed6-b9b0-8a1ebcbf0c87",
+      "code": "VENCIDO20",
+      "type": "pct",
+      "value": 20,
+      "expires_at": "2026-11-10",
+      "max_uses": 50,
+      "uses": 50,
+      "active": true
+    }
+  ],
+  "pages": [
+    {
+      "id": "e4514cc9-cd35-40ec-8f8b-60f6258e7812",
+      "title": "Nosotros",
+      "slug": "nosotros",
+      "active": true,
+      "show_in_footer": true,
+      "content": "<h2>Somos Distribuidora Buenos aires</h2><p>Desde 2025 fabricamos fundas de asiento y accesorios para autos con materiales de primera calidad, diseñados y confeccionados en Argentina.</p>"
+    },
+    {
+      "id": "2417526b-27c1-4eec-8fd8-81f8a6481c80",
+      "title": "Garantias",
+      "slug": "terminos-y-condiciones",
+      "active": true,
+      "show_in_footer": true,
+      "content": "Cambios y Devoluciones\nTodos los artículos comprados en nuestra página de venta online podrán ser cambiados dentro de los 10 días corridos posteriores a la compra.\n\nEs necesario para el cambio/devolución que el producto esté sin uso, en perfectas condiciones, con etiquetas, accesorios y empaques originales.\n\nEl costo del envío y/o retiro, según sea el caso, será asumido por CabanaFactory cuando la devolución o cambio se produzca porque:\n\n– El producto no corresponde al solicitado.\n\n– El producto entregado se encuentra dañado o defectuoso de FABRICA\n\n \n\nEn cualquier otro caso, el costo del envío y reenvío estarán a cargo del cliente.\n\nLa posibilidad de cambio por el mismo artículo siempre estará sujeta a su disponibilidad en stock.\n\n \n\nEl cambio se puede realizar solicitándonos por mail o WhatsApp con tu numero de Orden, recibirás las instrucciones del procedimiento.\n\nLos artículos comprados durante PROMOCIONES ESPECIALES, OFERTAS Y/O LIQUIDACIONES, se computarán al precio abonado.\n\nAnte cualquier duda, no dejes de escribirnos a través de la sección contacto o por mail a ventas@distribuidoraba.com"
+    },
+    {
+      "id": "000bd03c-8b42-4fcf-bc9a-32288b07e4db",
+      "title": "Contacto",
+      "slug": "contacto",
+      "active": true,
+      "show_in_footer": true,
+      "content": "<h2>Contacto</h2><p>Email: ventas@distribuidoraba.comr<br/>WhatsApp: +54 9 11 3354-9747<br/>Franklin D. Roosevelt 1700\nFranklin D. Roosevelt 1700, C1772 Cdad. Autónoma de Buenos Aires, Argentina</p>"
+    },
+    {
+      "title": "¿COMO COMPRAR?",
+      "slug": "como-comprar",
+      "content": "<h2>¿COMO COMPRAR?</h2><p>\nElegí el producto que querés comprar\nHacé clic en el botón \"\"Agregar al carrito\"\"\nPodés seguir agregando otros productos al carrito o hacer clic en \"\"Iniciar compra\"\"\nCompletá tus datos de contacto y hacé clic en \"\"Continuar\"\"\nIngresá la dirección a donde querés recibir el producto. Luego hacé clic en \"\"Continuar\"\"\nSeleccioná el medio de envío que querés y hacé clic en \"\"Continuar\"\"\nElegí el medio de pago\nUna vez que hayas elegido el medio de pago, haz clic en \"Continuar\".\nEn la página de confirmación de compra, podés revisar toda la información de la compra y confirmar\nDespués de confirmar, recibirás un e-mail de nuestra parte\nUna vez recibido el pago, enviaremos el comprobante y tu pedido</p>\n",
+      "active": true,
+      "show_in_footer": true,
+      "id": "681fee19-29be-4185-906e-010887d8f258"
+    }
+  ],
+  "comments": [
+    {
+      "id": "3079a52b-3c94-42be-9d9e-29f1368a2be7",
+      "user_id": null,
+      "name": "Lucía Pérez",
+      "email": "lucia@example.com",
+      "vehicle": "VW Gol Trend · Línea Glitter Rosa",
+      "rating": 5,
+      "comment": "¡Increíble cómo quedaron las fundas! El calce es perfecto y la calidad de la tela acolchada superó mis expectativas. Las coloqué en 15 minutos.",
+      "photo": "https://images.unsplash.com/photo-1614527255138-018e29ff34ee?crop=entropy&cs=srgb&fm=jpg&q=85&w=900",
+      "status": "Aprobado",
+      "created_at": "2026-11-10T18:59:22.421157+00:00"
+    },
+    {
+      "id": "ee90492a-7087-4c2f-b8ef-6c555c29de04",
+      "user_id": null,
+      "name": "Martín Gómez",
+      "email": "martin@example.com",
+      "vehicle": "Toyota Hilux · Eco Cuero Premium",
+      "rating": 5,
+      "comment": "Excelente terminación y costuras súper reforzadas. Parecen tapizado original de fábrica y se limpian con un paño húmedo.",
+      "photo": "https://images.unsplash.com/photo-1652860316277-370ca5b1b1df?crop=entropy&cs=srgb&fm=jpg&q=85&w=900",
+      "status": "Aprobado",
+      "created_at": "2026-11-13T18:59:22.421157+00:00"
+    },
+    {
+      "id": "2fbdb054-eed4-4001-9089-eaaf6b0c36a2",
+      "user_id": null,
+      "name": "Sofía Díaz",
+      "email": "sofia@example.com",
+      "vehicle": "Peugeot 208 · Línea Sport Negro",
+      "rating": 5,
+      "comment": "Muy buena atención por WhatsApp y el envío llegó rapidísimo. El cubre volante y las fundas cambiaron por completo el interior.",
+      "photo": "https://images.unsplash.com/photo-1614530499660-fe1fbd7921d6?crop=entropy&cs=srgb&fm=jpg&q=85&w=900",
+      "status": "Aprobado",
+      "created_at": "2026-11-15T18:59:22.421157+00:00"
+    },
+    {
+      "id": "1b017228-bea9-4521-8ce8-4f97e37b8a3e",
+      "user_id": null,
+      "name": "Juan Romero",
+      "email": "juan@example.com",
+      "vehicle": "Ford Ranger · Alfombras + Fundas",
+      "rating": 4,
+      "comment": "Muy buena relación precio-calidad, calzan muy bien en las butacas delanteras. Dejo foto de cómo quedaron instaladas.",
+      "photo": "https://images.unsplash.com/photo-1667893530449-e58102223524?crop=entropy&cs=srgb&fm=jpg&q=85&w=900",
+      "status": "Pendiente",
+      "created_at": "2026-11-16T13:59:22.421157+00:00"
+    }
+  ],
+  "files": [
+    {
+      "id": "5949f1b4-e77e-45c1-af6a-e29d39238c05",
+      "storage_path": "cabana-store/uploads/9685bc7c-53d4-46a1-ad8c-55e54e9b0045.png",
+      "original_filename": "Sin título (1254 x 550 px) (1254 x 250 px).png",
+      "content_type": "image/png",
+      "size": 86354,
+      "is_deleted": false,
+      "created_at": "2026-11-16T18:50:20.741344+00:00"
+    },
+    {
+      "id": "d8b6b571-64da-40ab-8c83-2c1d13acd75c",
+      "storage_path": "cabana-store/uploads/c8d8fb15-24a4-47ee-b656-f5ade596db6c.jpeg",
+      "original_filename": "WhatsApp Image 2026-11-16 at 15.59.35.jpeg",
+      "content_type": "image/jpeg",
+      "size": 187401,
+      "is_deleted": false,
+      "created_at": "2026-11-16T19:01:23.567741+00:00"
+    },
+    {
+      "id": "68af05f6-6002-46ef-967d-696b4fc00645",
+      "storage_path": "cabana-store/uploads/01dd1b82-98d3-4bd3-bcdb-46895e5e1adf.jpeg",
+      "original_filename": "WhatsApp Image 2026-11-16 at 15.59.36.jpeg",
+      "content_type": "image/jpeg",
+      "size": 184938,
+      "is_deleted": false,
+      "created_at": "2026-11-16T19:01:25.537303+00:00"
+    },
+    {
+      "id": "5092feb9-525b-4620-96da-cc916c5543f7",
+      "storage_path": "cabana-store/uploads/616c9a2a-ba71-4ce8-ab34-6994e7cd1ed3.jpeg",
+      "original_filename": "WhatsApp Image 2026-11-16 at 15.59.37.jpeg",
+      "content_type": "image/jpeg",
+      "size": 218130,
+      "is_deleted": false,
+      "created_at": "2026-11-16T19:01:27.288690+00:00"
+    },
+    {
+      "id": "dd03654a-ca46-440b-a293-a85fcb967206",
+      "storage_path": "cabana-store/uploads/5858fd18-7f5a-4fa3-84a9-f0d4c17d1807.jpeg",
+      "original_filename": "WhatsApp Image 2026-11-16 at 15.59.36.jpeg",
+      "content_type": "image/jpeg",
+      "size": 204982,
+      "is_deleted": false,
+      "created_at": "2026-11-16T19:02:18.246811+00:00"
+    },
+    {
+      "id": "615be397-b255-47b0-9cad-50635174d951",
+      "storage_path": "cabana-store/uploads/9e19b9bc-b206-4c00-93f6-6c1a54b07527.jpeg",
+      "original_filename": "WhatsApp Image 2026-11-16 at 15.59.37.jpeg",
+      "content_type": "image/jpeg",
+      "size": 198556,
+      "is_deleted": false,
+      "created_at": "2026-11-16T19:02:19.932278+00:00"
+    },
+    {
+      "id": "03a86d4f-578a-4c66-a1fd-0f3ad32f13e6",
+      "storage_path": "cabana-store/uploads/4f8f80a0-e46e-4c81-ba7c-72a30fe0820d.jpeg",
+      "original_filename": "WhatsApp Image 2026-11-16 at 15.59.36.jpeg",
+      "content_type": "image/jpeg",
+      "size": 204982,
+      "is_deleted": false,
+      "created_at": "2026-11-16T19:03:48.627174+00:00"
+    },
+    {
+      "id": "420716ad-0779-4602-adad-48289b8860f4",
+      "storage_path": "cabana-store/uploads/9d3eb679-5738-4715-9919-e859c431293d.jpeg",
+      "original_filename": "WhatsApp Image 2026-11-16 at 15.59.37.jpeg",
+      "content_type": "image/jpeg",
+      "size": 198556,
+      "is_deleted": false,
+      "created_at": "2026-11-16T19:04:29.294359+00:00"
+    },
+    {
+      "id": "6f018ef1-b170-4114-93b1-0382cb55ce72",
+      "storage_path": "cabana-store/uploads/4f588c7e-6e91-4f68-ba69-c65af50a18d1.jpeg",
+      "original_filename": "WhatsApp Image 2026-11-16 at 15.59.35.jpeg",
+      "content_type": "image/jpeg",
+      "size": 187401,
+      "is_deleted": false,
+      "created_at": "2026-11-16T19:04:48.486580+00:00"
+    },
+    {
+      "id": "899a2819-8957-47e8-b6a3-dae23623349f",
+      "storage_path": "cabana-store/uploads/e07b9f32-7308-4b3b-8b9c-52dae3131767.jpeg",
+      "original_filename": "WhatsApp Image 2026-11-16 at 15.59.36_negro.jpeg",
+      "content_type": "image/jpeg",
+      "size": 184938,
+      "is_deleted": false,
+      "created_at": "2026-11-16T19:06:45.446415+00:00"
+    },
+    {
+      "id": "bb597d72-e535-4b1c-8b46-20e418f8afcf",
+      "storage_path": "cabana-store/uploads/ed619acb-1d89-4cc7-b32b-d9339af6201c.jpeg",
+      "original_filename": "fundas volante 2.jpeg",
+      "content_type": "image/jpeg",
+      "size": 16517,
+      "is_deleted": false,
+      "created_at": "2026-11-16T19:11:34.270914+00:00"
+    },
+    {
+      "id": "62f996f0-6114-4553-bc55-19689eba26e0",
+      "storage_path": "cabana-store/uploads/b56de785-8058-4e23-bef2-8e66bd43df7b.jpeg",
+      "original_filename": "fundas volante_1.jpeg",
+      "content_type": "image/jpeg",
+      "size": 54457,
+      "is_deleted": false,
+      "created_at": "2026-11-16T19:11:35.217349+00:00"
+    },
+    {
+      "id": "ce63fb9c-54ce-4734-bad6-cf488213654a",
+      "storage_path": "cabana-store/uploads/39c59284-7964-4b4d-a5da-f932f8f3f31a.jpeg",
+      "original_filename": "fundas volantes 3.jpeg",
+      "content_type": "image/jpeg",
+      "size": 23541,
+      "is_deleted": false,
+      "created_at": "2026-11-16T19:11:36.056787+00:00"
+    },
+    {
+      "id": "0c03ba83-7aba-4c1c-9c5e-4745225f94e2",
+      "storage_path": "cabana-store/uploads/4dda1e8a-1d9c-4642-8ec8-ab7fd56e1d06.jpeg",
+      "original_filename": "fundas volante 2.jpeg",
+      "content_type": "image/jpeg",
+      "size": 16517,
+      "is_deleted": false,
+      "created_at": "2026-11-16T19:11:55.876024+00:00"
+    },
+    {
+      "id": "f3c63717-747a-4b23-bfb6-c48dbc3a2d3f",
+      "storage_path": "cabana-store/uploads/2e18e8d4-d857-4595-be68-754aeff5fd6e.jpeg",
+      "original_filename": "WhatsApp Image 2026-11-16 at 15.59.36.jpeg",
+      "content_type": "image/jpeg",
+      "size": 204982,
+      "is_deleted": false,
+      "created_at": "2026-11-16T19:15:03.854164+00:00"
+    },
+    {
+      "id": "31f8a430-17af-4adb-b7a0-13d7456d9506",
+      "storage_path": "cabana-store/uploads/7955bfe5-3027-4861-9685-c2fee46ea8d0.jpg",
+      "original_filename": "Gemini_Generated_Image_pkx1qipkx1qipkx1.jpg",
+      "content_type": "image/jpeg",
+      "size": 2159337,
+      "is_deleted": false,
+      "created_at": "2026-11-16T19:24:40.398598+00:00"
+    },
+    {
+      "id": "8b49ad8f-f79e-40c4-8f20-d0e1361b61c2",
+      "storage_path": "cabana-store/uploads/ef1a5357-8ff7-4cbd-b08e-e11b020fc428.jpg",
+      "original_filename": "Gemini_Generated_Image_i9a70ni9a70ni9a7.jpg",
+      "content_type": "image/jpeg",
+      "size": 1915253,
+      "is_deleted": false,
+      "created_at": "2026-11-16T19:40:54.479846+00:00"
+    },
+    {
+      "id": "ce84af0d-9b44-4f0d-96c9-3912c8056b8b",
+      "storage_path": "cabana-store/uploads/415f9e12-bbf9-4e5f-8a3d-50a3e1260a58.jpeg",
+      "original_filename": "alfombra home.jpeg",
+      "content_type": "image/jpeg",
+      "size": 79553,
+      "is_deleted": false,
+      "created_at": "2026-11-16T19:41:56.608099+00:00"
+    },
+    {
+      "id": "cce7d94c-9916-4fa0-a493-b66862150c0d",
+      "storage_path": "cabana-store/uploads/8ed8ee12-e13e-4f21-b7ff-4cb24e995e8d.jpg",
+      "original_filename": "Gemini_Generated_Image_em8dkeem8dkeem8d.jpg",
+      "content_type": "image/jpeg",
+      "size": 2019323,
+      "is_deleted": false,
+      "created_at": "2026-11-16T19:50:25.836134+00:00"
+    },
+    {
+      "id": "a07b7003-db80-44bb-a650-a82b6272a798",
+      "storage_path": "cabana-store/uploads/6937398e-77af-469b-9cbc-e0d614db782e.jpg",
+      "original_filename": "Gemini_Generated_Image_pkx1qipkx1qipkx1.jpg",
+      "content_type": "image/jpeg",
+      "size": 2159337,
+      "is_deleted": false,
+      "created_at": "2026-11-16T19:57:14.039741+00:00"
+    },
+    {
+      "id": "d7e7ea59-6c0b-4611-8d83-b7eacaa18829",
+      "storage_path": "cabana-store/uploads/af1347f4-a562-474c-8cc1-3485a67ce4db.jpg",
+      "original_filename": "Gemini_Generated_Image_i9a70ni9a70ni9a7.jpg",
+      "content_type": "image/jpeg",
+      "size": 1915253,
+      "is_deleted": false,
+      "created_at": "2026-11-16T19:57:38.727827+00:00"
+    },
+    {
+      "id": "b1a4e3a8-ace9-4cf5-bf3e-e6b20b27ac69",
+      "storage_path": "cabana-store/uploads/53d72f70-a3db-4988-bc2b-7f1d51a69394.jpg",
+      "original_filename": "Gemini_Generated_Image_em8dkeem8dkeem8d.jpg",
+      "content_type": "image/jpeg",
+      "size": 2019323,
+      "is_deleted": false,
+      "created_at": "2026-11-16T19:58:08.579864+00:00"
+    },
+    {
+      "id": "2544738f-b64d-4b7a-8b50-70392ba5fb32",
+      "storage_path": "cabana-store/uploads/9c0ac1c0-a5b9-4add-9522-d353f0610622.jpg",
+      "original_filename": "Gemini_Generated_Image_3j464f3j464f3j46.jpg",
+      "content_type": "image/jpeg",
+      "size": 2148550,
+      "is_deleted": false,
+      "created_at": "2026-11-16T20:04:38.459147+00:00"
+    },
+    {
+      "id": "edea1ebe-0ddc-4574-9c59-5655a89411e6",
+      "storage_path": "cabana-store/uploads/a355868d-de07-456f-8c81-335c5734b7f4.jpg",
+      "original_filename": "Gemini_Generated_Image_gggxe9gggxe9gggx.jpg",
+      "content_type": "image/jpeg",
+      "size": 2049481,
+      "is_deleted": false,
+      "created_at": "2026-11-16T20:10:04.463174+00:00"
+    },
+    {
+      "id": "d8499893-f8fa-4c66-8771-cabd5487d669",
+      "storage_path": "cabana-store/uploads/7999d136-7cc8-4a15-907e-29a3751b9e88.jpg",
+      "original_filename": "Gemini_Generated_Image_unppryunppryunpp.jpg",
+      "content_type": "image/jpeg",
+      "size": 2501224,
+      "is_deleted": false,
+      "created_at": "2026-11-16T20:12:09.278003+00:00"
+    },
+    {
+      "id": "440b335b-ebcb-4a6e-9b1d-84e6a5e4401b",
+      "storage_path": "cabana-store/uploads/366e3e7d-0a9f-4b8a-aada-bfb74c4d88ea.jpg",
+      "original_filename": "Gemini_Generated_Image_vc51tfvc51tfvc51.jpg",
+      "content_type": "image/jpeg",
+      "size": 2494790,
+      "is_deleted": false,
+      "created_at": "2026-11-16T20:21:21.100576+00:00"
+    },
+    {
+      "id": "6befef63-b813-42d4-a97c-5d02fcef6c91",
+      "storage_path": "cabana-store/uploads/5aa490c6-2ecd-4177-9a62-8f5f20e1cb53.jpg",
+      "original_filename": "Gemini_Generated_Image_apv5w8apv5w8apv5.jpg",
+      "content_type": "image/jpeg",
+      "size": 2820003,
+      "is_deleted": false,
+      "created_at": "2026-11-16T20:21:28.712195+00:00"
+    },
+    {
+      "id": "66d0b535-894e-4547-a176-823bf242f764",
+      "storage_path": "cabana-store/uploads/46034fd1-e446-4175-847a-6e286690fd34.jpg",
+      "original_filename": "Gemini_Generated_Image_apv5w8apv5w8apv5.jpg",
+      "content_type": "image/jpeg",
+      "size": 2820003,
+      "is_deleted": false,
+      "created_at": "2026-11-16T20:21:38.624567+00:00"
+    },
+    {
+      "id": "ef5cd888-75a8-48db-b78f-1703e9261ae0",
+      "storage_path": "cabana-store/uploads/a9ec230a-2844-495b-af17-b41c95f2811b.jpg",
+      "original_filename": "Gemini_Generated_Image_ptv7jbptv7jbptv7.jpg",
+      "content_type": "image/jpeg",
+      "size": 2293129,
+      "is_deleted": false,
+      "created_at": "2026-11-16T20:21:49.499543+00:00"
+    },
+    {
+      "id": "e4081d68-1c6f-4755-8a7d-49537b77760e",
+      "storage_path": "cabana-store/uploads/81f6fe87-6b65-4062-a9cb-ae15ec1099ec.jpg",
+      "original_filename": "Gemini_Generated_Image_4xvsu24xvsu24xvs.jpg",
+      "content_type": "image/jpeg",
+      "size": 2252257,
+      "is_deleted": false,
+      "created_at": "2026-11-16T20:28:24.248737+00:00"
+    },
+    {
+      "id": "5196fc02-96b5-4476-849e-a95d66237a17",
+      "storage_path": "cabana-store/uploads/429ba587-2b15-4d96-b3c9-428a50bc80ec.jpg",
+      "original_filename": "images.jpg",
+      "content_type": "image/jpeg",
+      "size": 32576,
+      "is_deleted": false,
+      "created_at": "2026-11-16T20:29:53.016562+00:00"
+    },
+    {
+      "id": "9ec76879-de99-46bc-a747-313a622ac903",
+      "storage_path": "cabana-store/uploads/bec50b3a-f6bf-4ab1-bc94-f4f23e78a326.png",
+      "original_filename": "slider muestra.png",
+      "content_type": "image/png",
+      "size": 2041873,
+      "is_deleted": false,
+      "created_at": "2026-11-16T20:31:25.636077+00:00"
+    },
+    {
+      "id": "014eebdb-50fa-4416-8f33-ae3ea9bb106a",
+      "storage_path": "cabana-store/uploads/3902ef23-4fe5-44a0-855f-d906a0452845.png",
+      "original_filename": "Diseño sin título (1).png",
+      "content_type": "image/png",
+      "size": 2572543,
+      "is_deleted": false,
+      "created_at": "2026-11-16T20:47:22.900916+00:00"
+    },
+    {
+      "id": "913f831b-1405-43f9-af4e-8719246f7c48",
+      "storage_path": "cabana-store/uploads/ca327eaa-b6f0-4ec9-8483-07e851d35907.png",
+      "original_filename": "Diseño sin título (2).png",
+      "content_type": "image/png",
+      "size": 2600626,
+      "is_deleted": false,
+      "created_at": "2026-11-16T20:48:45.391113+00:00"
+    },
+    {
+      "id": "673b40b7-3385-4d9a-994b-50d90d701c5b",
+      "storage_path": "cabana-store/uploads/9a2b3869-4e7d-4527-9249-e5ebdaf78c4d.png",
+      "original_filename": "Diseño sin título (3).png",
+      "content_type": "image/png",
+      "size": 2451909,
+      "is_deleted": false,
+      "created_at": "2026-11-16T20:49:47.920664+00:00"
+    },
+    {
+      "id": "1ad38b6d-faad-43ce-8643-6728f62e364d",
+      "storage_path": "cabana-store/uploads/45c6f3bc-3ffa-4556-94b1-b8a7db5d7d69.png",
+      "original_filename": "Diseño sin título (1).png",
+      "content_type": "image/png",
+      "size": 2572543,
+      "is_deleted": false,
+      "created_at": "2026-11-16T20:52:41.630481+00:00"
+    },
+    {
+      "id": "82a9b6f9-c9d1-47c9-80e6-fd295ce6fd5d",
+      "storage_path": "cabana-store/uploads/864d8782-c24b-4965-8c72-154497764143.png",
+      "original_filename": "Diseño sin título (2).png",
+      "content_type": "image/png",
+      "size": 2600626,
+      "is_deleted": false,
+      "created_at": "2026-11-16T20:53:18.228044+00:00"
+    },
+    {
+      "id": "e025f271-3e3f-41aa-970e-76979d3aaaa2",
+      "storage_path": "cabana-store/uploads/e9c817cc-ad1f-48e4-80e7-0824dd15e908.png",
+      "original_filename": "Diseño sin título (3).png",
+      "content_type": "image/png",
+      "size": 2451909,
+      "is_deleted": false,
+      "created_at": "2026-11-16T20:53:32.265174+00:00"
+    },
+    {
+      "id": "beba6654-42fb-4c98-abe9-27763d087bb8",
+      "storage_path": "cabana-store/uploads/945d0caa-b684-4649-82f9-9d9deec552ee.jpg",
+      "original_filename": "intermedia azul (1).jpg",
+      "content_type": "image/jpeg",
+      "size": 74042,
+      "is_deleted": false,
+      "created_at": "2026-11-16T21:26:20.590015+00:00"
+    },
+    {
+      "id": "f77658e6-6db5-4193-b329-2e4596dd7b34",
+      "storage_path": "cabana-store/uploads/dde43e19-a350-4101-9d2a-577164a3351b.jpg",
+      "original_filename": "intermedia azul (2).jpg",
+      "content_type": "image/jpeg",
+      "size": 86019,
+      "is_deleted": false,
+      "created_at": "2026-11-16T21:26:20.599792+00:00"
+    },
+    {
+      "id": "5f9c9d7f-b198-44fd-808e-9e0820e59f8f",
+      "storage_path": "cabana-store/uploads/4099a88d-fa38-4c80-aacd-f2978ee5d966.jpg",
+      "original_filename": "intermedia azul (3).jpg",
+      "content_type": "image/jpeg",
+      "size": 82681,
+      "is_deleted": false,
+      "created_at": "2026-11-16T21:26:20.608205+00:00"
+    },
+    {
+      "id": "c1745d72-cfdb-45f4-8c54-0508e9f97bf3",
+      "storage_path": "cabana-store/uploads/a381b0ac-99b6-4c54-9c82-36dc2d234bdd.jpg",
+      "original_filename": "intermedia negro.jpg",
+      "content_type": "image/jpeg",
+      "size": 83498,
+      "is_deleted": false,
+      "created_at": "2026-11-16T21:26:20.617027+00:00"
+    },
+    {
+      "id": "e74e5ef9-87ae-466b-b2da-b039ae8a9031",
+      "storage_path": "cabana-store/uploads/0f27919c-f527-44d0-8c0f-0b4c3289e629.jpg",
+      "original_filename": "intermedia azul (2).jpg",
+      "content_type": "image/jpeg",
+      "size": 86019,
+      "is_deleted": false,
+      "created_at": "2026-11-16T21:26:46.018821+00:00"
+    },
+    {
+      "id": "24b9c6e9-8ba0-42a2-8044-1fcc1024db7b",
+      "storage_path": "cabana-store/uploads/f084d5e1-12fa-4452-bb63-aa68e08caebf.jpg",
+      "original_filename": "intermedia azul (1).jpg",
+      "content_type": "image/jpeg",
+      "size": 74042,
+      "is_deleted": false,
+      "created_at": "2026-11-16T21:27:11.446036+00:00"
+    },
+    {
+      "id": "cdeab40b-4376-4b80-8a33-87b6b1270e7c",
+      "storage_path": "cabana-store/uploads/e3ec715e-4784-4f94-9f30-f8e570b813f0.jpg",
+      "original_filename": "intermedia azul (3).jpg",
+      "content_type": "image/jpeg",
+      "size": 82681,
+      "is_deleted": false,
+      "created_at": "2026-11-16T21:27:43.912843+00:00"
+    },
+    {
+      "id": "0972f7b1-d07e-4e91-8cf6-12238889986b",
+      "storage_path": "cabana-store/uploads/3e0a4201-f6fb-4ed9-b597-ecd30157479e.jpg",
+      "original_filename": "intermedia negro.jpg",
+      "content_type": "image/jpeg",
+      "size": 83498,
+      "is_deleted": false,
+      "created_at": "2026-11-16T21:29:22.694182+00:00"
+    },
+    {
+      "id": "975aa952-03f8-432a-a4ef-dc7df4c77fc3",
+      "storage_path": "cabana-store/uploads/a859c4cc-ea33-4a40-9197-3ed04011c9be.jpeg",
+      "original_filename": "economica azul .jpeg",
+      "content_type": "image/jpeg",
+      "size": 55312,
+      "is_deleted": false,
+      "created_at": "2026-11-16T21:31:31.183384+00:00"
+    },
+    {
+      "id": "fd1e06ce-7f4c-46e9-84e7-4b721c76be69",
+      "storage_path": "cabana-store/uploads/efeff39e-7d07-49b6-bffe-ec10071abd58.jpeg",
+      "original_filename": "Economica blanco .jpeg",
+      "content_type": "image/jpeg",
+      "size": 18471,
+      "is_deleted": false,
+      "created_at": "2026-11-16T21:31:31.192935+00:00"
+    },
+    {
+      "id": "3148a525-3c4c-4ba5-9a43-43b3a84c3d64",
+      "storage_path": "cabana-store/uploads/cdf87858-3cd3-4121-8396-1f1aacde293b.jpeg",
+      "original_filename": "economica gris.jpeg",
+      "content_type": "image/jpeg",
+      "size": 51866,
+      "is_deleted": false,
+      "created_at": "2026-11-16T21:31:31.201400+00:00"
+    },
+    {
+      "id": "b4bab7d2-f117-4ed1-a0dd-56aee4fe7cf9",
+      "storage_path": "cabana-store/uploads/0dd9e05b-de84-4f5c-ac8b-ffd2ae16bad2.jpeg",
+      "original_filename": "economica negro.jpeg",
+      "content_type": "image/jpeg",
+      "size": 22043,
+      "is_deleted": false,
+      "created_at": "2026-11-16T21:31:31.209507+00:00"
+    },
+    {
+      "id": "6c97d145-342e-43c0-861c-4946c9fc09f0",
+      "storage_path": "cabana-store/uploads/219fbbb0-3b3e-4a28-b068-64cbfc889891.jpeg",
+      "original_filename": "economica rojo .jpeg",
+      "content_type": "image/jpeg",
+      "size": 30388,
+      "is_deleted": false,
+      "created_at": "2026-11-16T21:31:31.217007+00:00"
+    },
+    {
+      "id": "b8117ed2-9432-4ed3-a54d-bf89319f6686",
+      "storage_path": "cabana-store/uploads/9259d76d-3742-4d61-ab1c-74fc6c5c403b.jpg",
+      "original_filename": "intermedia negro.jpg",
+      "content_type": "image/jpeg",
+      "size": 83498,
+      "is_deleted": false,
+      "created_at": "2026-11-16T21:31:44.788397+00:00"
+    },
+    {
+      "id": "40cdbf99-ea49-407f-93d7-54959f0a8f8a",
+      "storage_path": "cabana-store/uploads/b8aa1ebd-53dd-4d2a-aae2-ea769802ddda.jpeg",
+      "original_filename": "economica rojo .jpeg",
+      "content_type": "image/jpeg",
+      "size": 30388,
+      "is_deleted": false,
+      "created_at": "2026-11-16T21:32:44.617093+00:00"
+    },
+    {
+      "id": "89a67aee-fd3f-430d-8d49-fb990f6bb201",
+      "storage_path": "cabana-store/uploads/01c1b02a-ec03-4ecb-a4cb-80017bc1b9a7.jpeg",
+      "original_filename": "Economica blanco .jpeg",
+      "content_type": "image/jpeg",
+      "size": 18471,
+      "is_deleted": false,
+      "created_at": "2026-11-16T21:33:28.540584+00:00"
+    },
+    {
+      "id": "d48cad83-190b-496d-9ffd-b4eed6c7e722",
+      "storage_path": "cabana-store/uploads/681b7c83-93bc-4a35-b551-630b42fd7209.jpeg",
+      "original_filename": "economica gris.jpeg",
+      "content_type": "image/jpeg",
+      "size": 51866,
+      "is_deleted": false,
+      "created_at": "2026-11-16T21:34:54.796703+00:00"
+    },
+    {
+      "id": "e270191a-cc98-4c56-a883-5d44261b0268",
+      "storage_path": "cabana-store/uploads/3881a580-9d63-48e8-8173-5edd14437526.jpg",
+      "original_filename": "Gemini_Generated_Image_unppryunppryunpp.jpg",
+      "content_type": "image/jpeg",
+      "size": 2501224,
+      "is_deleted": false,
+      "created_at": "2026-11-16T21:44:10.898509+00:00"
+    },
+    {
+      "id": "bea4487c-1215-4618-ae06-bd543e331d38",
+      "storage_path": "cabana-store/uploads/ee7b00b1-e183-4c81-a6b4-8ad559b8729b.jpg",
+      "original_filename": "Gemini_Generated_Image_apv5w8apv5w8apv5.jpg",
+      "content_type": "image/jpeg",
+      "size": 2820003,
+      "is_deleted": false,
+      "created_at": "2026-11-16T21:44:21.831850+00:00"
+    },
+    {
+      "id": "f2c116bd-4755-4c9e-b1f9-055553259412",
+      "storage_path": "cabana-store/uploads/0ec3bc98-8394-42c7-912d-9330d86d77ed.jpg",
+      "original_filename": "Gemini_Generated_Image_unppryunppryunpp.jpg",
+      "content_type": "image/jpeg",
+      "size": 2501224,
+      "is_deleted": false,
+      "created_at": "2026-11-16T21:44:46.425389+00:00"
+    }
+  ]
+}
