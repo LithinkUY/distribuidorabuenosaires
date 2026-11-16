@@ -25,7 +25,11 @@ from pydantic import BaseModel
 
 import seed as S
 
-client = AsyncIOMotorClient(os.environ.get('MONGO_URL', 'mongodb+srv://infolithink_db_user:0SzXcNhPCVCOWtEh@cluster0.jm7zu6p.mongodb.net/?retryWrites=true&w=majority'))
+client = AsyncIOMotorClient(
+    os.environ.get('MONGO_URL', 'mongodb+srv://infolithink_db_user:0SzXcNhPCVCOWtEh@cluster0.jm7zu6p.mongodb.net/?retryWrites=true&w=majority'),
+    serverSelectionTimeoutMS=5000,
+    connectTimeoutMS=5000,
+)
 db = client[os.environ.get('DB_NAME', 'distribuidora_ba')]
 logger = logging.getLogger("store")
 logging.basicConfig(level=logging.INFO)
@@ -1098,32 +1102,17 @@ async def ensure_indexes():
                 logger.error("index %s: %s", col, e)
 
 
-_bootstrapped = False
-
-
 @app.on_event("startup")
 async def startup():
-    global _bootstrapped
-    if _bootstrapped:
-        return
-    await ensure_indexes()
-    await seed_admin()
-    await run_seed()
     try:
         LOCAL_UPLOADS.mkdir(parents=True, exist_ok=True)
     except OSError:
         pass
-    _bootstrapped = True
-
-
-@app.middleware("http")
-async def ensure_bootstrapped(request: Request, call_next):
-    if not _bootstrapped:
-        try:
-            await startup()
-        except Exception as e:
-            logger.error("Bootstrap error: %s", e)
-    return await call_next(request)
+    if os.environ.get("VERCEL"):
+        return
+    await ensure_indexes()
+    await seed_admin()
+    await run_seed()
 
 
 @app.on_event("shutdown")
