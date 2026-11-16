@@ -25,8 +25,8 @@ from pydantic import BaseModel
 
 import seed as S
 
-client = AsyncIOMotorClient(os.environ.get('MONGO_URL', 'mongodb://localhost:27017'))
-db = client[os.environ.get('DB_NAME', 'test_database')]
+client = AsyncIOMotorClient(os.environ.get('MONGO_URL', 'mongodb+srv://infolithink_db_user:0SzXcNhPCVCOWtEh@cluster0.jm7zu6p.mongodb.net/?retryWrites=true&w=majority'))
+db = client[os.environ.get('DB_NAME', 'distribuidora_ba')]
 logger = logging.getLogger("store")
 logging.basicConfig(level=logging.INFO)
 
