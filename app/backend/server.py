@@ -25,17 +25,48 @@ from pydantic import BaseModel
 
 import seed as S
 
-client = AsyncIOMotorClient(
-    os.environ.get('MONGO_URL', 'mongodb+srv://infolithink_db_user:0SzXcNhPCVCOWtEh@cluster0.jm7zu6p.mongodb.net/?retryWrites=true&w=majority'),
-    serverSelectionTimeoutMS=5000,
-    connectTimeoutMS=5000,
-)
-db = client[os.environ.get('DB_NAME', 'distribuidora_ba')]
+DEFAULT_MONGO_URL = "mongodb+srv://infolithink_db_user:0SzXcNhPCVCOWtEh@cluster0.jm7zu6p.mongodb.net/?retryWrites=true&w=majority"
+_raw_mongo = (os.environ.get("MONGO_URL") or "").strip().strip('"').strip("'")
+if not _raw_mongo or "<db_username>" in _raw_mongo or "<password>" in _raw_mongo or (os.environ.get("VERCEL") and "localhost" in _raw_mongo):
+    MONGO_URL = DEFAULT_MONGO_URL
+else:
+    MONGO_URL = _raw_mongo
+
+_raw_db = (os.environ.get("DB_NAME") or "").strip().strip('"').strip("'")
+DB_NAME = _raw_db if _raw_db else "distribuidora_ba"
+
+_clients: dict[int, AsyncIOMotorClient] = {}
+
+
+def get_client() -> AsyncIOMotorClient:
+    try:
+        loop_id = id(asyncio.get_running_loop())
+    except RuntimeError:
+        loop_id = 0
+    if loop_id not in _clients:
+        _clients[loop_id] = AsyncIOMotorClient(
+            MONGO_URL,
+            serverSelectionTimeoutMS=5000,
+            connectTimeoutMS=5000,
+        )
+    return _clients[loop_id]
+
+
+class _DBProxy:
+    def __getattr__(self, name: str):
+        return getattr(get_client()[DB_NAME], name)
+
+    def __getitem__(self, name: str):
+        return get_client()[DB_NAME][name]
+
+
+client = None
+db = _DBProxy()
 logger = logging.getLogger("store")
 logging.basicConfig(level=logging.INFO)
 
-JWT_SECRET = os.environ.get("JWT_SECRET", "b7f3c1e9a2d84f6c9e0a1b2c3d4e5f60718293a4b5c6d7e8f90123456789abcd")
-APP_NAME = os.environ.get("APP_NAME", "distribuidora-ba")
+JWT_SECRET = (os.environ.get("JWT_SECRET") or "b7f3c1e9a2d84f6c9e0a1b2c3d4e5f60718293a4b5c6d7e8f90123456789abcd").strip().strip('"')
+APP_NAME = (os.environ.get("APP_NAME") or "distribuidora-ba").strip().strip('"')
 WA_DEFAULT = "5491133549747"
 STATUSES = ["Pendiente", "Pagado", "En Preparación", "Enviado", "Entregado", "Cancelado"]
 
@@ -1117,7 +1148,17 @@ async def startup():
 
 @app.on_event("shutdown")
 async def shutdown():
-    client.close()
+    for c in list(_clients.values()):
+        c.close()
+
+
+@api.get("/health")
+async def health_check():
+    try:
+        cnt = await db.products.count_documents({})
+        return {"ok": True, "db": DB_NAME, "products": cnt}
+    except Exception as e:
+        return {"ok": False, "db": DB_NAME, "error": f"{type(e).__name__}: {e}"}
 
 
 app.include_router(api)
