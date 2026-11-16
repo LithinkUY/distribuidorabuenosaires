@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "buildCommand": "cd app/frontend && yarn install && yarn build",
+  "outputDirectory": "app/frontend/build",
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}

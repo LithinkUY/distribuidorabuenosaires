@@ -1,6 +1,18 @@
 import axios from "axios";
 
-export const BACKEND = process.env.REACT_APP_BACKEND_URL || "http://localhost:8000";
+const isLocalHost =
+  typeof window !== "undefined" &&
+  (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1");
+
+const envBackend = (process.env.REACT_APP_BACKEND_URL || "").trim().replace(/\/+$/, "");
+
+export const BACKEND =
+  envBackend && (isLocalHost || !envBackend.includes("localhost"))
+    ? envBackend
+    : isLocalHost
+      ? "http://localhost:8000"
+      : "";
+
 export const api = axios.create({ baseURL: `${BACKEND}/api` });
 api.interceptors.request.use((c) => {
   const t = localStorage.getItem("token");

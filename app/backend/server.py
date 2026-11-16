@@ -20,17 +20,18 @@ from fastapi import FastAPI, APIRouter, HTTPException, Request, Depends, UploadF
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 from pymongo import ASCENDING, DESCENDING, IndexModel
+from bson import Binary
 from pydantic import BaseModel
 
 import seed as S
 
-client = AsyncIOMotorClient(os.environ['MONGO_URL'])
-db = client[os.environ['DB_NAME']]
+client = AsyncIOMotorClient(os.environ.get('MONGO_URL', 'mongodb://localhost:27017'))
+db = client[os.environ.get('DB_NAME', 'test_database')]
 logger = logging.getLogger("store")
 logging.basicConfig(level=logging.INFO)
 
-JWT_SECRET = os.environ["JWT_SECRET"]
-APP_NAME = os.environ["APP_NAME"]
+JWT_SECRET = os.environ.get("JWT_SECRET", "b7f3c1e9a2d84f6c9e0a1b2c3d4e5f60718293a4b5c6d7e8f90123456789abcd")
+APP_NAME = os.environ.get("APP_NAME", "distribuidora-ba")
 WA_DEFAULT = "5491133549747"
 STATUSES = ["Pendiente", "Pagado", "En Preparación", "Enviado", "Entregado", "Cancelado"]
 
@@ -187,9 +188,12 @@ LOCAL_UPLOADS = ROOT_DIR / "uploads"
 
 
 def put_object(path, data, ct):
-    fp = LOCAL_UPLOADS / path
-    fp.parent.mkdir(parents=True, exist_ok=True)
-    fp.write_bytes(data)
+    try:
+        fp = LOCAL_UPLOADS / path
+        fp.parent.mkdir(parents=True, exist_ok=True)
+        fp.write_bytes(data)
+    except OSError:
+        pass
     return {"path": path, "size": len(data)}
 
 
@@ -211,7 +215,8 @@ async def upload(file: UploadFile = File(...), user=Depends(optional_user)):
     path = f"{APP_NAME}/uploads/{uuid.uuid4()}.{ext}"
     res = await asyncio.to_thread(put_object, path, data, file.content_type)
     await db.files.insert_one({"id": str(uuid.uuid4()), "storage_path": res["path"], "original_filename": file.filename,
-                               "content_type": file.content_type, "size": res.get("size"), "is_deleted": False, "created_at": now_iso()})
+                               "content_type": file.content_type, "size": res.get("size"), "data": Binary(data),
+                               "is_deleted": False, "created_at": now_iso()})
     return {"url": f"/api/files/{res['path']}"}
 
 
@@ -220,7 +225,11 @@ async def serve_file(path: str):
     rec = await db.files.find_one({"storage_path": path, "is_deleted": False})
     if not rec:
         raise HTTPException(404, "Archivo no encontrado")
-    data, ct = await asyncio.to_thread(get_object, path)
+    if rec.get("data"):
+        data = bytes(rec["data"])
+        ct = rec.get("content_type") or "application/octet-stream"
+    else:
+        data, ct = await asyncio.to_thread(get_object, path)
     return Response(content=data, media_type=rec.get("content_type") or ct, headers={"Cache-Control": "public, max-age=31536000"})
 
 
@@ -1073,10 +1082,11 @@ async def run_seed():
 
 
 async def seed_admin():
-    email = os.environ["ADMIN_EMAIL"].lower()
+    email = os.environ.get("ADMIN_EMAIL", "admin@distribuidoraba.com").lower()
+    pw = os.environ.get("ADMIN_PASSWORD", "Admin123!")
     if not await db.users.find_one({"email": email}):
         await db.users.insert_one({"id": str(uuid.uuid4()), "email": email, "name": "Administrador", "phone": "", "role": "ADMIN",
-                                   "password_hash": hash_pw(os.environ["ADMIN_PASSWORD"]), "created_at": now_iso()})
+                                   "password_hash": hash_pw(pw), "created_at": now_iso()})
 
 
 async def ensure_indexes():
@@ -1088,12 +1098,32 @@ async def ensure_indexes():
                 logger.error("index %s: %s", col, e)
 
 
+_bootstrapped = False
+
+
 @app.on_event("startup")
 async def startup():
+    global _bootstrapped
+    if _bootstrapped:
+        return
     await ensure_indexes()
     await seed_admin()
     await run_seed()
-    LOCAL_UPLOADS.mkdir(parents=True, exist_ok=True)
+    try:
+        LOCAL_UPLOADS.mkdir(parents=True, exist_ok=True)
+    except OSError:
+        pass
+    _bootstrapped = True
+
+
+@app.middleware("http")
+async def ensure_bootstrapped(request: Request, call_next):
+    if not _bootstrapped:
+        try:
+            await startup()
+        except Exception as e:
+            logger.error("Bootstrap error: %s", e)
+    return await call_next(request)
 
 
 @app.on_event("shutdown")
