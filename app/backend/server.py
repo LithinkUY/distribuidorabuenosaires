@@ -23,6 +23,9 @@ from pymongo import ASCENDING, DESCENDING, IndexModel
 from bson import Binary
 from pydantic import BaseModel
 
+import json
+import copy
+import time
 import seed as S
 
 DEFAULT_MONGO_URL = "mongodb+srv://infolithink_db_user:0SzXcNhPCVCOWtEh@cluster0.jm7zu6p.mongodb.net/?retryWrites=true&w=majority"
@@ -36,6 +39,272 @@ _raw_db = (os.environ.get("DB_NAME") or "").strip().strip('"').strip("'")
 DB_NAME = _raw_db if _raw_db else "distribuidora_ba"
 
 _clients: dict[int, AsyncIOMotorClient] = {}
+_fallback_until: float = 0.0
+_mem_store: Optional[dict[str, list[dict]]] = None
+
+
+def _get_mem_store() -> dict[str, list[dict]]:
+    global _mem_store
+    if _mem_store is not None:
+        return _mem_store
+    snap_path = ROOT_DIR / "initial_data.json"
+    data: dict[str, list[dict]] = json.loads(snap_path.read_text(encoding="utf-8")) if snap_path.exists() else {}
+    for k in ("users", "settings", "categories", "brands", "types", "products", "coupons", "pages", "comments", "orders", "files", "login_attempts"):
+        data.setdefault(k, [])
+    admin_email = (os.environ.get("ADMIN_EMAIL") or "admin@distribuidoraba.com").strip().strip('"').lower()
+    admin_pw = (os.environ.get("ADMIN_PASSWORD") or "Admin123!").strip().strip('"')
+    if not any(u.get("email") == admin_email for u in data["users"]):
+        data["users"].append({
+            "id": "3dc78fe2-e227-462a-b0c7-4d2d3c69b519",
+            "email": admin_email,
+            "name": "Administrador Distribuidora BA",
+            "phone": "",
+            "role": "ADMIN",
+            "password_hash": bcrypt.hashpw(admin_pw.encode(), bcrypt.gensalt()).decode(),
+            "created_at": datetime.now(timezone.utc).isoformat(),
+        })
+    if not any(u.get("email") == "cliente@demo.com" for u in data["users"]):
+        data["users"].append({
+            "id": "b2b329a6-d4ae-45ba-9250-61dce5151d44",
+            "email": "cliente@demo.com",
+            "name": "Cliente Demo",
+            "phone": "1155550000",
+            "role": "CLIENTE",
+            "password_hash": bcrypt.hashpw(b"Cliente123!", bcrypt.gensalt()).decode(),
+            "created_at": datetime.now(timezone.utc).isoformat(),
+        })
+    _mem_store = data
+    return _mem_store
+
+
+def _get_nested(doc: dict, key: str):
+    cur: Any = doc
+    for part in key.split("."):
+        if isinstance(cur, dict):
+            cur = cur.get(part)
+        else:
+            return None
+    return cur
+
+
+def _match_query(doc: dict, q: Optional[dict]) -> bool:
+    if not q:
+        return True
+    for k, v in q.items():
+        if k == "$or":
+            if not any(_match_query(doc, sub) for sub in v):
+                return False
+            continue
+        val = _get_nested(doc, k) if "." in k else doc.get(k)
+        if isinstance(v, dict):
+            if "$in" in v:
+                if isinstance(val, list):
+                    if not any(x in v["$in"] for x in val):
+                        return False
+                elif val not in v["$in"]:
+                    return False
+            if "$ne" in v and val == v["$ne"]:
+                return False
+            if "$regex" in v:
+                flags = re.IGNORECASE if "i" in v.get("$options", "") else 0
+                if not re.search(v["$regex"], str(val or ""), flags):
+                    return False
+        else:
+            if isinstance(val, list) and not isinstance(v, list):
+                if v not in val:
+                    return False
+            elif val != v:
+                return False
+    return True
+
+
+def _project(doc: dict, proj: Optional[dict]) -> dict:
+    d = copy.deepcopy(doc)
+    if not proj:
+        return d
+    excl = [k for k, v in proj.items() if v == 0]
+    incl = [k for k, v in proj.items() if v == 1]
+    if incl:
+        return {k: d.get(k) for k in incl if k in d}
+    for k in excl:
+        d.pop(k, None)
+    return d
+
+
+class _MemCursor:
+    def __init__(self, docs: list[dict]):
+        self._docs = docs
+
+    def sort(self, key_or_list, direction: int = 1):
+        if isinstance(key_or_list, list):
+            for k, d in reversed(key_or_list):
+                self._docs.sort(key=lambda x: str(x.get(k) or ""), reverse=(d < 0))
+        else:
+            self._docs.sort(key=lambda x: str(x.get(key_or_list) or ""), reverse=(direction < 0))
+        return self
+
+    async def to_list(self, limit: int = 1000):
+        return self._docs[:limit] if limit else self._docs
+
+    def __aiter__(self):
+        self._iter = iter(self._docs)
+        return self
+
+    async def __anext__(self):
+        try:
+            return next(self._iter)
+        except StopIteration:
+            raise StopAsyncIteration
+
+
+class _UpdateResult:
+    def __init__(self, matched: int):
+        self.matched_count = matched
+
+
+class _SmartCollection:
+    def __init__(self, name: str):
+        self._name = name
+
+    def _raw(self):
+        return get_client()[DB_NAME][self._name]
+
+    def _mem(self) -> list[dict]:
+        return _get_mem_store().setdefault(self._name, [])
+
+    async def find_one(self, q: Optional[dict] = None, proj: Optional[dict] = None, sort=None):
+        global _fallback_until
+        if time.time() >= _fallback_until:
+            try:
+                return await self._raw().find_one(q or {}, proj, sort=sort)
+            except Exception as e:
+                logger.warning("Mongo fallback on find_one(%s): %s", self._name, e)
+                _fallback_until = time.time() + 45
+        docs = [ _project(d, proj) for d in self._mem() if _match_query(d, q) ]
+        if sort:
+            for k, d in reversed(sort):
+                docs.sort(key=lambda x: str(x.get(k) or ""), reverse=(d < 0))
+        return docs[0] if docs else None
+
+    def find(self, q: Optional[dict] = None, proj: Optional[dict] = None):
+        return _SmartCursor(self, q, proj)
+
+    async def count_documents(self, q: Optional[dict] = None):
+        global _fallback_until
+        if time.time() >= _fallback_until:
+            try:
+                return await self._raw().count_documents(q or {})
+            except Exception:
+                _fallback_until = time.time() + 45
+        return sum(1 for d in self._mem() if _match_query(d, q))
+
+    async def insert_one(self, doc: dict):
+        global _fallback_until
+        self._mem().append(copy.deepcopy(doc))
+        if time.time() >= _fallback_until:
+            try:
+                return await self._raw().insert_one(doc)
+            except Exception:
+                _fallback_until = time.time() + 45
+
+    async def insert_many(self, docs: list[dict]):
+        global _fallback_until
+        self._mem().extend(copy.deepcopy(docs))
+        if time.time() >= _fallback_until:
+            try:
+                return await self._raw().insert_many(docs)
+            except Exception:
+                _fallback_until = time.time() + 45
+
+    async def update_one(self, q: dict, upd: dict, upsert: bool = False):
+        global _fallback_until
+        matched = 0
+        for d in self._mem():
+            if _match_query(d, q):
+                if "$set" in upd:
+                    d.update(copy.deepcopy(upd["$set"]))
+                if "$inc" in upd:
+                    for k, v in upd["$inc"].items():
+                        if not k.startswith("variants.$"):
+                            d[k] = (d.get(k) or 0) + v
+                matched = 1
+                break
+        if not matched and upsert and "$set" in upd:
+            self._mem().append({**q, **copy.deepcopy(upd["$set"])})
+            matched = 1
+        if time.time() >= _fallback_until:
+            try:
+                return await self._raw().update_one(q, upd, upsert=upsert)
+            except Exception:
+                _fallback_until = time.time() + 45
+        return _UpdateResult(matched)
+
+    async def delete_one(self, q: dict):
+        global _fallback_until
+        mem = self._mem()
+        for i, d in enumerate(mem):
+            if _match_query(d, q):
+                mem.pop(i)
+                break
+        if time.time() >= _fallback_until:
+            try:
+                return await self._raw().delete_one(q)
+            except Exception:
+                _fallback_until = time.time() + 45
+
+    async def create_indexes(self, models):
+        if time.time() >= _fallback_until:
+            try:
+                return await self._raw().create_indexes(models)
+            except Exception:
+                pass
+
+
+class _SmartCursor:
+    def __init__(self, col: _SmartCollection, q: Optional[dict], proj: Optional[dict]):
+        self._col = col
+        self._q = q
+        self._proj = proj
+        self._sort_args = None
+
+    def sort(self, key_or_list, direction: int = 1):
+        self._sort_args = (key_or_list, direction)
+        return self
+
+    async def _resolve(self, limit: int = 1000) -> list[dict]:
+        global _fallback_until
+        if time.time() >= _fallback_until:
+            try:
+                cur = self._col._raw().find(self._q or {}, self._proj)
+                if self._sort_args:
+                    k, d = self._sort_args
+                    cur = cur.sort(k) if isinstance(k, list) else cur.sort(k, d)
+                return await cur.to_list(limit)
+            except Exception as e:
+                logger.warning("Mongo fallback on find(%s): %s", self._col._name, e)
+                _fallback_until = time.time() + 45
+        docs = [_project(d, self._proj) for d in self._col._mem() if _match_query(d, self._q)]
+        mc = _MemCursor(docs)
+        if self._sort_args:
+            mc.sort(*self._sort_args)
+        return await mc.to_list(limit)
+
+    async def to_list(self, limit: int = 1000):
+        return await self._resolve(limit)
+
+    def __aiter__(self):
+        self._iter_list = None
+        self._idx = 0
+        return self
+
+    async def __anext__(self):
+        if self._iter_list is None:
+            self._iter_list = await self._resolve(2000)
+        if self._idx >= len(self._iter_list):
+            raise StopAsyncIteration
+        item = self._iter_list[self._idx]
+        self._idx += 1
+        return item
 
 
 def get_client() -> AsyncIOMotorClient:
@@ -46,18 +315,18 @@ def get_client() -> AsyncIOMotorClient:
     if loop_id not in _clients:
         _clients[loop_id] = AsyncIOMotorClient(
             MONGO_URL,
-            serverSelectionTimeoutMS=5000,
-            connectTimeoutMS=5000,
+            serverSelectionTimeoutMS=2500,
+            connectTimeoutMS=2500,
         )
     return _clients[loop_id]
 
 
 class _DBProxy:
     def __getattr__(self, name: str):
-        return getattr(get_client()[DB_NAME], name)
+        return _SmartCollection(name)
 
     def __getitem__(self, name: str):
-        return get_client()[DB_NAME][name]
+        return _SmartCollection(name)
 
 
 client = None
